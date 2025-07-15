@@ -1,0 +1,12 @@
+/* components/imageGrid/imageGrid.css */
+.image-p-4 {
+  padding: 0.5rem;
+}
+
+.aspect-square-set {
+  aspect-ratio: 1 / 1.183;
+}
+
+.padding-bottom-set {
+  padding-bottom: 5rem;
+}
