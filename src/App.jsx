@@ -13,8 +13,8 @@ export default function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/library" element={<LibraryPage />} />
+          <Route path="/library" element={<MainPage />} />
+          <Route path="/" element={<LibraryPage />} />
           {/* <Route path="/login" element={<Login />} /> */}
           <Route path="/profile" element={<ProfilePage />} />
         </Routes>
