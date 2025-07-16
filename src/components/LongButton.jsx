@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ActionButton = ({
+const LongButton = ({
   children,
   onClick,
   href,
@@ -37,4 +37,4 @@ const ActionButton = ({
   );
 };
 
-export default ActionButton;
+export default LongButton;

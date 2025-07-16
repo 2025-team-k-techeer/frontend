@@ -1,24 +1,26 @@
 import React from 'react';
 
 // 닫기 아이콘
-const CloseIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className="h-8 w-8 text-brand-charcoal"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth="2.5"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M6 18L18 6M6 6l12 12"
-    />
-  </svg>
-);
+function CloseIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-8 w-8 text-brand-charcoal"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth="2.5"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M6 18L18 6M6 6l12 12"
+      />
+    </svg>
+  );
+}
 
-const FullscreenMenu = ({ isOpen, onClose }) => {
+function FullscreenMenu({ isOpen, onClose }) {
   if (!isOpen) {
     return null; // isOpen이 false이면 컴포넌트를 렌더링하지 않음
   }
@@ -49,10 +51,16 @@ const FullscreenMenu = ({ isOpen, onClose }) => {
           <a href="#" className="text-xl text-gray-700">
             내 프로필
           </a>
+          <a href="#" className="text-xl text-gray-700">
+            사용법
+          </a>
+          <a href="#" className="text-xl text-gray-700">
+            인테리어 스타일
+          </a>
         </nav>
       </main>
     </div>
   );
-};
+}
 
 export default FullscreenMenu;

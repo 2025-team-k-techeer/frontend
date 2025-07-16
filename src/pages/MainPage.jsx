@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 
-import Header from '../component/Header';
-import FullscreenMenu from '../component/HambergerManu';
-import ActionButton from '../component/ActionButton';
-import InteriorStyleSection from '../component/InteriorStyleSection';
+import Header from '../components/HeaderM';
+import Menu from '../components/Menu';
+import LongButton from '../components/LongButton';
+import InteriorStyleSection from '../components/InteriorStyleSection';
+import Navigation from '../components/Navigation/Navigation';
+import HowToUseSection from '../components/HowToUseSection';
+import HeroBanner from '../components/MainPage/HeroBenner';
 
 // 인테리어 스타일 데이터 예시
 const sampleStyles = [
@@ -27,7 +30,7 @@ const sampleStyles = [
   },
 ];
 
-const MainPage = () => {
+function MainPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -41,44 +44,25 @@ const MainPage = () => {
       <main className="flex-1 overflow-y-auto">
         <div className="p-4 space-y-8 pb-24">
           {/* 상단 배너 섹션 */}
-          <section className="relative rounded-2xl overflow-hidden shadow-lg">
-            <img
-              src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7"
-              alt="메인 배너"
-              className="w-full h-48 object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-            <div className="absolute bottom-0 left-0 p-5 text-white font-laundry">
-              <h2 className="text-2xl font-bold mb-1">
-                AI로 완성하는
-                <br />
-                나만의 인테리어
-              </h2>
-              <p className="text-sm font-light">
-                한 번의 클릭으로 새로운 공간을 경험해보세요
-              </p>
-            </div>
-          </section>
+          <HeroBanner />
 
           {/* 시작하기 버튼 컴포넌트 사용 */}
-          <ActionButton href="/upload" variant="primary">
+          <LongButton href="/upload" variant="primary">
             시작하기
-          </ActionButton>
+          </LongButton>
+          {/* 사용법 섹션 컴포넌트 사용 */}
+          <HowToUseSection />
 
           {/* 인테리어 스타일 섹션 컴포넌트 사용 */}
           <InteriorStyleSection styles={sampleStyles} />
         </div>
       </main>
 
-      {/* 하단 네비게이션은 생략... 필요시 컴포넌트화 가능 */}
-
       {/* 햄버거 메뉴 컴포넌트 사용 */}
-      <FullscreenMenu
-        isOpen={isMenuOpen}
-        onClose={() => setIsMenuOpen(false)}
-      />
+      <Menu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+      <Navigation />
     </div>
   );
-};
+}
 
 export default MainPage;
