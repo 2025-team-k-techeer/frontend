@@ -6,6 +6,7 @@ import LibraryPage from './pages/LibraryPage.jsx';
 import MainPage from './pages/Home.jsx';
 //import Login from './pages/Login';
 // import ARScene from './pages/ARScene';
+import ProfilePage from './pages/ProfilePage.jsx';
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/library" element={<LibraryPage />} />
           {/* <Route path="/login" element={<Login />} /> */}
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </BrowserRouter>
       <Analytics />
