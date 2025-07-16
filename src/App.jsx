@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import LibraryPage from './pages/LibraryPage.jsx';
-import Profile from './pages/Profile.jsx';
+import ProfilePage from './pages/ProfilePage.jsx';
 
 export default function App() {
   return (
@@ -12,7 +12,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<LibraryPage />} />
           <Route path="/library" element={<LibraryPage />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </BrowserRouter>
       <Analytics />
