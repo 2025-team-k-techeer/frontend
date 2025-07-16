@@ -1,9 +1,9 @@
 import React from 'react';
-
+import './Navigation.css'; // CSS 파일을 임포트하여 스타일 적용
 function Navigation() {
   return (
     // 여기에 fixed, bottom-0, left-0, right-0, w-full 클래스를 추가합니다.
-    <nav className="fixed bottom-0 left-0 right-0 w-full h-20 bg-white/80 backdrop-blur-sm border-t border-gray-200/80 flex justify-around items-center text-xs text-icon-gray font-medium z-10 flex-shrink-0">
+    <nav className="fixed bottom-0 left-0 right-0 w-full h-20 bg-white/80 backdrop-blur-sm border-t border-gray-200/80 flex justify-around items-center text-xs text-icon-gray font-medium z-10 flex-shrink-0 h-20-set">
       <a href="./index.html" className="flex flex-col items-center space-y-1">
         <svg
           xmlns="http://www.w3.org/2000/svg"

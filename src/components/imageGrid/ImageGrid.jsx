@@ -1,5 +1,5 @@
 import React from 'react';
-import './imageGrid.css'; // CSS 파일을 임포트하여 스타일 적용
+import './ImageGrid.css'; // CSS 파일을 임포트하여 스타일 적용
 function ImageGrid() {
   // 이미지 데이터 배열 (실제 데이터는 외부에서 받아올 수 있습니다)
   const images = [
