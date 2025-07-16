@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
-import Header from '../component/Header';
-import FullscreenMenu from '../component/HambergerManu';
-import ActionButton from '../component/ActionButton';
-import InteriorStyleSection from '../component/InteriorStyleSection';
+import Header from '../components/MainHeader';
+import FullscreenMenu from '../components/HambergerMenu';
+import ActionButton from '../components/ActionButton';
+import InteriorStyleSection from '../components/InteriorStyleSection';
+import Navigation from '../components/Navigation/Navigation';
 
 // 인테리어 스타일 데이터 예시
 const sampleStyles = [
