@@ -3,6 +3,9 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import LibraryPage from './pages/LibraryPage.jsx';
+import MainPage from './pages/Home.jsx';
+//import Login from './pages/Login';
+// import ARScene from './pages/ARScene';
 import ProfilePage from './pages/ProfilePage.jsx';
 
 export default function App() {
@@ -10,8 +13,9 @@ export default function App() {
     <div>
       <BrowserRouter>
         <Routes>
+          <Route path="/library" element={<MainPage />} />
           <Route path="/" element={<LibraryPage />} />
-          <Route path="/library" element={<LibraryPage />} />
+          {/* <Route path="/login" element={<Login />} /> */}
           <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </BrowserRouter>
