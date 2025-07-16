@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 
-import Header from '../components/MainHeader';
+import Header from '../components/HeaderM';
 import FullscreenMenu from '../components/HambergerMenu';
-import ActionButton from '../components/ActionButton';
+import LongButton from '../components/LongButton';
 import InteriorStyleSection from '../components/InteriorStyleSection';
 import Navigation from '../components/Navigation/Navigation';
+import HowToUseSection from '../components/HowToUseSection';
 
 // 인테리어 스타일 데이터 예시
 const sampleStyles = [
@@ -62,22 +63,23 @@ const MainPage = () => {
           </section>
 
           {/* 시작하기 버튼 컴포넌트 사용 */}
-          <ActionButton href="/upload" variant="primary">
+          <LongButton href="/upload" variant="primary">
             시작하기
-          </ActionButton>
+          </LongButton>
+          {/* 사용법 섹션 컴포넌트 사용 */}
+          <HowToUseSection />
 
           {/* 인테리어 스타일 섹션 컴포넌트 사용 */}
           <InteriorStyleSection styles={sampleStyles} />
         </div>
       </main>
 
-      {/* 하단 네비게이션은 생략... 필요시 컴포넌트화 가능 */}
-
       {/* 햄버거 메뉴 컴포넌트 사용 */}
       <FullscreenMenu
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
       />
+      <Navigation />
     </div>
   );
 };
