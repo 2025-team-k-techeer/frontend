@@ -2,10 +2,10 @@
 import React from 'react';
 
 function MyLibraryPreview() {
-  const imageOnError = (e) => {
+  function imageOnError(e) {
     e.target.onerror = null;
     e.target.src = 'https://placehold.co/200x200/cccccc/ffffff?text=Image';
-  };
+  }
 
   return (
     <section>

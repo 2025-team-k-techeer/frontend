@@ -13,9 +13,9 @@ function HeaderBack({
   // 하단 구분선 Tailwind 클래스를 조건부로 적용합니다.
   const borderClass = showBorder ? 'border-b border-gray-200' : '';
   // 뒤로 가기 핸들러 함수
-  const handleGoBack = () => {
+  function handleGoBack() {
     window.history.back();
-  };
+  }
 
   return (
     <header
