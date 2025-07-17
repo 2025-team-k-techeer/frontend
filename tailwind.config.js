@@ -11,7 +11,7 @@ export default {
         'icon-gray': '#A0AEC0',
       },
       fontFamily: {
-        laundry: ['TTLaundryGothicB', 'sans-serif'],
+        laundry: ['TTLaundryGothic', 'sans-serif'],
       },
     },
   },

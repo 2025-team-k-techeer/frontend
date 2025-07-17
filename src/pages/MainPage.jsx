@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Header from '../components/HeaderM';
 import Menu from '../components/Menu';
-import LongButton from '../components/LongButton';
+import ButtonL from '../components/ButtonL';
 import InteriorStyleSection from '../components/InteriorStyleSection';
 import Navigation from '../components/Navigation/Navigation';
 import HowToUseSection from '../components/HowToUseSection';
@@ -47,9 +47,9 @@ function MainPage() {
           <HeroBanner />
 
           {/* 시작하기 버튼 컴포넌트 사용 */}
-          <LongButton href="/upload" variant="primary">
+          <ButtonL href="/upload" variant="primary">
             시작하기
-          </LongButton>
+          </ButtonL>
           {/* 사용법 섹션 컴포넌트 사용 */}
           <HowToUseSection />
 

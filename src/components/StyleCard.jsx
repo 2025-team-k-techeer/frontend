@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const StyleCard = ({ imageUrl, title, description, linkTo }) => {
+function StyleCard({ imageUrl, title, description, linkTo }) {
   return (
     // linkTo prop으로 받은 주소로 이동하는 Link 태그로 전체를 감쌉니다.
     <Link to={linkTo} className="flex-shrink-0 w-48 group">
@@ -21,5 +21,5 @@ const StyleCard = ({ imageUrl, title, description, linkTo }) => {
       </div>
     </Link>
   );
-};
+}
 export default StyleCard;
