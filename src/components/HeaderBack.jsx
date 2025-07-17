@@ -21,7 +21,10 @@ function HeaderBack({
     <header
       className={`p-4 flex items-center z-10 flex-shrink-0 ${headerBgClass} ${borderClass}`}
     >
-      <button onClick={handleGoBack} className="p-2 -ml-2 focus:outline-none">
+      <button
+        onClick={handleGoBack}
+        className="p-2 -ml-2 focus:outline-none bg-transparent hover:bg-transparent"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6 text-brand-charcoal"

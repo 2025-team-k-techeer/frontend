@@ -51,7 +51,7 @@ function FullscreenMenu({ isOpen, onClose }) {
           <a href="#" className="text-xl text-gray-700">
             내 프로필
           </a>
-          <a href="#" className="text-xl text-gray-700">
+          <a href="/manual" className="text-xl text-gray-700">
             사용법
           </a>
           <a href="#" className="text-xl text-gray-700">
