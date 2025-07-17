@@ -5,7 +5,7 @@ import './Navigation.css';
 
 function Navigation() {
   // 2. 활성/비활성 스타일에 따라 클래스 이름을 반환하는 함수를 만듭니다.
-  const getLinkClassName = ({ isActive }) => {
+  function getLinkClassName({ isActive }) {
     // 공통으로 적용될 기본 클래스
     const baseClasses = 'flex flex-col items-center space-y-1 font-medium';
     // 활성 상태일 때 추가될 클래스
@@ -14,7 +14,7 @@ function Navigation() {
     const inactiveClass = 'text-icon-gray';
 
     return `${baseClasses} ${isActive ? activeClass : inactiveClass}`;
-  };
+  }
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 w-full h-20 bg-white/80 backdrop-blur-sm border-t border-gray-200/80 flex justify-around items-center text-xs z-10 flex-shrink-0 h-20-set">
