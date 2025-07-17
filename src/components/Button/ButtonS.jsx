@@ -29,8 +29,8 @@ function ButtonS({
   return (
     <button
       onClick={onClick}
-      className={`flex justify-center items-center bg-white p-4 rounded-2xl border-2 hover:border-gray-300 transition-all
-        ${layoutClasses[layout]}
+      className={`flex justify-center items-center bg-white p-4 rounded-2xl border-2 hover:border-gray-300 transition-all 
+        ${layoutClasses[layout]} 
         ${selectionClasses}`}
     >
       <div
