@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Header from '../components/HeaderM';
 import Menu from '../components/Menu';
-import ButtonL from '../components/ButtonL';
+import ButtonL from '../components/Button/ButtonL';
 import InteriorStyleSection from '../components/InteriorStyleSection';
 import Navigation from '../components/Navigation/Navigation';
 import HowToUse from '../components/HowToUse';
