@@ -53,35 +53,6 @@ function ManualPage() {
 
   return (
     <div className="w-full max-w-2xl mx-auto flex flex-col min-h-screen bg-white">
-      <style jsx>{`
-        @import url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/TTLaundryGothicB.woff2');
-        @font-face {
-          font-family: 'TTLaundryGothicB';
-          src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/TTLaundryGothicB.woff2')
-            format('woff2');
-          font-weight: 700;
-          font-style: normal;
-        }
-        body {
-          font-family: 'TTLaundryGothicB', sans-serif;
-        }
-        html {
-          scroll-behavior: smooth;
-        }
-        .text-sage-accent {
-          color: #6b8a7a;
-        }
-        .bg-sage-accent {
-          background-color: #6b8a7a;
-        }
-        .text-brand-charcoal {
-          color: #2d3748;
-        }
-        .bg-sage-bg {
-          background-color: #eaf0ee;
-        }
-      `}</style>
-
       <HeaderBack />
       <Navigation_top
         activeSection={activeSection}

@@ -80,4 +80,5 @@ button:focus-visible {
 }
 body {
   font-family: 'TTLaundryGothicB', sans-serif;
+  scroll-behavior: smooth;
 }
