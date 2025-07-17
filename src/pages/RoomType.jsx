@@ -4,6 +4,11 @@ import ButtonAction from '../components/Button/ButtonAction';
 import ButtonS from '../components/Button/ButtonS';
 import Title from '../components/Title/Title';
 import LivingRoomIcon from '../assets/Icon/LivingRoom.svg?react';
+import BedroomIcon from '../assets/Icon/Bedroom.svg?react';
+import StudyIcon from '../assets/Icon/StudyRoom.svg?react';
+import OneroomIcon from '../assets/Icon/OneRoom.svg?react';
+import EtcIcon from '../assets/Icon/Ect.svg?react';
+
 import { useNavigate } from 'react-router-dom';
 
 function RoomType() {
@@ -25,30 +30,35 @@ function RoomType() {
         <div className="grid grid-cols-2 gap-4">
           <ButtonS
             label="거실"
+            icon={LivingRoomIcon}
             isSelected={selectedRoom === 'livingroom'}
             onClick={() => setSelectedRoom('livingroom')}
             layout="square"
           />
           <ButtonS
             label="침실"
+            icon={BedroomIcon}
             isSelected={selectedRoom === 'bedroom'}
             onClick={() => setSelectedRoom('bedroom')}
             layout="square"
           />
           <ButtonS
             label="공부방/서재"
+            icon={StudyIcon}
             isSelected={selectedRoom === 'study'}
             onClick={() => setSelectedRoom('study')}
             layout="square"
           />
           <ButtonS
             label="원룸"
+            icon={OneroomIcon}
             isSelected={selectedRoom === 'oneroom'}
             onClick={() => setSelectedRoom('oneroom')}
             layout="square"
           />
           <ButtonS
             label="기타"
+            icon={EtcIcon}
             isSelected={selectedRoom === 'etc'}
             onClick={() => setSelectedRoom('etc')}
             layout="square"
