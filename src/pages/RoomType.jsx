@@ -3,7 +3,7 @@ import HeaderBack from '../components/HeaderBack';
 import ButtonAction from '../components/Button/ButtonAction';
 import ButtonS from '../components/Button/ButtonS';
 import Title from '../components/Title/Title';
-import { ReactComponent as LivingRoomIcon } from '../assets/Icon/LivingRoom.svg';
+import LivingRoomIcon from '../assets/Icon/LivingRoom.svg?react';
 
 function RoomType() {
   return (
@@ -20,26 +20,26 @@ function RoomType() {
             label="거실"
             isSelected={true}
             onClick={() => {}}
-            layout="full"
+            layout="square"
           />
           <ButtonS
             label="거실"
             Icon={LivingRoomIcon}
             isSelected={true}
             onClick={() => {}}
-            layout="full"
+            layout="square"
           />
           <ButtonS
             label="거실"
             isSelected={true}
             onClick={() => {}}
-            layout="full"
+            layout="square"
           />
           <ButtonS
             label="거실"
             isSelected={true}
             onClick={() => {}}
-            layout="full"
+            layout="square"
           />
         </div>
       </div>
