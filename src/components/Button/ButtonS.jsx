@@ -37,7 +37,8 @@ function ButtonS({
         className={`w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center 
           ${layout === 'square' ? 'mb-3' : 'mr-4'}`}
       >
-        <Icon className={`h-8 w-8 ${iconColor}`} />
+        {/* Icon이 존재할 때만 렌더링하도록 변경 */}
+        {Icon && <Icon className={`h-8 w-8 ${iconColor}`} />}
       </div>
       <span className="font-semibold text-base text-center">{label}</span>
     </button>
