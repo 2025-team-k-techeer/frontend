@@ -56,7 +56,7 @@ export default function UploadPage() {
       <div className="w-full max-w-xl mx-auto flex flex-col min-h-screen">
         <HeaderBack
           title=""
-          bgColor="#EAF0EE"
+          bgColor="bg-sage-bg"
           showBorder={false} // 구분선 보임 (true는 기본값이므로 생략 가능)
         />
         <main className="flex-1 flex flex-col p-6">
