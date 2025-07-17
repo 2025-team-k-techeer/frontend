@@ -1,12 +1,12 @@
 import React from 'react';
 
-const LongButton = ({
+function ButtonL({
   children,
   onClick,
   href,
   variant = 'primary',
   className = '',
-}) => {
+}) {
   // 기본 스타일
   const baseStyles =
     'block w-full text-center font-bold py-4 rounded-xl text-lg hover:bg-opacity-90 transition-colors shadow-md';
@@ -35,6 +35,6 @@ const LongButton = ({
       {children}
     </button>
   );
-};
+}
 
-export default LongButton;
+export default ButtonL;
