@@ -40,7 +40,7 @@ const HowToUseSection = () => {
           <div className="bg-white p-4 rounded-full shadow-sm">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8 text-brand-charcoal"
+              className="h-10 w-10 text-brand-charcoal"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -64,7 +64,7 @@ const HowToUseSection = () => {
           <div className="w-20 h-20 flex items-center justify-center -m-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8 text-brand-charcoal"
+              className="h-10 w-10 text-brand-charcoal"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

@@ -5,7 +5,7 @@ import Menu from '../components/Menu';
 import ButtonL from '../components/ButtonL';
 import InteriorStyleSection from '../components/InteriorStyleSection';
 import Navigation from '../components/Navigation/Navigation';
-import HowToUseSection from '../components/HowToUseSection';
+import HowToUse from '../components/HowToUse';
 import HeroBanner from '../components/MainPage/HeroBenner';
 
 // 인테리어 스타일 데이터 예시
@@ -41,7 +41,7 @@ function MainPage() {
     >
       <Header onMenuClick={() => setIsMenuOpen(true)} />
 
-      <main className="flex-1 overflow-y-auto">
+      <main className="flex-1">
         <div className="p-4 space-y-8 pb-24">
           {/* 상단 배너 섹션 */}
           <HeroBanner />
@@ -51,7 +51,7 @@ function MainPage() {
             시작하기
           </ButtonL>
           {/* 사용법 섹션 컴포넌트 사용 */}
-          <HowToUseSection />
+          <HowToUse />
 
           {/* 인테리어 스타일 섹션 컴포넌트 사용 */}
           <InteriorStyleSection styles={sampleStyles} />
