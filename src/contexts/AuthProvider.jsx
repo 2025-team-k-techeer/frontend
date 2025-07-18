@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import AuthContext from './AuthContext'; // 위에서 만든 context import
+import { AuthContext } from './AuthContext'; // 위에서 만든 context import
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
