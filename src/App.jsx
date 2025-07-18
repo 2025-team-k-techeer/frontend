@@ -9,6 +9,7 @@ import ManualPage from './pages/ManualPage.jsx';
 import RoomType from './pages/RoomType.jsx';
 import Login from './pages/Login';
 import UploadPage from './pages/UploadPage.jsx';
+import StyleList from './pages/StyleList.jsx';
 export default function App() {
   return (
     <div>

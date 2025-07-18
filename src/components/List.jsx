@@ -41,10 +41,6 @@ function StyleList() {
     // 전체 영역을 차지하고, 내부 콘텐츠가 많아지면 세로 스크롤이 생깁니다.
     <main className="w-full h-full overflow-y-auto bg-gray-50 p-4">
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">
-          인테리어 스타일
-        </h1>
-        {/* 각 스타일 아이템을 세로로 나열하기 위한 div */}
         <div className="space-y-8">
           {styleData.map((style) => (
             <div
