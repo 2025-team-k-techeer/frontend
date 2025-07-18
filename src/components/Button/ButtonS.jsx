@@ -29,6 +29,7 @@ function ButtonS({
   return (
     <button
       onClick={onClick}
+      data-label={label} // 버튼 클릭 시 라벨 값을 전달(룸스타일선택에 이용)
       className={`flex justify-center items-center bg-white p-4 rounded-2xl border-2 hover:border-gray-300 transition-all 
         ${layoutClasses[layout]} 
         ${selectionClasses}`}

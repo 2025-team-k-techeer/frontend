@@ -27,6 +27,7 @@ function RoomType() {
           title="공간 유형을 선택해주세요"
           subtitle="공간 유형에 따라 알맞는 인테리어를 추천해드립니다."
         />
+        {/* 버튼 그리드 */}
         <div className="grid grid-cols-2 gap-4">
           <ButtonS
             label="거실"

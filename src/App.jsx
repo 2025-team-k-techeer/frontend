@@ -9,6 +9,7 @@ import ManualPage from './pages/ManualPage.jsx';
 import RoomType from './pages/RoomType.jsx';
 import Login from './pages/Login';
 import UploadPage from './pages/UploadPage.jsx';
+import RoomStyle from './pages/RoomStyle.jsx';
 export default function App() {
   return (
     <div>
@@ -18,12 +19,14 @@ export default function App() {
           <Route path="/library" element={<LibraryPage />} />
           <Route path="/RoomType" element={<RoomType />} />
           <Route path="/ManualPage" element={<ManualPage />} />
+          {/* <Route path="/" element={<MainPage />} /> */}
           <Route path="/home" element={<MainPage />} />
           <Route path="/upload" element={<UploadPage />} />
           <Route path="/library" element={<LibraryPage />} />
           <Route path="/manual" element={<ManualPage />} />
-          <Route path="/" element={<ProfilePage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/" element={<RoomStyle />} />
         </Routes>
       </BrowserRouter>
       <Analytics />
