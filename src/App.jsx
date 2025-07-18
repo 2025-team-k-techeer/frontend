@@ -7,8 +7,8 @@ import LibraryPage from './pages/LibraryPage.jsx';
 import ProfilePage from './pages/ProfilePage.jsx';
 import ManualPage from './pages/ManualPage.jsx';
 import RoomType from './pages/RoomType.jsx';
-import Login from './pages/Login';
 import UploadPage from './pages/UploadPage.jsx';
+<<<<<<< HEAD
 import StyleList from './pages/StyleList.jsx';
 export default function App() {
   return (
@@ -28,6 +28,27 @@ export default function App() {
           <Route path="/" element={<StyleList />} />
         </Routes>
       </BrowserRouter>
+=======
+import LoginPage from './pages/LoginPage.jsx';
+import { AuthProvider } from './contexts/AuthProvider.jsx'; //전역 상태로도 관리를 위함함
+
+export default function App() {
+  return (
+    <div>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/RoomType" element={<RoomType />} />
+            <Route path="/library" element={<LibraryPage />} />
+            <Route path="/Manual" element={<ManualPage />} />
+            <Route path="/upload" element={<UploadPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/login" element={<LoginPage />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+>>>>>>> d18ba11dca5f20e9fb851b9d1994b89b578037fc
       <Analytics />
     </div>
   );
