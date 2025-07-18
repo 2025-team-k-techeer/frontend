@@ -3,43 +3,62 @@ import React from 'react';
 // 인테리어 스타일 데이터 배열 (갯수를 늘리거나 줄여서 테스트 가능)
 const styleData = [
   {
-    id: 'biophilic',
-    title: '바이오필릭 (Biophilic)',
-    description:
-      '식물과 자연 소재를 적극적으로 활용하여 실내 공간에 생명력과 평온함을 더하는 자연 친화적인 디자인입니다.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1567688993206-439ce1124f13?q=80&w=2070&auto=format&fit=crop',
+    id: 'style_minimal',
+    name: '미니멀',
+    description: '불필요한 장식을 최소화하고 본질에 집중하는 스타일입니다.',
+    example_image_url: '/styles/minimal.jpg',
   },
   {
-    id: 'modern',
-    title: '모던 (Modern)',
-    description:
-      '장식적인 요소를 최소화하고 기능성과 단순함을 강조하는 스타일로, 깔끔하고 현대적인 느낌을 줍니다.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1618220179428-22790b461013?q=80&w=2127&auto=format&fit=crop',
+    id: 'style_natural',
+    name: '내추럴',
+    description: '나무, 흙 등 자연 소재를 사용하여 편안함을 주는 스타일입니다.',
+    example_image_url: '/styles/natural.jpg',
   },
   {
-    id: 'minimal',
-    title: '미니멀 (Minimal)',
-    description:
-      '불필요한 것을 모두 없애고 본질에만 집중하는 스타일로, 단순함이 주는 여백의 미를 강조합니다.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1616046229478-9901c5536a45?q=80&w=2080&auto=format&fit=crop',
+    id: 'style_nordic',
+    name: '북유럽',
+    description: '실용성과 따뜻한 감성이 조화된 밝고 아늑한 스타일입니다.',
+    example_image_url: '/styles/nordic.jpg',
   },
   {
-    id: 'natural',
-    title: '내추럴 (Natural)',
+    id: 'style_industrial',
+    name: '인더스트리얼',
     description:
-      '나무, 돌, 흙 등 자연 그대로의 소재와 색감을 사용하여 편안하고 따뜻한 분위기를 연출하는 스타일입니다.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?q=80&w=1974&auto=format&fit=crop',
+      '노출 콘크리트, 벽돌 등 거친 마감재를 그대로 살린 스타일입니다.',
+    example_image_url: '/styles/industrial.jpg',
+  },
+  {
+    id: 'style_classic',
+    name: '클래식',
+    description:
+      '우아한 곡선과 고급스러운 장식이 돋보이는 전통적인 스타일입니다.',
+    example_image_url: '/styles/classic.jpg',
+  },
+  {
+    id: 'style_vintage',
+    name: '빈티지',
+    description: '과거의 디자인을 재현하여 향수를 불러일으키는 스타일입니다.',
+    example_image_url: '/styles/classic.jpg',
+  },
+  {
+    id: 'style_tribal',
+    name: '트라이벌',
+    description:
+      '다채로운 색상을 과감하게 사용하여 생동감을 주는 스타일입니다.',
+    example_image_url: '/styles/classic.jpg',
+  },
+  {
+    id: 'style_modern',
+    name: '모던',
+    description: '기능적이고 깔끔한 선과 면으로 구성된 현대적인 스타일입니다.',
+    example_image_url: '/styles/modern.jpg',
   },
 ];
 
 function StyleList() {
   return (
     // 전체 영역을 차지하고, 내부 콘텐츠가 많아지면 세로 스크롤이 생깁니다.
-    <main className="w-full h-full overflow-y-auto bg-gray-50 p-4">
+    <main className=" w-full h-full overflow-y-auto bg-gray-50 p-4  padding-bottom-set">
       <div className="max-w-2xl mx-auto">
         <div className="space-y-8">
           {styleData.map((style) => (
@@ -50,15 +69,15 @@ function StyleList() {
               {/* 16:9 비율을 유지하는 이미지 컨테이너 */}
               <div className="aspect-w-16 aspect-h-9">
                 <img
-                  src={style.imageUrl}
-                  alt={`${style.title} 스타일 인테리어`}
+                  src={style.example_image_url}
+                  alt={`${style.name} 스타일 인테리어`}
                   className="w-full h-full object-cover"
                 />
               </div>
               {/* 텍스트 설명 영역 */}
               <div className="p-5">
                 <h2 className="text-lg font-semibold text-gray-800">
-                  {style.title}
+                  {style.name}
                 </h2>
                 <p className="text-sm text-gray-600 mt-2">
                   {style.description}
