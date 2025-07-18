@@ -61,8 +61,8 @@ export default function UploadPage() {
         />
         <main className="flex-1 flex flex-col p-6">
           <Title
-            title="AI 인식 시작하기"
-            subtitle="방의 사진을 업로드해주세요. AI가 방을 인식하고, 인테리어 스타일을 추천해드립니다."
+            title="방의 사진을 업로드해주세요."
+            subtitle="인테리어를 적용할 공간의 사진을 올리면 AI가 분석합니다."
           />
           <ImageUploadSection
             uploadedImage={uploadedImage}
