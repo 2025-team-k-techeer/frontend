@@ -6,7 +6,7 @@ import InputEmail from '../components/InputEmail';
 import InputPassword from '../components/InputPassword';
 import LoginErrorMessage from '../components/LoginErrorMessage';
 import ActionButton from '../components/ButtonAction';
-import { useAuth } from '../hooks/useAuth'; //전역 상태 관리를 위함
+import { useAuthStore } from '../store/useAuthStore'; // zustand 스토어 import
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -14,7 +14,7 @@ function LoginPage() {
   const [errorMsg, setErrorMsg] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { login } = useAuth(); //전역 상태 관리를 위함
+  const login = useAuthStore((state) => state.login); // zustand의 login 함수 사용
 
   //API 연동 예정
   //handleLogin 함수 내부에서 fetch로 요청을 보냄.
@@ -34,8 +34,8 @@ function LoginPage() {
       const data = await res.json(); //이 부분이 서버에서 응답받은 JSON 데이터를 파싱하는 부분
       if (data.status === 'success' && data.token) {
         //API 응답 상태 코드 확인 (명세서 참고)
-        login({ token: data.token }); //로그인 성공 시 전역 상태 관리를 위함
-        localStorage.setItem('token', data.token); //로그인 성공 시 로컬스토리지에 토큰 저장
+        login({ token: data.token }); // zustand의 login 사용
+        localStorage.setItem('token', data.token); // (필요시 유지)
         navigate('/'); //로그인 성공 시 메인 페이지로 이동
       } else {
         setErrorMsg(data.message || '로그인에 실패했습니다.'); //API 응답 메시지 표시
