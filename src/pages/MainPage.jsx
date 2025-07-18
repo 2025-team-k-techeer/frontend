@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 
 import Header from '../components/HeaderM';
 import Menu from '../components/Menu';
-import ButtonL from '../components/ButtonL';
-import InteriorStyleSection from '../components/InteriorStyleSection';
+import ButtonL from '../components/Button/ButtonL';
+import InteriorStyleSection from '../components/MainPage/InteriorStyleSection';
 import Navigation from '../components/Navigation/Navigation';
-import HowToUse from '../components/HowToUse';
+import HowToUse from '../components/MainPage/HowToUse';
 import HeroBanner from '../components/MainPage/HeroBenner';
 
 // 인테리어 스타일 데이터 예시
