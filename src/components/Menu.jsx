@@ -36,19 +36,19 @@ function FullscreenMenu({ isOpen, onClose }) {
         <nav className="flex flex-col items-center text-center space-y-6 font-laundry">
           {/* 로그인/회원가입 등 조건부 렌더링을 추가할 수 있습니다. */}
           <a
-            href="#"
+            href="/login"
             className="flex items-center gap-2 text-2xl text-brand-charcoal font-bold"
           >
             <span>로그인 하기</span>
           </a>
           <hr className="w-24 border-gray-200" />
-          <a href="#" className="text-xl text-gray-700">
+          <a href="/upload" className="text-xl text-gray-700">
             시작하기
           </a>
-          <a href="#" className="text-xl text-gray-700">
+          <a href="/library" className="text-xl text-gray-700">
             라이브러리
           </a>
-          <a href="#" className="text-xl text-gray-700">
+          <a href="/profile" className="text-xl text-gray-700">
             내 프로필
           </a>
           <a href="/manual" className="text-xl text-gray-700">
