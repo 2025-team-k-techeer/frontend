@@ -22,8 +22,9 @@ export default function App() {
           <Route path="/upload" element={<UploadPage />} />
           <Route path="/library" element={<LibraryPage />} />
           <Route path="/manual" element={<ManualPage />} />
-          <Route path="/" element={<ProfilePage />} />
+          <Route path="/Profilepage" element={<ProfilePage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/" element={<StyleList />} />
         </Routes>
       </BrowserRouter>
       <Analytics />
