@@ -70,7 +70,7 @@ function StyleSelectionPage() {
           subtitle="선택한 스타일에 맞춰 AI가 공간을 꾸며줍니다."
         />
 
-        {/* 스타일 버튼 그리드 */}
+        {/* 스타일 버튼 그리드, map 형식으로 데이터를 불러옵니다. */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {styleData.map((style) => (
             <ButtonS
