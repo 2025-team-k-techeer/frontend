@@ -55,12 +55,6 @@ function StyleSelectionPage() {
     setIsModalOpen(false);
   }, []);
 
-  // 2. 다음 버튼 클릭 시 실행될 함수를 정의합니다.
-  const handleNextClick = () => {
-    // 선택된 스타일이 없으면 아무것도 하지 않습니다.
-    if (!selectedStyle) return;
-  };
-
   return (
     <div className="w-full mx-auto flex flex-col min-h-screen">
       {/* 헤더 부분 */}
