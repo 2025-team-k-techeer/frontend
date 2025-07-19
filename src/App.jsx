@@ -9,6 +9,7 @@ import ManualPage from './pages/ManualPage.jsx';
 import RoomType from './pages/RoomType.jsx';
 import UploadPage from './pages/UploadPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
+import StyleList from './pages/StyleList.jsx';
 import { AuthProvider } from './contexts/AuthProvider.jsx'; //전역 상태로도 관리를 위함함
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
             <Route path="/upload" element={<UploadPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/StyleList" element={<StyleList />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
