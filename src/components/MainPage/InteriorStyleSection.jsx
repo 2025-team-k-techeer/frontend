@@ -9,7 +9,7 @@ const InteriorStyleSection = ({ styles }) => {
           인테리어 스타일
         </h3>
         <a
-          href="/styles"
+          href="/StyleList"
           className="text-sm font-medium text-cyan-point hover:underline"
         >
           더보기 &gt;
