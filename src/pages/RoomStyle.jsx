@@ -14,6 +14,7 @@ import IndustrialIcon from '../assets/Icon/Industrial.svg?react';
 import MinimalIcon from '../assets/Icon/Mimimal.svg?react';
 import TribalIcon from '../assets/Icon/Trival.svg?react';
 import RetroIcon from '../assets/Icon/Retro.svg?react';
+import { useNavigate } from 'react-router-dom';
 
 // import { ModernIcon, NordicIcon, ... } from '../components/icons';
 
@@ -39,6 +40,7 @@ const styleData = [
 ];
 
 function StyleSelectionPage() {
+  const navigate = useNavigate();
   const [selectedStyle, setSelectedStyle] = useState(null); // 선택된 스타일 객체 저장
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -52,12 +54,6 @@ function StyleSelectionPage() {
   const closeModal = useCallback(() => {
     setIsModalOpen(false);
   }, []);
-
-  // 2. 다음 버튼 클릭 시 실행될 함수를 정의합니다.
-  const handleNextClick = () => {
-    // 선택된 스타일이 없으면 아무것도 하지 않습니다.
-    if (!selectedStyle) return;
-  };
 
   return (
     <div className="w-full mx-auto flex flex-col min-h-screen">
@@ -89,7 +85,12 @@ function StyleSelectionPage() {
       </main>
       {/* 푸터 (다음 버튼) */}
       <footer className="p-4 flex-shrink-0">
-        <ButtonAction onClick={handleNextClick} isDisabled={!selectedStyle}>
+        <ButtonAction
+          onClick={() => {
+            navigate('/RoomDetail');
+          }}
+          isDisabled={!selectedStyle}
+        >
           다음
         </ButtonAction>
       </footer>
