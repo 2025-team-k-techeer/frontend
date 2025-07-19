@@ -6,23 +6,35 @@ import Title from '../components/Title/Title';
 import ButtonS from '../components/Button/ButtonS';
 import StyleModal from '../components/StyleModal';
 import ButtonAction from '../components/Button/ButtonAction';
+import ModernIcon from '../assets/Icon/Modern.svg?react';
+import ClassicIcon from '../assets/Icon/Classic.svg?react';
+import NaturalIcon from '../assets/Icon/Natural.svg?react';
+import EuropeIcon from '../assets/Icon/Europe.svg?react';
+import IndustrialIcon from '../assets/Icon/Industrial.svg?react';
+import MinimalIcon from '../assets/Icon/Mimimal.svg?react';
+import TribalIcon from '../assets/Icon/Trival.svg?react';
+import RetroIcon from '../assets/Icon/Retro.svg?react';
 
 // import { ModernIcon, NordicIcon, ... } from '../components/icons';
 
 // 데이터는 컴포넌트 바깥에 두거나 API로 받아옵니다.
 const styleData = [
-  { label: '모던', icon: null, description: '모던 스타일 설명' },
-  { label: '클래식', icon: null, description: '클래식 스타일 설명' },
-  { label: '내츄럴', icon: null, description: '내츄럴 스타일 설명' },
-  { label: '북유럽', icon: null, description: '북유럽 스타일 설명' },
+  {
+    label: '모던',
+    icon: ModernIcon,
+    description: '모던 스타일 설명',
+  },
+  { label: '클래식', icon: ClassicIcon, description: '클래식 스타일 설명' },
+  { label: '내츄럴', icon: NaturalIcon, description: '내츄럴 스타일 설명' },
+  { label: '북유럽', icon: EuropeIcon, description: '북유럽 스타일 설명' },
   {
     label: '인더스트리얼',
-    icon: null,
+    icon: IndustrialIcon,
     description: '인더스트리얼 스타일 설명',
   },
-  { label: '미니멀', icon: null, description: '미니멀 스타일 설명' },
-  { label: '트라이벌', icon: null, description: '트라이벌 스타일 설명' },
-  { label: '빈티지', icon: null, description: '빈티지 스타일 설명' },
+  { label: '미니멀', icon: MinimalIcon, description: '미니멀 스타일 설명' },
+  { label: '트라이벌', icon: TribalIcon, description: '트라이벌 스타일 설명' },
+  { label: '빈티지', icon: RetroIcon, description: '빈티지 스타일 설명' },
   // ... 나머지 8개 스타일 데이터
 ];
 

@@ -20,7 +20,7 @@ export default function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/Home" element={<MainPage />} />
+            <Route path="/" element={<MainPage />} />
             <Route path="/RoomType" element={<RoomType />} />
             <Route path="/library" element={<LibraryPage />} />
             <Route path="/Manual" element={<ManualPage />} />
@@ -29,7 +29,7 @@ export default function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/StyleList" element={<StyleList />} />
-            <Route path="/" element={<RoomStyle />} />
+            <Route path="/RoomStyle" element={<RoomStyle />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
