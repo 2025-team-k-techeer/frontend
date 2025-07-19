@@ -66,14 +66,16 @@ function RoomType() {
           />
         </div>
       </div>
-      <ButtonAction
-        isDisabled={!selectedRoom}
-        onClick={() => {
-          navigate('/RoomStyle');
-        }}
-      >
-        다음
-      </ButtonAction>
+      <footer className="p-4 flex-shrink-0">
+        <ButtonAction
+          isDisabled={!selectedRoom}
+          onClick={() => {
+            navigate('/RoomStyle');
+          }}
+        >
+          다음
+        </ButtonAction>
+      </footer>
     </div>
   );
 }

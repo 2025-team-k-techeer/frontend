@@ -3,7 +3,7 @@
 import React, { useState, useCallback } from 'react';
 import HeaderBack from '../components/HeaderBack';
 import Title from '../components/Title/Title';
-import ButtonT from '../components/Button/ButtonT';
+import ButtonS from '../components/Button/ButtonS';
 import StyleModal from '../components/StyleModal';
 import ButtonAction from '../components/Button/ButtonAction';
 
@@ -61,7 +61,7 @@ function StyleSelectionPage() {
         {/* 스타일 버튼 그리드 */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {styleData.map((style) => (
-            <ButtonT
+            <ButtonS
               key={style.label}
               label={style.label}
               icon={style.icon}
@@ -72,11 +72,11 @@ function StyleSelectionPage() {
         </div>
       </main>
       {/* 푸터 (다음 버튼) */}
-      <ButtonAction
-            onClick={handleNextClick}
-            disabled={!selectedStyle} {/*selectedStyle이 null이면 true, 아니면 false가 전달됩니다.*/}>
-              다음
-              <ButtonAction />
+      <footer className="p-4 flex-shrink-0">
+        <ButtonAction onClick={handleNextClick} isDisabled={!selectedStyle}>
+          다음
+        </ButtonAction>
+      </footer>
       {/*selectedStyle이 null이면 true, 아니면 false가 전달됩니다.*/}
       {/* 모달 컴포넌트 */}
       <StyleModal
