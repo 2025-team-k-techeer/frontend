@@ -12,6 +12,9 @@ import LoginPage from './pages/LoginPage.jsx';
 import SignUpPage from './pages/SignUpPage.jsx';
 import StyleList from './pages/StyleList.jsx';
 import ResultPage from './pages/ResultPage.jsx';
+import RoomDetail from './pages/RoomDetail.jsx';
+import RoomStyle from './pages/RoomStyle.jsx';
+
 import { AuthProvider } from './contexts/AuthProvider.jsx'; //전역 상태로도 관리를 위함함
 
 export default function App() {
@@ -30,6 +33,9 @@ export default function App() {
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/StyleList" element={<StyleList />} /> */}
             <Route path="/" element={<ResultPage />} />
+            {/*} <Route path="/StyleList" element={<StyleList />} />
+            <Route path="/RoomDetail" element={<RoomDetail />} />
+            <Route path="/RoomStyle" element={<RoomStyle />} />*/}
           </Routes>
         </BrowserRouter>
       </AuthProvider>
