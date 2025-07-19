@@ -2,9 +2,11 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import svgr from 'vite-plugin-svgr';
+import mkcert from 'vite-plugin-mkcert';
 
 export default defineConfig({
   plugins: [
+    mkcert(),
     react(),
     svgr(),
     VitePWA({
@@ -22,4 +24,7 @@ export default defineConfig({
       },
     }),
   ],
+  server: {
+    https: true, // 이 설정을 추가해야 mkcert 플러그인이 동작합니다.
+  },
 });

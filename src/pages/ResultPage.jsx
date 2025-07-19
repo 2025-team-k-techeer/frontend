@@ -5,6 +5,7 @@ import ImageComparisonSlider from '../components/ImageComparisonSlider';
 import FurnitureDrawer from '../components/FurnitureDrawer';
 import ToastMessage from '../components/ToastMessage';
 import OtherRoomButton from '../components/OtherRoomButton';
+import { useNavigate } from 'react-router-dom';
 
 function ResultPage() {
   const [resultData, setResultData] = useState(null);
@@ -14,14 +15,7 @@ function ResultPage() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [isToastVisible, setIsToastVisible] = useState(false);
-  const [arData, setArData] = useState(null); // AR 데이터 저장 변수
-
-  // 임시 테스트 AR 데이터 로깅
-  useEffect(() => {
-    if (arData) {
-      console.log('AR 데이터:', arData);
-    }
-  }, [arData]);
+  const navigate = useNavigate();
 
   // 더미 데이터
   const dummyData = {
@@ -257,24 +251,22 @@ function ResultPage() {
       // } else {
       //   showToast(data.message || 'AR 실행에 실패했습니다.');
       // }
+      // 실제 API 호출 및 데이터 변환 후 ARPage로 이동
+      // 여러 가구 지원 구조로 배열로 넘김
+      // dimensions 정보가 없으면 기본값 100cm로 처리
+      const product =
+        (furniture.danawa_products && furniture.danawa_products[0]) || {};
+      const modelInfo = {
+        label: furniture.label,
+        model_url: 'https://firebase.storage/models/desk.glb', // 실제 API 응답값으로 대체 필요
+        image_url: product.image_url || '',
+        scale: 1.0,
+        width_cm: product.dimensions?.width_cm || 100,
+        depth_cm: product.dimensions?.depth_cm || 100,
+        height_cm: product.dimensions?.height_cm || 100,
+      };
+      navigate('/ar', { state: { models: [modelInfo] } });
       setTimeout(() => {
-        // 성공 더미 응답
-        const dummyAR = {
-          status: 'success',
-          message: '유사한 desk 객체를 반환합니다.',
-          objects: [
-            {
-              _id: 'placement_001',
-              label: furniture.label,
-              model_url: 'https://firebase.storage/models/desk.glb',
-              image_url: 'https://firebase.storage/3d.jpg',
-              position: { x: 0.5, y: 0, z: -1.2 },
-              rotation: 45,
-              scale: 1.0,
-            },
-          ],
-        };
-        setArData(dummyAR.objects);
         showToast('AR이 실행되었습니다!');
       }, 500);
     } catch (error) {

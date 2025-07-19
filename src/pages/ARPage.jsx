@@ -1,27 +1,23 @@
-import '../App.css';
+import React, { useEffect } from 'react';
 import * as THREE from 'three';
 import { ARButton } from 'three/examples/jsm/webxr/ARButton';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { XREstimatedLight } from 'three/examples/jsm/webxr/XREstimatedLight';
+import { useLocation, useNavigate } from 'react-router-dom';
 // CSS3DRenderer 제거
 
-function App() {
+function ARPage() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const models = location.state?.models || [];
+  // scale은 models 배열의 각 객체에 포함되어 있음
+
   let reticle;
   let hitTestSource = null;
   let hitTestSourceRequested = false;
 
   let scene, camera, renderer;
   let controller;
-
-  const models = [
-    './dylan_armchair_yolk_yellow.glb',
-    './ivan_armchair_mineral_blue.glb',
-    './marble_coffee_table.glb',
-    './flippa_functional_coffee_table_w._storagewalnut.glb',
-    './frame_armchairpetrol_velvet_with_gold_frame.glb',
-    './elnaz_nesting_side_tables_brass__green_marble.glb',
-  ];
-  const modelScaleFactor = [0.008, 0.008, 0.005, 0.008, 0.008, 0.008];
 
   const items = [];
   const placedObjects = [];
@@ -49,9 +45,12 @@ function App() {
   // 크기 정보 카드 관련 변수들
   let sizeInfoCard = null;
 
-  init();
-  setupFurnitureSelection();
-  animate();
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때만 실행
+    init();
+    setupFurnitureSelection();
+    animate();
+  }, []);
 
   function init() {
     const myCanvas = document.getElementById('canvas');
@@ -110,7 +109,7 @@ function App() {
 
     for (let i = 0; i < models.length; i++) {
       const loader = new GLTFLoader();
-      loader.load(models[i], function (glb) {
+      loader.load(models[i].model_url, function (glb) {
         let model = glb.scene;
         items[i] = model;
       });
@@ -297,7 +296,7 @@ function App() {
       newModel.quaternion,
       newModel.scale
     );
-    const scale = modelScaleFactor[itemSelectedIndex];
+    const scale = models[itemSelectedIndex]?.scale || 1.0;
     newModel.scale.set(scale, scale, scale);
     scene.add(newModel);
     placedObjects.push(newModel);
@@ -517,13 +516,48 @@ function App() {
     // cssRenderer.render(cssScene, camera); // CSS3D 렌더링 제거
   }
 
+  // 뒤로가기 버튼 UI (오른쪽 위 고정)
+  // 실제 AR 캔버스 위에 겹치게 absolute/fixed로 배치
+  // 아이콘+텍스트 형태
+  const BackButton = () => (
+    <button
+      onClick={() => navigate('/result')}
+      className="fixed top-4 right-4 z-50 bg-black/60 text-white px-4 py-2 rounded-full flex items-center gap-2 hover:bg-black/80 transition-colors"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+      뒤로가기
+    </button>
+  );
+
   return (
     <div className="App">
-      <div id="ar-status" className="ar-status">
+      <BackButton />
+      <canvas
+        id="canvas"
+        className="w-full h-screen"
+        style={{ width: '100%', height: '100vh' }}
+      />
+      <div
+        id="ar-status"
+        className="absolute top-[10%] left-1/2 transform -translate-x-1/2 px-4 py-2 bg-black/70 text-white text-base rounded-lg z-[9999] opacity-0 transition-opacity duration-300 ease-in-out pointer-events-none"
+      >
         바닥을 인식 중입니다...
       </div>
     </div>
   );
 }
 
-export default App;
+export default ARPage;
