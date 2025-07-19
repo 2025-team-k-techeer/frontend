@@ -60,7 +60,7 @@ function StyleSelectionPage() {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto flex flex-col min-h-screen">
+    <div className="w-full mx-auto flex flex-col min-h-screen">
       {/* 헤더 부분 */}
       <HeaderBack title="" bgColor="bg-sage-bg" />
       {/* 메인 컨텐츠 */}

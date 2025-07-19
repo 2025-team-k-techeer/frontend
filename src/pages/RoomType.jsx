@@ -28,7 +28,7 @@ function RoomType() {
           subtitle="공간 유형에 따라 알맞는 인테리어를 추천해드립니다."
         />
         {/* 버튼 그리드 */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           <ButtonS
             label="거실"
             icon={LivingRoomIcon}
