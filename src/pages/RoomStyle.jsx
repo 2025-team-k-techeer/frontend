@@ -45,7 +45,7 @@ function StyleSelectionPage() {
   // 스타일 버튼 클릭 시 실행될 함수
   const handleStyleSelect = useCallback((style) => {
     setSelectedStyle(style); // 클릭된 스타일 정보로 state 업데이트
-    setIsModalOpen(true); // 모달 열기
+    // setIsModalOpen(true); // 모달 열기 제거
   }, []);
 
   // 모달 닫기 함수
@@ -79,6 +79,10 @@ function StyleSelectionPage() {
               icon={style.icon}
               isSelected={selectedStyle?.label === style.label}
               onClick={() => handleStyleSelect(style)}
+              onLongPress={() => {
+                setSelectedStyle(style);
+                setIsModalOpen(true);
+              }}
             />
           ))}
         </div>

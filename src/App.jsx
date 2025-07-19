@@ -21,7 +21,6 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<MainPage />} />
-            <Route path="/home" element={<MainPage />} />
             <Route path="/RoomType" element={<RoomType />} />
             <Route path="/library" element={<LibraryPage />} />
             <Route path="/Manual" element={<ManualPage />} />

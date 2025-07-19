@@ -23,7 +23,7 @@ function Navigation() {
     <nav className="fixed bottom-0 left-0 right-0 w-full h-20 bg-white/80 backdrop-blur-sm border-t border-gray-200/80 flex justify-around items-center text-xs z-10 flex-shrink-0 h-20-set">
       {/* 3. a 태그를 NavLink로 바꾸고, href를 to로 바꿉니다. */}
       {/* className에 위에서 만든 함수를 적용합니다. */}
-      <NavLink to="/home" className={getLinkClassName}>
+      <NavLink to="/" className={getLinkClassName}>
         {/* SVG 아이콘 */}
         <HomeIcon className="h-6 w-6" />
         <span>홈</span>
