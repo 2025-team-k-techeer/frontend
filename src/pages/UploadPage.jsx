@@ -54,6 +54,11 @@ export default function UploadPage() {
     }
   }
 
+  // 카메라로 촬영된 이미지 처리
+  function handleImageCaptured(imageDataUrl) {
+    setUploadedImage(imageDataUrl);
+  }
+
   return (
     <div className="bg-white font-ttlaundrygothicb">
       <div className="w-full max-w-xl mx-auto flex flex-col min-h-screen">
@@ -75,6 +80,7 @@ export default function UploadPage() {
             onUploadClick={handleUploadClick}
             onRemoveImage={handleRemoveImage}
             fileInputRef={fileInputRef}
+            onImageCaptured={handleImageCaptured}
           />
           <ExamplePhotos />
         </main>
