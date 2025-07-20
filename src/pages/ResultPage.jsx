@@ -258,14 +258,33 @@ function ResultPage() {
         (furniture.danawa_products && furniture.danawa_products[0]) || {};
       const modelInfo = {
         label: furniture.label,
-        model_url: 'https://firebase.storage/models/desk.glb', // 실제 API 응답값으로 대체 필요
-        image_url: product.image_url || '',
-        scale: 1.0,
-        width_cm: product.dimensions?.width_cm || 100,
-        depth_cm: product.dimensions?.depth_cm || 100,
-        height_cm: product.dimensions?.height_cm || 100,
+        model_url:
+          '	https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb', // 실제 API 응답값으로 대체 필요
+        image_url:
+          'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/DuckCM.png',
+        scale: 0.1,
+        width_cm: product.dimensions?.width_cm || 50,
+        depth_cm: product.dimensions?.depth_cm || 50,
+        height_cm: product.dimensions?.height_cm || 50,
       };
-      navigate('/ar', { state: { models: [modelInfo] } });
+
+      // 추가 테스트 모델 (다른 가구)
+      const additionalModelInfo = {
+        label: 'chair',
+        model_url:
+          'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Box/glTF-Binary/Box.glb',
+        image_url:
+          'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Box/glTF/BoxCM.png',
+        scale: 0.1,
+        width_cm: 80,
+        depth_cm: 80,
+        height_cm: 80,
+      };
+
+      // 두 개의 모델을 배열로 전달
+      const modelsArray = [modelInfo, additionalModelInfo];
+
+      navigate('/ar', { state: { models: modelsArray } });
       setTimeout(() => {
         showToast('AR이 실행되었습니다!');
       }, 500);

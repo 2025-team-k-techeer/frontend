@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { ARButton } from 'three/examples/jsm/webxr/ARButton';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -12,51 +12,96 @@ function ARPage() {
   const models = location.state?.models || [];
   // scale은 models 배열의 각 객체에 포함되어 있음
 
-  let reticle;
-  let hitTestSource = null;
-  let hitTestSourceRequested = false;
+  // useRef를 사용하여 변수들을 관리 (React 렌더링과 분리)
+  const sceneRef = useRef(null);
+  const cameraRef = useRef(null);
+  const rendererRef = useRef(null);
+  const controllerRef = useRef(null);
+  const reticleRef = useRef(null);
+  const selectionRingRef = useRef(null);
+  const itemsRef = useRef([]);
+  const placedObjectsRef = useRef([]);
+  const selectedObjectRef = useRef(null);
+  const sizeInfoCardRef = useRef(null);
+  const itemSelectedIndexRef = useRef(0);
+  const hitTestSourceRef = useRef(null);
+  const hitTestSourceRequestedRef = useRef(false);
+  const lastTapTimeRef = useRef(0);
+  const longPressTimeoutRef = useRef(null);
+  const isRotatingRef = useRef(false);
+  const initialTouchCenterXRef = useRef(0);
+  const initialObjectYRotationRef = useRef(0);
 
-  let scene, camera, renderer;
-  let controller;
-
-  const items = [];
-  const placedObjects = [];
-
-  let itemSelectedIndex = 0;
-
-  let lastTapTime = 0;
-  let longPressTimeout;
   const DOUBLE_TAP_THRESHOLD = 300;
   const LONG_PRESS_DURATION = 500;
   const RING_SCALE_FACTOR = 0.3;
-
-  let selectedObject = null;
-  let selectionRing = null;
-  let isRotating = false;
-  let initialTouchCenterX = 0;
-  let initialObjectYRotation = 0;
   const ROTATION_SENSITIVITY = 0.01;
 
-  let reticleDetectedFrames = 0;
-  const RETICLE_THRESHOLD = 300;
+  // let reticleDetectedFrames = 0;
+  //const RETICLE_THRESHOLD = 300;
 
   //let lineGroup = null;
 
   // 크기 정보 카드 관련 변수들
-  let sizeInfoCard = null;
 
   useEffect(() => {
     // 컴포넌트가 마운트될 때만 실행
     init();
     setupFurnitureSelection();
     animate();
+
+    // Cleanup 함수
+    return () => {
+      // 애니메이션 루프 중지
+      if (rendererRef.current) {
+        rendererRef.current.setAnimationLoop(null);
+      }
+
+      // 이벤트 리스너 제거
+      if (rendererRef.current?.domElement) {
+        rendererRef.current.domElement.removeEventListener(
+          'touchstart',
+          handleTouchStart
+        );
+        rendererRef.current.domElement.removeEventListener(
+          'touchmove',
+          handleTouchMove
+        );
+        rendererRef.current.domElement.removeEventListener(
+          'touchend',
+          handleTouchEnd
+        );
+      }
+
+      // 컨트롤러 이벤트 리스너 제거
+      if (controllerRef.current) {
+        controllerRef.current.removeEventListener('selectstart', onSelectStart);
+        controllerRef.current.removeEventListener('selectend', onSelectEnd);
+      }
+
+      // AR 버튼 제거
+      const arButton = document.querySelector('#ARButton');
+      if (arButton) {
+        arButton.remove();
+      }
+
+      // 렌더러 정리
+      if (rendererRef.current) {
+        rendererRef.current.dispose();
+      }
+
+      // 씬 정리
+      if (sceneRef.current) {
+        sceneRef.current.clear();
+      }
+    };
   }, []);
 
   function init() {
     const myCanvas = document.getElementById('canvas');
-    scene = new THREE.Scene();
+    sceneRef.current = new THREE.Scene();
 
-    camera = new THREE.PerspectiveCamera(
+    cameraRef.current = new THREE.PerspectiveCamera(
       70,
       myCanvas.innerWidth / myCanvas.innerHeight,
       0.01,
@@ -65,41 +110,57 @@ function ARPage() {
 
     const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
     light.position.set(0.5, 1, 0.25);
-    scene.add(light);
+    sceneRef.current.add(light);
 
-    renderer = new THREE.WebGLRenderer({
+    rendererRef.current = new THREE.WebGLRenderer({
       canvas: myCanvas,
       antialias: true,
       alpha: true,
+      powerPreference: 'high-performance',
+      stencil: false,
+      depth: true,
     });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(myCanvas.innerWidth, myCanvas.innerHeight);
-    renderer.xr.enabled = true;
+    rendererRef.current.setPixelRatio(window.devicePixelRatio);
+    rendererRef.current.setSize(myCanvas.innerWidth, myCanvas.innerHeight);
+    rendererRef.current.xr.enabled = true;
+    rendererRef.current.setClearColor(0x000000, 0);
 
-    renderer.domElement.addEventListener('touchstart', handleTouchStart, {
-      passive: false,
-    });
-    renderer.domElement.addEventListener('touchmove', handleTouchMove, {
-      passive: false,
-    });
-    renderer.domElement.addEventListener('touchend', handleTouchEnd, {
-      passive: false,
-    });
+    rendererRef.current.domElement.addEventListener(
+      'touchstart',
+      handleTouchStart,
+      {
+        passive: false,
+      }
+    );
+    rendererRef.current.domElement.addEventListener(
+      'touchmove',
+      handleTouchMove,
+      {
+        passive: false,
+      }
+    );
+    rendererRef.current.domElement.addEventListener(
+      'touchend',
+      handleTouchEnd,
+      {
+        passive: false,
+      }
+    );
 
-    const xrLight = new XREstimatedLight(renderer);
+    const xrLight = new XREstimatedLight(rendererRef.current);
     xrLight.addEventListener('estimationstart', () => {
-      scene.add(xrLight);
-      scene.remove(light);
+      sceneRef.current.add(xrLight);
+      sceneRef.current.remove(light);
       if (xrLight.environment) {
-        scene.environment = xrLight.environment;
+        sceneRef.current.environment = xrLight.environment;
       }
     });
     xrLight.addEventListener('estimationend', () => {
-      scene.add(light);
-      scene.remove(xrLight);
+      sceneRef.current.add(light);
+      sceneRef.current.remove(xrLight);
     });
 
-    let arButton = ARButton.createButton(renderer, {
+    let arButton = ARButton.createButton(rendererRef.current, {
       requiredFeatures: ['hit-test'],
       optionalFeatures: ['dom-overlay', 'light-estimation'],
       domOverlay: { root: document.body },
@@ -109,39 +170,56 @@ function ARPage() {
 
     for (let i = 0; i < models.length; i++) {
       const loader = new GLTFLoader();
-      loader.load(models[i].model_url, function (glb) {
-        let model = glb.scene;
-        items[i] = model;
-      });
+      loader.load(
+        models[i].model_url,
+        function (glb) {
+          let model = glb.scene;
+          itemsRef.current[i] = model;
+          // 모델 최적화
+          model.traverse((child) => {
+            if (child.isMesh) {
+              child.frustumCulled = true;
+              child.castShadow = false;
+              child.receiveShadow = false;
+            }
+          });
+        },
+        // Progress callback
+        function () {},
+        // Error callback
+        function (error) {
+          console.error(`Error loading model ${i}:`, error);
+        }
+      );
     }
 
-    controller = renderer.xr.getController(0);
-    controller.addEventListener('selectstart', onSelectStart);
-    controller.addEventListener('selectend', onSelectEnd);
-    scene.add(controller);
+    controllerRef.current = rendererRef.current.xr.getController(0);
+    controllerRef.current.addEventListener('selectstart', onSelectStart);
+    controllerRef.current.addEventListener('selectend', onSelectEnd);
+    sceneRef.current.add(controllerRef.current);
 
-    reticle = new THREE.Mesh(
+    reticleRef.current = new THREE.Mesh(
       new THREE.RingGeometry(0.15, 0.2, 32).rotateX(-Math.PI / 2),
       new THREE.MeshBasicMaterial()
     );
 
-    reticle.matrixAutoUpdate = false;
-    reticle.visible = false;
-    scene.add(reticle);
+    reticleRef.current.matrixAutoUpdate = false;
+    reticleRef.current.visible = false;
+    sceneRef.current.add(reticleRef.current);
 
-    selectionRing = new THREE.Mesh(
+    selectionRingRef.current = new THREE.Mesh(
       new THREE.TorusGeometry(0.5, 0.03, 16, 100).rotateX(-Math.PI / 2),
       new THREE.MeshBasicMaterial({ color: 0x00ff00 })
     );
-    selectionRing.visible = false;
+    selectionRingRef.current.visible = false;
   }
 
   // 크기 정보 카드 생성 함수 (3D 텍스처 방식)
   function createSizeInfoCard(width, height, depth) {
     // 기존 카드가 있다면 제거
-    if (sizeInfoCard) {
-      scene.remove(sizeInfoCard);
-      sizeInfoCard = null;
+    if (sizeInfoCardRef.current) {
+      sceneRef.current.remove(sizeInfoCardRef.current);
+      sizeInfoCardRef.current = null;
     }
 
     // 캔버스 생성하여 텍스트 그리기
@@ -199,84 +277,91 @@ function ARPage() {
       alphaTest: 0.1,
     });
 
-    sizeInfoCard = new THREE.Mesh(cardGeometry, cardMaterial);
+    sizeInfoCardRef.current = new THREE.Mesh(cardGeometry, cardMaterial);
 
     // 회전 초기화
-    sizeInfoCard.rotation.set(0, 0, 0);
+    sizeInfoCardRef.current.rotation.set(0, 0, 0);
 
-    return sizeInfoCard;
+    return sizeInfoCardRef.current;
   }
 
   function onSelectStart() {
-    if (isRotating) return;
-    longPressTimeout = setTimeout(() => {
+    if (isRotatingRef.current) return;
+    longPressTimeoutRef.current = setTimeout(() => {
       handleLongPress();
-      longPressTimeout = null;
+      longPressTimeoutRef.current = null;
     }, LONG_PRESS_DURATION);
   }
 
   function onSelectEnd() {
-    if (isRotating) return;
-    if (longPressTimeout) {
-      clearTimeout(longPressTimeout);
+    if (isRotatingRef.current) return;
+    if (longPressTimeoutRef.current) {
+      clearTimeout(longPressTimeoutRef.current);
       handleTap();
     }
   }
 
   function handleTouchStart(event) {
-    if (event.touches.length === 2 && selectedObject) {
+    if (event.touches.length === 2 && selectedObjectRef.current) {
       event.preventDefault();
-      isRotating = true;
-      initialTouchCenterX =
+      isRotatingRef.current = true;
+      initialTouchCenterXRef.current =
         (event.touches[0].pageX + event.touches[1].pageX) / 2;
-      initialObjectYRotation = selectedObject.rotation.y;
+      initialObjectYRotationRef.current = selectedObjectRef.current.rotation.y;
     }
   }
 
   function handleTouchMove(event) {
-    if (isRotating && event.touches.length === 2 && selectedObject) {
+    if (
+      isRotatingRef.current &&
+      event.touches.length === 2 &&
+      selectedObjectRef.current
+    ) {
       event.preventDefault();
       const currentCenterX =
         (event.touches[0].pageX + event.touches[1].pageX) / 2;
-      const deltaX = currentCenterX - initialTouchCenterX;
-      selectedObject.rotation.y =
-        initialObjectYRotation + deltaX * ROTATION_SENSITIVITY;
+      const deltaX = currentCenterX - initialTouchCenterXRef.current;
+      selectedObjectRef.current.rotation.y =
+        initialObjectYRotationRef.current + deltaX * ROTATION_SENSITIVITY;
     }
   }
 
   function handleTouchEnd(event) {
     if (event.touches.length < 2) {
-      isRotating = false;
+      isRotatingRef.current = false;
     }
   }
 
   function handleTap() {
     const currentTime = Date.now();
-    const timeSinceLastTap = currentTime - lastTapTime;
+    const timeSinceLastTap = currentTime - lastTapTimeRef.current;
     if (timeSinceLastTap < DOUBLE_TAP_THRESHOLD) {
-      if (reticle.visible) {
+      if (reticleRef.current.visible) {
         placeFurniture();
       }
     }
-    lastTapTime = currentTime;
+    lastTapTimeRef.current = currentTime;
   }
 
   function handleLongPress() {
     const raycaster = new THREE.Raycaster();
     const pointingRay = new THREE.Vector3(0, 0, -1);
-    pointingRay.applyQuaternion(controller.quaternion);
-    raycaster.set(controller.position, pointingRay);
+    pointingRay.applyQuaternion(controllerRef.current.quaternion);
+    raycaster.set(controllerRef.current.position, pointingRay);
 
-    const intersects = raycaster.intersectObjects(placedObjects, true);
+    const intersects = raycaster.intersectObjects(
+      placedObjectsRef.current,
+      true
+    );
 
     if (intersects.length > 0) {
       const intersectedObject = findTopLevelObject(intersects[0].object);
       if (intersectedObject) {
-        if (intersectedObject === selectedObject) {
-          scene.remove(intersectedObject);
-          const index = placedObjects.indexOf(intersectedObject);
+        if (intersectedObject === selectedObjectRef.current) {
+          sceneRef.current.remove(intersectedObject);
+          const index = placedObjectsRef.current.indexOf(intersectedObject);
           if (index !== -1) {
-            placedObjects.splice(index, 1);
+            placedObjectsRef.current.splice(index, 1);
           }
           deselectObject();
         } else {
@@ -289,30 +374,30 @@ function ARPage() {
   }
 
   function placeFurniture() {
-    const newModel = items[itemSelectedIndex].clone();
+    const newModel = itemsRef.current[itemSelectedIndexRef.current].clone();
     newModel.visible = true;
-    reticle.matrix.decompose(
+    reticleRef.current.matrix.decompose(
       newModel.position,
       newModel.quaternion,
       newModel.scale
     );
-    const scale = models[itemSelectedIndex]?.scale || 1.0;
+    const scale = models[itemSelectedIndexRef.current]?.scale || 1.0;
     newModel.scale.set(scale, scale, scale);
-    scene.add(newModel);
-    placedObjects.push(newModel);
+    sceneRef.current.add(newModel);
+    placedObjectsRef.current.push(newModel);
     selectObject(newModel);
   }
 
   function selectObject(object) {
     deselectObject();
-    selectedObject = object;
-    selectedObject.add(selectionRing);
+    selectedObjectRef.current = object;
+    selectedObjectRef.current.add(selectionRingRef.current);
 
-    const box = new THREE.Box3().setFromObject(selectedObject);
+    const box = new THREE.Box3().setFromObject(selectedObjectRef.current);
     const size = box.getSize(new THREE.Vector3());
 
     // 실제 크기 계산 (스케일 역보정)
-    const scale = selectedObject.scale;
+    const scale = selectedObjectRef.current.scale;
     const trueSize = new THREE.Vector3(
       size.x / scale.x,
       size.y / scale.y,
@@ -328,29 +413,29 @@ function ARPage() {
     const card = createSizeInfoCard(widthCm, heightCm, depthCm);
 
     // 카드 위치 설정 (객체 위쪽에 배치)
-    card.position.copy(selectedObject.position);
+    card.position.copy(selectedObjectRef.current.position);
     card.position.y += size.y / 2 + 0.3;
 
     // 카메라와 카드 사이의 방향 벡터 계산
     //const direction = new THREE.Vector3().subVectors(camera.position, card.position);
-    card.lookAt(camera.position);
+    card.lookAt(cameraRef.current.position);
 
     // 카드가 뒤집히지 않도록 Y축 회전만 사용
     card.rotation.x = 0;
     card.rotation.z = 0;
 
-    scene.add(card);
+    sceneRef.current.add(card);
 
     // 링 설정
-    selectionRing.position.set(0, -size.y / 2, 0);
-    selectionRing.scale.set(1, 1, 1);
-    const maxDim = Math.max(size.x, size.z) / selectedObject.scale.x;
-    selectionRing.scale.set(
+    selectionRingRef.current.position.set(0, -size.y / 2, 0);
+    selectionRingRef.current.scale.set(1, 1, 1);
+    const maxDim = Math.max(size.x, size.z) / selectedObjectRef.current.scale.x;
+    selectionRingRef.current.scale.set(
       maxDim * RING_SCALE_FACTOR,
       maxDim * RING_SCALE_FACTOR,
       maxDim * RING_SCALE_FACTOR
     );
-    selectionRing.visible = true;
+    selectionRingRef.current.visible = true;
 
     //makeSizeLine(size);
   }
@@ -408,8 +493,8 @@ function ARPage() {
   // }
 
   function deselectObject() {
-    if (selectedObject) {
-      selectedObject.remove(selectionRing);
+    if (selectedObjectRef.current) {
+      selectedObjectRef.current.remove(selectionRingRef.current);
       // if (lineGroup) {
       //   selectedObject.remove(lineGroup);
       //   lineGroup = null;
@@ -417,102 +502,79 @@ function ARPage() {
     }
 
     // 크기 정보 카드 제거
-    if (sizeInfoCard) {
-      scene.remove(sizeInfoCard);
-      sizeInfoCard = null;
+    if (sizeInfoCardRef.current) {
+      sceneRef.current.remove(sizeInfoCardRef.current);
+      sizeInfoCardRef.current = null;
     }
 
-    selectedObject = null;
-    selectionRing.visible = false;
+    selectedObjectRef.current = null;
+    selectionRingRef.current.visible = false;
   }
 
   function findTopLevelObject(object) {
     let parent = object;
-    while (parent.parent && parent.parent !== scene) {
+    while (parent.parent && parent.parent !== sceneRef.current) {
       parent = parent.parent;
     }
-    return placedObjects.includes(parent) ? parent : null;
+    return placedObjectsRef.current.includes(parent) ? parent : null;
   }
 
   function onClicked(e, selectItem, index) {
-    itemSelectedIndex = index;
+    itemSelectedIndexRef.current = index;
     deselectObject();
-    document
-      .querySelectorAll('.item-button')
-      .forEach((el) => el.classList.remove('clicked'));
-    e.target.classList.add('clicked');
   }
 
   function setupFurnitureSelection() {
-    for (let i = 0; i < models.length; i++) {
-      const el = document.querySelector(`#item` + i);
-      el.classList.add('item-button');
-      el.addEventListener('beforexrselect', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-      });
-      el.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        onClicked(e, items[i], i);
-      });
-    }
+    // React에서는 DOM 이벤트 리스너 대신 onClick prop 사용
   }
 
   function animate() {
-    renderer.setAnimationLoop(render);
+    rendererRef.current.setAnimationLoop(render);
   }
 
   function render(timestamp, frame) {
     if (frame) {
-      const referenceSpace = renderer.xr.getReferenceSpace();
-      const session = renderer.xr.getSession();
+      const referenceSpace = rendererRef.current.xr.getReferenceSpace();
+      const session = rendererRef.current.xr.getSession();
 
-      if (hitTestSourceRequested === false) {
+      if (hitTestSourceRequestedRef.current === false) {
         session.requestReferenceSpace('viewer').then(function (refSpace) {
           session
             .requestHitTestSource({ space: refSpace })
             .then(function (source) {
-              hitTestSource = source;
+              hitTestSourceRef.current = source;
             });
         });
         session.addEventListener('end', function () {
-          hitTestSourceRequested = false;
-          hitTestSource = null;
+          hitTestSourceRequestedRef.current = false;
+          hitTestSourceRef.current = null;
           deselectObject();
         });
-        hitTestSourceRequested = true;
+        hitTestSourceRequestedRef.current = true;
       }
 
-      if (hitTestSource) {
-        const hitTestResults = frame.getHitTestResults(hitTestSource);
+      if (hitTestSourceRef.current) {
+        const hitTestResults = frame.getHitTestResults(
+          hitTestSourceRef.current
+        );
         if (hitTestResults.length > 0) {
           const hit = hitTestResults[0];
-          reticle.visible = true;
-          reticle.matrix.fromArray(
+          reticleRef.current.visible = true;
+          reticleRef.current.matrix.fromArray(
             hit.getPose(referenceSpace).transform.matrix
           );
-          reticleDetectedFrames++;
         } else {
-          reticle.visible = false;
+          reticleRef.current.visible = false;
         }
       }
     }
 
-    const arStatusEl = document.getElementById('ar-status');
-
-    if (reticleDetectedFrames >= RETICLE_THRESHOLD && reticle.visible) {
-      arStatusEl.classList.remove('turnOn');
-    } else {
-      arStatusEl.classList.add('turnOn');
+    // 성능 최적화: 카드 업데이트를 선택적으로만 실행
+    if (sizeInfoCardRef.current && selectedObjectRef.current) {
+      sizeInfoCardRef.current.lookAt(cameraRef.current.position);
     }
 
-    // 카드가 있다면 매 프레임마다 카메라를 향하도록 업데이트
-    if (sizeInfoCard) {
-      sizeInfoCard.lookAt(camera.position);
-    }
-
-    renderer.render(scene, camera);
+    rendererRef.current.render(sceneRef.current, cameraRef.current);
     // cssRenderer.render(cssScene, camera); // CSS3D 렌더링 제거
   }
 
@@ -555,6 +617,25 @@ function ARPage() {
         className="absolute top-[10%] left-1/2 transform -translate-x-1/2 px-4 py-2 bg-black/70 text-white text-base rounded-lg z-[9999] opacity-0 transition-opacity duration-300 ease-in-out pointer-events-none"
       >
         바닥을 인식 중입니다...
+      </div>
+      {/* 가구 선택 UI */}
+      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 flex gap-2">
+        {models.map((model, index) => (
+          <button
+            key={index}
+            id={`item${index}`}
+            className="bg-white/80 backdrop-blur-sm rounded-lg p-3 hover:bg-white transition-colors"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onClicked(e, null, index);
+            }}
+          >
+            <div className="w-12 h-12 bg-gray-200 rounded flex items-center justify-center text-xs font-bold text-gray-600">
+              {model.label}
+            </div>
+          </button>
+        ))}
       </div>
     </div>
   );
