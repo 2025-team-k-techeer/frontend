@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+
 import ResultHeader from '../components/Header/ResultHeader';
 import RegenerateButton from '../components/Button/RegenerateButton';
 import ImageComparisonSlider from '../components/Result/ImageComparisonSlider';
 import FurnitureDrawer from '../components/Result/FurnitureDrawer';
 import ToastMessage from '../components/Result/ToastMessage';
 import OtherRoomButton from '../components/Button/OtherRoomButton';
+import { useNavigate } from 'react-router-dom';
 
 function ResultPage() {
   const [resultData, setResultData] = useState(null);
@@ -14,14 +16,7 @@ function ResultPage() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [isToastVisible, setIsToastVisible] = useState(false);
-  const [arData, setArData] = useState(null); // AR 데이터 저장 변수
-
-  // 임시 테스트 AR 데이터 로깅
-  useEffect(() => {
-    if (arData) {
-      console.log('AR 데이터:', arData);
-    }
-  }, [arData]);
+  const navigate = useNavigate();
 
   // 더미 데이터
   const dummyData = {
@@ -58,7 +53,7 @@ function ResultPage() {
             product_id: 'uuid2',
             product_name: '골드 프레임 스탠드 조명',
             price: 120000,
-            product_url: 'https://example.com/product2',
+            product_url: 'https://www.youtube.com/watch?v=AG6XwxwALQA',
             image_url:
               'https://images.unsplash.com/photo-1540932239986-30128078f3c5?q=80&w=1974&auto=format&fit=crop',
             dimensions: { width_cm: 30, depth_cm: 30, height_cm: 150 },
@@ -257,24 +252,41 @@ function ResultPage() {
       // } else {
       //   showToast(data.message || 'AR 실행에 실패했습니다.');
       // }
+      // 실제 API 호출 및 데이터 변환 후 ARPage로 이동
+      // 여러 가구 지원 구조로 배열로 넘김
+      // dimensions 정보가 없으면 기본값 100cm로 처리
+      const product =
+        (furniture.danawa_products && furniture.danawa_products[0]) || {};
+      const modelInfo = {
+        label: furniture.label,
+        model_url:
+          '	https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb', // 실제 API 응답값으로 대체 필요
+        image_url:
+          'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/DuckCM.png',
+        scale: 0.1,
+        width_cm: product.dimensions?.width_cm || 50,
+        depth_cm: product.dimensions?.depth_cm || 50,
+        height_cm: product.dimensions?.height_cm || 50,
+      };
+
+      // 추가 테스트 모델 (다른 가구)
+      const additionalModelInfo = {
+        label: 'chair',
+        model_url:
+          'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Box/glTF-Binary/Box.glb',
+        image_url:
+          'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Box/glTF/BoxCM.png',
+        scale: 0.1,
+        width_cm: 80,
+        depth_cm: 80,
+        height_cm: 80,
+      };
+
+      // 두 개의 모델을 배열로 전달
+      const modelsArray = [modelInfo, additionalModelInfo];
+
+      navigate('/ar', { state: { models: modelsArray } });
       setTimeout(() => {
-        // 성공 더미 응답
-        const dummyAR = {
-          status: 'success',
-          message: '유사한 desk 객체를 반환합니다.',
-          objects: [
-            {
-              _id: 'placement_001',
-              label: furniture.label,
-              model_url: 'https://firebase.storage/models/desk.glb',
-              image_url: 'https://firebase.storage/3d.jpg',
-              position: { x: 0.5, y: 0, z: -1.2 },
-              rotation: 45,
-              scale: 1.0,
-            },
-          ],
-        };
-        setArData(dummyAR.objects);
         showToast('AR이 실행되었습니다!');
       }, 500);
     } catch (error) {

@@ -12,9 +12,9 @@ import LoginPage from './pages/LoginPage.jsx';
 import SignUpPage from './pages/SignUpPage.jsx';
 import StyleList from './pages/StyleList.jsx';
 import ResultPage from './pages/ResultPage.jsx';
+import ARPage from './pages/ARPage.jsx';
 import RoomDetail from './pages/RoomDetail.jsx';
 import RoomStyle from './pages/RoomStyle.jsx';
-
 import { AuthProvider } from './contexts/AuthProvider.jsx'; //전역 상태로도 관리를 위함함
 
 export default function App() {
@@ -23,7 +23,7 @@ export default function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            {/* <Route path="/" element={<MainPage />} />
+            <Route path="/" element={<MainPage />} />
             <Route path="/RoomType" element={<RoomType />} />
             <Route path="/library" element={<LibraryPage />} />
             <Route path="/Manual" element={<ManualPage />} />
@@ -31,11 +31,11 @@ export default function App() {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/StyleList" element={<StyleList />} /> */}
-            <Route path="/" element={<ResultPage />} />
-            {/*} <Route path="/StyleList" element={<StyleList />} />
+            <Route path="/StyleList" element={<StyleList />} />
+            <Route path="/RoomStyle" element={<RoomStyle />} />
             <Route path="/RoomDetail" element={<RoomDetail />} />
-            <Route path="/RoomStyle" element={<RoomStyle />} />*/}
+            <Route path="/result" element={<ResultPage />} />
+            <Route path="/ar" element={<ARPage />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

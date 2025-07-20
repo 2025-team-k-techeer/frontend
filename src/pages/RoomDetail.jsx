@@ -33,7 +33,7 @@ export default function RoomDetail() {
 
       <footer className="p-4 flex-shrink-0 bg-white mt-auto">
         <ButtonAction
-          hraf="/"
+          hraf="/result"
           onClick={() => {}}
           // detail state의 양쪽 공백을 제거한 값이 비어있으면 isDisabled는 true가 됨
           isDisabled={detail.trim() === ''}
