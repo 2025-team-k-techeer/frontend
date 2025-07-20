@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback } from 'react';
-
+// 카메라 모달 열기
 function ImageUploadSection({
   uploadedImage,
   onFileChange,
