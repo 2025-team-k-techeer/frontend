@@ -71,6 +71,10 @@ function ARPage() {
           'touchend',
           handleTouchEnd
         );
+        rendererRef.current.domElement.removeEventListener(
+          'click',
+          handleCanvasClick
+        );
       }
 
       // 컨트롤러 이벤트 리스너 제거
@@ -142,6 +146,15 @@ function ARPage() {
     rendererRef.current.domElement.addEventListener(
       'touchend',
       handleTouchEnd,
+      {
+        passive: false,
+      }
+    );
+
+    // 빈 공간 클릭 시 가구 선택 해제
+    rendererRef.current.domElement.addEventListener(
+      'click',
+      handleCanvasClick,
       {
         passive: false,
       }
@@ -332,6 +345,31 @@ function ARPage() {
     }
   }
 
+  function handleCanvasClick(event) {
+    if (!selectedObjectRef.current) {
+      return;
+    }
+
+    const raycaster = new THREE.Raycaster();
+    const camera = cameraRef.current;
+    const mouse = new THREE.Vector2();
+
+    // 화면 좌표를 카메라 좌표로 변환
+    mouse.x = ((event.clientX / window.innerWidth) * 2 - 1) * camera.aspect;
+    mouse.y = -((event.clientY / window.innerHeight) * 2 - 1) * camera.aspect;
+
+    raycaster.setFromCamera(mouse, camera);
+
+    const intersects = raycaster.intersectObjects(
+      placedObjectsRef.current,
+      true
+    );
+
+    if (intersects.length === 0) {
+      deselectObject();
+    }
+  }
+
   function handleTap() {
     const currentTime = Date.now();
     const timeSinceLastTap = currentTime - lastTapTimeRef.current;
@@ -383,6 +421,13 @@ function ARPage() {
     );
     const scale = models[itemSelectedIndexRef.current]?.scale || 1.0;
     newModel.scale.set(scale, scale, scale);
+
+    // 객체에 모델 정보 저장 (크기 정보 표시용)
+    newModel.userData = {
+      modelIndex: itemSelectedIndexRef.current,
+      modelInfo: models[itemSelectedIndexRef.current],
+    };
+
     sceneRef.current.add(newModel);
     placedObjectsRef.current.push(newModel);
     selectObject(newModel);
@@ -396,18 +441,11 @@ function ARPage() {
     const box = new THREE.Box3().setFromObject(selectedObjectRef.current);
     const size = box.getSize(new THREE.Vector3());
 
-    // 실제 크기 계산 (스케일 역보정)
-    const scale = selectedObjectRef.current.scale;
-    const trueSize = new THREE.Vector3(
-      size.x / scale.x,
-      size.y / scale.y,
-      size.z / scale.z
-    );
-
-    // 크기를 cm 단위로 변환 (미터를 cm로)
-    const widthCm = trueSize.x;
-    const heightCm = trueSize.y;
-    const depthCm = trueSize.z;
+    // 객체에 저장된 모델 정보에서 크기 정보 가져오기
+    const modelInfo = selectedObjectRef.current.userData?.modelInfo;
+    const widthCm = modelInfo?.width_cm || 100;
+    const heightCm = modelInfo?.height_cm || 100;
+    const depthCm = modelInfo?.depth_cm || 100;
 
     // 크기 정보 카드 생성
     const card = createSizeInfoCard(widthCm, heightCm, depthCm);
@@ -631,7 +669,19 @@ function ARPage() {
               onClicked(e, null, index);
             }}
           >
-            <div className="w-12 h-12 bg-gray-200 rounded flex items-center justify-center text-xs font-bold text-gray-600">
+            <div className="w-12 h-12 rounded overflow-hidden">
+              <img
+                src={model.image_url}
+                alt={model.label}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src =
+                    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yNCAyOEMyNi4yMDkxIDI4IDI4IDI2LjIwOTEgMjggMjRDMjggMjEuNzkwOSAyNi4yMDkxIDIwIDI0IDIwQzIxLjc5MDkgMjAgMjAgMjEuNzkwOSAyMCAyNEMyMCAyNi4yMDkxIDIxLjc5MDkgMjggMjQgMjhaIiBmaWxsPSIjOUI5QkEwIi8+CjxwYXRoIGQ9Ik0yNCA0QzEyLjk1NDMgNCA0IDEyLjk1NDMgNCAyNFMxMi45NTQzIDQ0IDI0IDQ0QzM1LjA0NTcgNDQgNDQgMzUuMDQ1NyA0NCAyNFMzNS4wNDU3IDQgMjQgNFpNMjQgNDBDMTUuMTY0IDQwIDggMzIuODM2IDggMjRTMTUuMTY0IDggMjQgOEMzMi44MzYgOCA0MCAxNS4xNjQgNDAgMjRTMzIuODM2IDQwIDI0IDQwWiIgZmlsbD0iIzlCOUJBQCIvPgo8L3N2Zz4K';
+                }}
+              />
+            </div>
+            <div className="text-xs font-bold text-gray-600 mt-1 text-center">
               {model.label}
             </div>
           </button>

@@ -52,7 +52,7 @@ function ResultPage() {
             product_id: 'uuid2',
             product_name: '골드 프레임 스탠드 조명',
             price: 120000,
-            product_url: 'https://example.com/product2',
+            product_url: 'https://www.youtube.com/watch?v=AG6XwxwALQA',
             image_url:
               'https://images.unsplash.com/photo-1540932239986-30128078f3c5?q=80&w=1974&auto=format&fit=crop',
             dimensions: { width_cm: 30, depth_cm: 30, height_cm: 150 },

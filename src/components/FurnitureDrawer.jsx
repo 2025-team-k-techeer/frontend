@@ -4,21 +4,6 @@ import OpenNewIcon from '../assets/Icon/OpenNew.svg?react';
 function FurnitureDrawer({ isOpen, furniture, onClose, onARView }) {
   if (!isOpen || !furniture) return null;
 
-  const handleARClick = () => {
-    if (onARView) {
-      onARView(furniture);
-    }
-  };
-
-  const handleExternalLink = () => {
-    if (furniture.danawa_products && furniture.danawa_products.length > 0) {
-      const product = furniture.danawa_products[0];
-      if (product.product_url) {
-        window.open(product.product_url, '_blank');
-      }
-    }
-  };
-
   const getFurnitureInfo = () => {
     if (furniture.danawa_products && furniture.danawa_products.length > 0) {
       const product = furniture.danawa_products[0];
@@ -26,12 +11,14 @@ function FurnitureDrawer({ isOpen, furniture, onClose, onARView }) {
         name: product.product_name,
         price: `${product.price.toLocaleString()}원`,
         image: product.image_url,
+        url: product.product_url,
       };
     }
     return {
       name: furniture.label,
       price: '가격 정보 없음',
       image: 'https://placehold.co/56x56/cccccc/ffffff?text=Img',
+      url: '',
     };
   };
 
@@ -77,20 +64,22 @@ function FurnitureDrawer({ isOpen, furniture, onClose, onARView }) {
           <p className="text-sm text-gray-500">{furnitureInfo.price}</p>
         </div>
         <button
-          onClick={handleARClick}
+          onClick={() => onARView(furniture)}
           className="w-9 h-9 bg-gray-200 rounded-md flex items-center justify-center hover:bg-gray-300 transition-colors"
           title="AR로 보기"
         >
           <span className="text-sm font-bold text-brand-charcoal">AR</span>
         </button>
-        {furniture.danawa_products && furniture.danawa_products.length > 0 && (
-          <button
-            onClick={handleExternalLink}
-            className="w-9 h-9 bg-gray-200 rounded-md flex items-center justify-center hover:bg-gray-300 transition-colors"
+        {furnitureInfo.url && (
+          <a
+            href={furnitureInfo.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-9 h-9 bg-gray-200 rounded-md flex items-center justify-center hover:bg-gray-300 transition-colors ml-1"
             title="쇼핑몰로 가기"
           >
             <OpenNewIcon className="w-5 h-5 text-gray-600" />
-          </button>
+          </a>
         )}
       </div>
     </div>

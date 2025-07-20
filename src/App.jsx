@@ -21,7 +21,7 @@ export default function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            {/* <Route path="/" element={<MainPage />} />
+            <Route path="/" element={<MainPage />} />
             <Route path="/RoomType" element={<RoomType />} />
             <Route path="/library" element={<LibraryPage />} />
             <Route path="/Manual" element={<ManualPage />} />
@@ -29,8 +29,8 @@ export default function App() {
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/StyleList" element={<StyleList />} /> */}
-            <Route path="/" element={<ResultPage />} />
+            <Route path="/StyleList" element={<StyleList />} />
+            <Route path="/result" element={<ResultPage />} />
             <Route path="/ar" element={<ARPage />} />
           </Routes>
         </BrowserRouter>
