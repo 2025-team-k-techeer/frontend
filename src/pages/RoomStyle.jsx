@@ -1,7 +1,9 @@
 // src/pages/StyleSelectionPage.jsx
 
 import React, { useState, useCallback } from 'react';
+
 import HeaderBack from '../components/Header/HeaderBack';
+
 import Title from '../components/Title/Title';
 import ButtonS from '../components/Button/ButtonS';
 import StyleModal from '../components/StyleModal';
