@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import HeaderBack from '../components/HeaderBack';
+import HeaderBack from '../components/Header/HeaderBack';
 import ButtonAction from '../components/Button/ButtonAction';
 import ButtonS from '../components/Button/ButtonS';
 import Title from '../components/Title/Title';
@@ -27,7 +27,8 @@ function RoomType() {
           title="공간 유형을 선택해주세요"
           subtitle="공간 유형에 따라 알맞는 인테리어를 추천해드립니다."
         />
-        <div className="grid grid-cols-2 gap-4">
+        {/* 버튼 그리드 */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           <ButtonS
             label="거실"
             icon={LivingRoomIcon}
@@ -65,14 +66,16 @@ function RoomType() {
           />
         </div>
       </div>
-      <ButtonAction
-        isDisabled={!selectedRoom}
-        onClick={() => {
-          navigate('/RoomStyle');
-        }}
-      >
-        다음
-      </ButtonAction>
+      <footer className="p-4 flex-shrink-0">
+        <ButtonAction
+          isDisabled={!selectedRoom}
+          onClick={() => {
+            navigate('/RoomStyle');
+          }}
+        >
+          다음
+        </ButtonAction>
+      </footer>
     </div>
   );
 }

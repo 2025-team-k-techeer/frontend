@@ -30,6 +30,8 @@ export default function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/StyleList" element={<StyleList />} />
+            <Route path="/RoomDetail" element={<RoomDetail />} />
+            <Route path="/RoomStyle" element={<RoomStyle />} />
             <Route path="/result" element={<ResultPage />} />
             <Route path="/ar" element={<ARPage />} />
           </Routes>

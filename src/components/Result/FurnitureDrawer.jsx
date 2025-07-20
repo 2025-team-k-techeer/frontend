@@ -1,5 +1,5 @@
 import React from 'react';
-import OpenNewIcon from '../assets/Icon/OpenNew.svg?react';
+import OpenNew from '../../assets/Icon/OpenNew.jsx';
 
 function FurnitureDrawer({ isOpen, furniture, onClose, onARView }) {
   if (!isOpen || !furniture) return null;
@@ -78,7 +78,7 @@ function FurnitureDrawer({ isOpen, furniture, onClose, onARView }) {
             className="w-9 h-9 bg-gray-200 rounded-md flex items-center justify-center hover:bg-gray-300 transition-colors ml-1"
             title="쇼핑몰로 가기"
           >
-            <OpenNewIcon className="w-5 h-5 text-gray-600" />
+            <OpenNew className="w-5 h-5 text-gray-600" />
           </a>
         )}
       </div>

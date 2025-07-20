@@ -24,7 +24,4 @@ export default defineConfig({
       },
     }),
   ],
-  server: {
-    https: true, // 이 설정을 추가해야 mkcert 플러그인이 동작합니다.
-  },
 });

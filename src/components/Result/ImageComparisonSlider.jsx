@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import PlusIcon from '../assets/Icon/Plus.svg?react';
+import PlusIcon from '../../assets/Icon/Plus.jsx';
 
 function ImageComparisonSlider({
   originalImageUrl,
@@ -120,7 +120,7 @@ function ImageComparisonSlider({
             <button
               key={furniture.id}
               onClick={() => onFurnitureClick(furniture)}
-              className="plus-icon absolute bg-sage-accent/80 text-white rounded-full w-8 h-8 flex items-center justify-center backdrop-blur-sm transition-transform duration-200 hover:scale-110"
+              className="plus-icon absolute bg-sage-accent/80 text-white rounded-full flex items-center justify-center p-2 backdrop-blur-sm transition-transform duration-200 hover:scale-110"
               style={{
                 left: `${Math.max(0, Math.min(100, left))}%`,
                 top: `${Math.max(0, Math.min(100, top))}%`,

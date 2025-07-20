@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import ResultHeader from '../components/ResultHeader';
 import RegenerateButton from '../components/RegenerateButton';
 import ImageComparisonSlider from '../components/ImageComparisonSlider';
