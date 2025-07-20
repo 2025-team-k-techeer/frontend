@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 // Shadcn UI는 코드를 직접 복사해서 사용하므로 별도의 import가 필요 없습니다.
 // 아래 컴포넌트 함수들을 이 파일 안에 정의하거나,
 // 별도 파일로 분리한 후 import하여 사용하면 됩니다.
+// 카메라 모달 열기
 
 // 메인 페이지 컴포넌트
 export default function UploadPage() {
@@ -54,6 +55,11 @@ export default function UploadPage() {
     }
   }
 
+  // 카메라로 촬영된 이미지 처리
+  function handleImageCaptured(imageDataUrl) {
+    setUploadedImage(imageDataUrl);
+  }
+
   return (
     <div className="bg-white font-ttlaundrygothicb">
       <div className="w-full max-w-xl mx-auto flex flex-col min-h-screen">
@@ -75,6 +81,7 @@ export default function UploadPage() {
             onUploadClick={handleUploadClick}
             onRemoveImage={handleRemoveImage}
             fileInputRef={fileInputRef}
+            onImageCaptured={handleImageCaptured}
           />
           <ExamplePhotos />
         </main>
