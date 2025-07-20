@@ -1,5 +1,5 @@
 import React from 'react';
-import HeaderBack from '../components/HeaderBack';
+import HeaderBack from '../components/Header/HeaderBack';
 import InteriorList from '../components/List';
 import Navigation from '../components/Navigation/Navigation';
 

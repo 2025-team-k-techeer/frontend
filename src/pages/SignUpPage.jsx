@@ -1,11 +1,11 @@
 // src/pages/SignUpPage.jsx
 import React, { useState } from 'react';
-import HeaderBack from '../components/HeaderBack';
-import InputNickname from '../components/InputNickname';
-import InputEmail from '../components/InputEmail';
-import InputPassword from '../components/InputPassword';
-import InputPasswordConfirm from '../components/InputPasswordConfirm';
-import SignUpButton from '../components/SignUpButton';
+import HeaderBack from '../components/Header/HeaderBack';
+import InputNickname from '../components/Sign/InputNickname';
+import InputEmail from '../components/Sign/InputEmail';
+import InputPassword from '../components/Sign/InputPassword';
+import InputPasswordConfirm from '../components/Sign/InputPasswordConfirm';
+import SignUpButton from '../components/Button/SignUpButton';
 import { useAuthStore } from '../store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 

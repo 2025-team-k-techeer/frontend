@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import HeaderBack from '../components/HeaderBack';
+import HeaderBack from '../components/Header/HeaderBack';
 import Title from '../components/Title/Title';
 import Detail from '../components/Detail';
-import TipSection from '../components/TipSection'; // 팁 섹션 컴포넌트 불러오기
+import TipSection from '../components/Tip/TipSection'; // 팁 섹션 컴포넌트 불러오기
 import ButtonAction from '../components/Button/ButtonAction';
 
 export default function RoomDetail() {
