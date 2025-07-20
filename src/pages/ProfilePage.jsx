@@ -1,6 +1,6 @@
 // App.js (예시)
 import React from 'react';
-import HeaderBack from '../components/HeaderBack'; // HeaderBack 컴포넌트를 import 합니다.
+import HeaderBack from '../components/Header/HeaderBack'; // HeaderBack 컴포넌트를 import 합니다.
 import ProfileInfo from '../components/ProfileInfo';
 import MyLibraryPreview from '../components/MyLibraryPreview';
 import Navigation from '../components/Navigation/Navigation'; // Navigation 컴포넌트를 import 합니다.

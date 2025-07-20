@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Header from '../components/HeaderM';
+import Header from '../components/Header/HeaderM';
 import Menu from '../components/Menu';
 import ButtonL from '../components/Button/ButtonL';
 import InteriorStyleSection from '../components/MainPage/InteriorStyleSection';

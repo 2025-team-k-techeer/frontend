@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import HeaderBack from '../components/HeaderBack';
-import LoginTitle from '../components/LoginTitle';
-import InputEmail from '../components/InputEmail';
-import InputPassword from '../components/InputPassword';
-import LoginErrorMessage from '../components/LoginErrorMessage';
-import ActionButton from '../components/ButtonAction';
+import HeaderBack from '../components/Header/HeaderBack';
+import LoginTitle from '../components/Title/LoginTitle';
+import InputEmail from '../components/Sign/InputEmail';
+import InputPassword from '../components/Sign/InputPassword';
+import LoginErrorMessage from '../components/Sign/LoginErrorMessage';
+import ActionButton from '../components/Button/ButtonAction';
 import { useAuthStore } from '../store/useAuthStore'; // zustand 스토어 import
 
 function LoginPage() {

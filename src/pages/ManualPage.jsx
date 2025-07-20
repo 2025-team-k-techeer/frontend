@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import HeaderBack from '../components/HeaderBack';
+import HeaderBack from '../components/Header/HeaderBack';
 import Navigation_top from '../components/Navigation/Navigation_top';
-import Manual from '../components/Manual';
+import Manual from '../components/Tip/Manual';
 
 function ManualPage() {
   const [activeSection, setActiveSection] = useState('upload');

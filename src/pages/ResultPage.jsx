@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import ResultHeader from '../components/ResultHeader';
-import RegenerateButton from '../components/RegenerateButton';
-import ImageComparisonSlider from '../components/ImageComparisonSlider';
-import FurnitureDrawer from '../components/FurnitureDrawer';
-import ToastMessage from '../components/ToastMessage';
-import OtherRoomButton from '../components/OtherRoomButton';
+import ResultHeader from '../components/Header/ResultHeader';
+import RegenerateButton from '../components/Button/RegenerateButton';
+import ImageComparisonSlider from '../components/Result/ImageComparisonSlider';
+import FurnitureDrawer from '../components/Result/FurnitureDrawer';
+import ToastMessage from '../components/Result/ToastMessage';
+import OtherRoomButton from '../components/Button/OtherRoomButton';
 
 function ResultPage() {
   const [resultData, setResultData] = useState(null);
