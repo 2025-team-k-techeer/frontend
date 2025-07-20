@@ -7,7 +7,7 @@ import React from 'react';
  * @param {function} props.onClick - 버튼 클릭 시 실행될 함수
  * @param {boolean} [props.isDisabled=false] - 버튼 비활성화 여부
  */
-const ActionButton = ({ children, onClick, isDisabled = false }) => {
+function ButtonAction({ children, onClick, isDisabled = false }) {
   // 기본 스타일
   const baseStyle =
     'w-full text-center font-bold py-4 rounded-xl text-lg transition-colors shadow-md';
@@ -26,6 +26,6 @@ const ActionButton = ({ children, onClick, isDisabled = false }) => {
       {children}
     </button>
   );
-};
+}
 
-export default ActionButton;
+export default ButtonAction;
