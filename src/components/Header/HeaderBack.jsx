@@ -1,5 +1,6 @@
 // Header.jsx
 import React from 'react';
+import LeftArrow from '../../assets/Icon/LeftArrow';
 
 function HeaderBack({
   title = '프로필',
@@ -25,20 +26,7 @@ function HeaderBack({
         onClick={handleGoBack}
         className="p-2 -ml-2 focus:outline-none bg-transparent hover:bg-transparent"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 text-brand-charcoal"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth="2.5"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15 19l-7-7 7-7"
-          />
-        </svg>
+        <LeftArrow className="h-6 w-6 text-brand-charcoal" />
       </button>
       <h1 className="text-xl font-bold text-brand-charcoal text-center flex-1">
         {title}
