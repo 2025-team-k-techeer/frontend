@@ -1,0 +1,31 @@
+import React from 'react';
+
+const CameraIcon = ({ width = 43, height = 42, ...props }) => {
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 43 42"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M7.32129 36.75H35.3213C37.2543 36.75 38.8213 35.183 38.8213 33.25V15.05C38.8213 13.117 37.2543 11.55 35.3213 11.55H30.0713L25.6963 5.25H16.9463L12.5713 11.55H7.32129C5.38829 11.55 3.82129 13.117 3.82129 15.05V33.25C3.82129 35.183 5.38829 36.75 7.32129 36.75Z"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M21.3213 29.75C25.1873 29.75 28.3213 26.616 28.3213 22.75C28.3213 18.884 25.1873 15.75 21.3213 15.75C17.4553 15.75 14.3213 18.884 14.3213 22.75C14.3213 26.616 17.4553 29.75 21.3213 29.75Z"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export default CameraIcon;

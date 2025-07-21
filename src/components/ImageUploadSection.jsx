@@ -1,4 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
+import Camera from '../assets/Icon/Camera.jsx';
+import LeftArrow from '../assets/Icon/LeftArrow.jsx';
+import Circle from '../assets/Icon/Circle.jsx';
 // 카메라 모달 열기
 function ImageUploadSection({
   uploadedImage,
@@ -169,25 +172,7 @@ function ImageUploadSection({
           </>
         ) : (
           <>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-12 w-12 text-gray-400 mb-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="1"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-              />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-            </svg>
+            <Camera className="h-12 w-12 text-gray-400 mb-4" />
             <span className="text-gray-500 font-semibold mb-4">
               사진을 여기에 끌어다 놓거나
               <br />
@@ -216,22 +201,11 @@ function ImageUploadSection({
         <div className="fixed inset-0 bg-black z-50 flex flex-col">
           {/* 헤더 */}
           <div className="flex justify-between items-center p-4 bg-black text-white">
-            <button onClick={closeCamera} className="text-white">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+            <button onClick={closeCamera} className="text-white rounded-full">
+              {/* LeftArrow 아이콘 추가 */}
+              <LeftArrow className="text-black" />
             </button>
-            <span className="font-semibold">사진 촬영</span>
+            <span>사진 촬영</span>
             <div className="w-6"></div>
           </div>
 
@@ -248,16 +222,19 @@ function ImageUploadSection({
                 />
                 <canvas ref={canvasRef} className="hidden" />
                 {/* 촬영 버튼 - 우측 상단으로 이동 */}
-                <div className="absolute top-4 right-4">
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex justify-center">
                   <button
                     onClick={capturePhoto}
                     disabled={isCapturing}
                     className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg"
                   >
                     {isCapturing ? (
-                      <div className="w-6 h-6 border-3 border-sage-accent border-t-transparent rounded-full animate-spin"></div>
+                      <div></div>
                     ) : (
-                      <div className="w-10 h-10 bg-sage-accent rounded-full"></div>
+                      <div className="w-10 h-10 rounded-full">
+                        {/* 카메라 아이콘 삽입 */}
+                        <Circle className="w-10 h-10 text-sage-accent" />
+                      </div>
                     )}
                   </button>
                 </div>
@@ -271,10 +248,10 @@ function ImageUploadSection({
                   className="w-full h-full object-cover"
                 />
                 {/* 다시 찍기 / 확인 버튼 - 상단으로 이동 */}
-                <div className="absolute top-4 left-0 right-0 flex justify-center gap-4">
+                <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-4">
                   <button
                     onClick={retakePhoto}
-                    className="bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold"
+                    className="bg-icon-gray text-black px-6 py-3 rounded-lg font-semibold"
                   >
                     다시 찍기
                   </button>
