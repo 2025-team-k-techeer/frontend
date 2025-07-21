@@ -7,7 +7,7 @@ import InputPassword from '../components/Sign/InputPassword';
 import InputPasswordConfirm from '../components/Sign/InputPasswordConfirm';
 import SignUpButton from '../components/Button/SignUpButton';
 import { postSignup } from '../api/signupApi';
-import { useAuthStore } from '../store/useAuthStore';
+//import { useAuthStore } from '../store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 
 const SignUpPage = () => {
@@ -19,7 +19,7 @@ const SignUpPage = () => {
   const [messageType, setMessageType] = useState(''); // 'success' | 'error'
   const [loading, setLoading] = useState(false); // 로딩 상태
 
-  const setUser = useAuthStore((state) => state.login);
+  //const setUser = useAuthStore((state) => state.login);
   const navigate = useNavigate();
 
   const isPasswordMatch =
@@ -47,11 +47,11 @@ const SignUpPage = () => {
       setMessage(data.message);
       setMessageType(data.status);
       if (data.status === 'success') {
-        setUser({
-          user_id: data.user_id,
-          name: nickname,
-          email,
-        });
+        // setUser({
+        //   user_id: data.user_id,
+        //   name: nickname,
+        //   email,
+        // });
         setTimeout(() => {
           setMessage('');
           navigate('/login');
