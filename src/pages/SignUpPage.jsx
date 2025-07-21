@@ -6,19 +6,18 @@ import InputEmail from '../components/Sign/InputEmail';
 import InputPassword from '../components/Sign/InputPassword';
 import InputPasswordConfirm from '../components/Sign/InputPasswordConfirm';
 import SignUpButton from '../components/Button/SignUpButton';
+import { postSignup } from '../api/signupApi';
 import { useAuthStore } from '../store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-
 const SignUpPage = () => {
-  const [nickname, setNickname] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-  const [message, setMessage] = useState('');
+  const [nickname, setNickname] = useState(''); // 닉네임
+  const [email, setEmail] = useState(''); // 이메일
+  const [password, setPassword] = useState(''); // 비밀번호
+  const [passwordConfirm, setPasswordConfirm] = useState(''); // 비밀번호 확인
+  const [message, setMessage] = useState(''); // 메시지
   const [messageType, setMessageType] = useState(''); // 'success' | 'error'
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // 로딩 상태
 
   const setUser = useAuthStore((state) => state.login);
   const navigate = useNavigate();
@@ -38,16 +37,13 @@ const SignUpPage = () => {
     if (!isFormValid || loading) return;
     setLoading(true);
     try {
-      const res = await fetch(`${API_URL}/users/signup`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: nickname,
-          email,
-          password,
-        }),
+      const data = await postSignup({
+        name: nickname,
+        email,
+        password,
       });
-      const data = await res.json();
+      console.log('post 성공', data);
+
       setMessage(data.message);
       setMessageType(data.status);
       if (data.status === 'success') {
@@ -65,7 +61,7 @@ const SignUpPage = () => {
       }
     } catch (err) {
       console.error(err);
-      setMessage('서버 오류가 발생했습니다.');
+      setMessage(err.message || '서버 오류가 발생했습니다.');
       setMessageType('error');
       setTimeout(() => setMessage(''), 1000);
     } finally {
