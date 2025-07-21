@@ -8,18 +8,17 @@ export const useAuthStore = create((set) => ({
   login: (userData) => {
     //로그인 함수
     set({ user: userData, isLoggedIn: true }); //사용자 정보와 로그인 상태 업데이트
-    localStorage.setItem('authUser', JSON.stringify(userData)); //로컬스토리지에 사용자 정보 저장
+    localStorage.setItem('token', userData.access_token); // localStorage에도 저장
   },
   logout: () => {
     //로그아웃 함수
     set({ user: null, isLoggedIn: false }); //사용자 정보와 로그인 상태 초기화
-    localStorage.removeItem('authUser'); //로컬스토리지에서 사용자 정보 삭제
+    localStorage.removeItem('token'); // localStorage 토큰 삭제
   },
   initialize: () => {
-    //초기화 함수
-    const storedUser = localStorage.getItem('authUser'); //로컬스토리지에서 사용자 정보 가져오기
-    if (storedUser) {
-      set({ user: JSON.parse(storedUser), isLoggedIn: true }); //사용자 정보와 로그인 상태 업데이트
+    const token = localStorage.getItem('token');
+    if (token) {
+      set({ user: { token }, isLoggedIn: true });
     }
   },
 }));
