@@ -52,8 +52,8 @@ function ManualPage() {
   }, []);
 
   return (
-    <div className="w-full max-w-2xl mx-auto flex flex-col min-h-screen bg-white">
-      <HeaderBack />
+    <div className="w-full max-w-2xl mx-auto flex flex-col pt-20 min-h-screen bg-white">
+      <HeaderBack title="사용법" />
       <Navigation_top
         activeSection={activeSection}
         onSectionClick={handleSectionClick}

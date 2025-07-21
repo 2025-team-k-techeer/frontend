@@ -16,7 +16,7 @@ function RoomType() {
   const [selectedRoom, setSelectedRoom] = useState(null);
   const navigate = useNavigate();
   return (
-    <div>
+    <div className="pt-20">
       <HeaderBack
         title=""
         bgColor="bg-sage-bg" // 배경색을 sage로 변경

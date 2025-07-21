@@ -74,7 +74,7 @@ const SignUpPage = () => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto flex flex-col min-h-screen bg-white">
+    <div className="w-full max-w-md mx-auto flex flex-col pt-20 min-h-screen bg-white">
       <HeaderBack title="회원가입" />
       <main className="flex-1 overflow-y-auto">
         <div className="p-6 sm:p-8">

@@ -62,7 +62,7 @@ export default function UploadPage() {
 
   return (
     <div className="bg-white font-ttlaundrygothicb">
-      <div className="w-full max-w-xl mx-auto flex flex-col min-h-screen">
+      <div className="w-full max-w-xl mx-auto flex flex-col pt-20 min-h-screen">
         <HeaderBack
           title=""
           bgColor="bg-sage-bg"
