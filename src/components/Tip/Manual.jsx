@@ -1,6 +1,19 @@
-import React from 'react';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 function Manual() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
+
   return (
     <main className="flex-1">
       <div className="p-6 space-y-12">

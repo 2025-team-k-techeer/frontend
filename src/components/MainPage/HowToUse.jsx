@@ -11,7 +11,7 @@ const HowToUseSection = () => {
       <div className="bg-gray-50 p-4 rounded-2xl flex justify-around items-center text-center">
         {/* 이미지 업로드 */}
         <Link
-          to="/how-to-use#upload"
+          to="/Manual#upload"
           className="flex flex-col items-center space-y-2"
         >
           <div className="bg-white p-4 rounded-full shadow-sm">
@@ -24,7 +24,7 @@ const HowToUseSection = () => {
 
         {/* AI 생성 */}
         <Link
-          to="/how-to-use#select"
+          to="/Manual#select"
           className="flex flex-col items-center space-y-2"
         >
           <div className="bg-white p-4 rounded-full shadow-sm">
@@ -34,10 +34,7 @@ const HowToUseSection = () => {
         </Link>
 
         {/* AR */}
-        <Link
-          to="/how-to-use#ar"
-          className="flex flex-col items-center space-y-2"
-        >
+        <Link to="/Manual#ar" className="flex flex-col items-center space-y-2">
           <div className="w-20 h-20 flex items-center justify-center -m-2">
             <ARIcon className="h-10 w-10 text-brand-charcoal" />
           </div>

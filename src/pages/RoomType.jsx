@@ -16,13 +16,13 @@ function RoomType() {
   const [selectedRoom, setSelectedRoom] = useState(null);
   const navigate = useNavigate();
   return (
-    <div>
+    <div className="pt-20 mx-auto lg:max-w-6xl">
       <HeaderBack
         title=""
         bgColor="bg-sage-bg" // 배경색을 sage로 변경
         showBorder={true} // 구분선 보임 (true는 기본값이므로 생략 가능)
       />
-      <div className="p-4">
+      <div className="p-4 ">
         <Title
           title="공간 유형을 선택해주세요"
           subtitle="공간 유형에 따라 알맞는 인테리어를 추천해드립니다."
