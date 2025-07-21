@@ -6,6 +6,7 @@ import ImageComparisonSlider from '../components/Result/ImageComparisonSlider';
 import FurnitureDrawer from '../components/Result/FurnitureDrawer';
 import ToastMessage from '../components/Result/ToastMessage';
 import OtherRoomButton from '../components/Button/OtherRoomButton';
+import Loading from '../components/Loading';
 import { useNavigate } from 'react-router-dom';
 
 function ResultPage() {
@@ -306,8 +307,8 @@ function ResultPage() {
 
   if (!resultData) {
     return (
-      <div className="relative w-full h-screen bg-black flex items-center justify-center">
-        <div className="text-white text-lg">로딩 중...</div>
+      <div className="relative w-full h-screen bg-sage-bg flex items-center justify-center">
+        <Loading />
       </div>
     );
   }
