@@ -53,7 +53,7 @@ function LoginPage() {
   return (
     <div className="w-full max-w-sm mx-auto flex flex-col min-h-screen px-4">
       <HeaderBack title="" bgColor="bg-white" showBorder={false} />
-      <main className="flex-1 flex flex-col pt-20 justify-center items-center">
+      <main className="flex-1 flex flex-col justify-center items-center">
         <LoginErrorMessage message={errorMsg} />
         <LoginTitle />
         <form className="w-full space-y-4" onSubmit={handleLogin}>

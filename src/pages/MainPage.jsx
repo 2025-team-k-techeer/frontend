@@ -35,9 +35,8 @@ function MainPage() {
 
   return (
     <div
-      className="w-full min-h-screen bg-white
-                md:max-w-3xl md:mx-auto  //태블릿 사이즈에선 최대 너비 지정 및 가운데 정렬
-                lg:max-w-7xl" //데스크탑에선 최대 너비 더 넓게
+      className="w-full min-h-screen bg-white mx-auto  
+                lg:max-w-6xl" //데스크탑 사이즈
     >
       <Header onMenuClick={() => setIsMenuOpen(true)} />
 

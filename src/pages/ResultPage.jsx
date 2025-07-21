@@ -314,7 +314,16 @@ function ResultPage() {
   }
 
   return (
-    <div className="relative w-full h-screen bg-black">
+    <div className="relative w-full h-screen bg-black ">
+      {/* 헤더 */}
+      <header className="absolute top-0 left-0 right-0 p-4 flex justify-between items-center z-20">
+        <ResultHeader />
+        <RegenerateButton
+          onRegenerate={handleRegenerate}
+          isLoading={isLoading}
+        />
+      </header>
+
       {/* 이미지 슬라이더 */}
       <main className="w-full h-full">
         <ImageComparisonSlider
@@ -324,15 +333,6 @@ function ResultPage() {
           onFurnitureClick={handleFurnitureClick}
         />
       </main>
-
-      {/* 헤더 */}
-      <header className="absolute top-0 left-0 right-0 p-4 flex justify-between items-center z-20">
-        <ResultHeader />
-        <RegenerateButton
-          onRegenerate={handleRegenerate}
-          isLoading={isLoading}
-        />
-      </header>
 
       {/* 푸터 */}
       <footer className="absolute bottom-0 left-0 right-0 p-4 z-20">

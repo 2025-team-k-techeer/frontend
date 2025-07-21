@@ -58,7 +58,9 @@ function ManualPage() {
         activeSection={activeSection}
         onSectionClick={handleSectionClick}
       />
-      <Manual />
+      <main>
+        <Manual />
+      </main>
     </div>
   );
 }
