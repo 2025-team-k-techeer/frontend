@@ -33,11 +33,11 @@ function FullscreenMenu({ isOpen, onClose }) {
         </button>
       </header>
       <main className="flex-grow flex flex-col justify-center items-center -mt-10">
-        <nav className="flex flex-col items-center text-center space-y-6 font-laundry">
+        <nav className="flex flex-col items-center text-center space-y-6">
           {/* 로그인/회원가입 등 조건부 렌더링을 추가할 수 있습니다. */}
           <a
             href="/login"
-            className="flex items-center gap-2 text-2xl text-brand-charcoal font-bold"
+            className="flex items-center gap-2 text-2xl text-brand-charcoal font-semibold"
           >
             <span>로그인 하기</span>
           </a>

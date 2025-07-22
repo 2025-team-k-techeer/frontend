@@ -40,7 +40,7 @@ function MainPage() {
     >
       <Header onMenuClick={() => setIsMenuOpen(true)} />
 
-      <main className="flex-1 pt-16">
+      <main className="flex-1 pt-20">
         <div className="p-4 space-y-8 pb-24">
           {/* 상단 배너 섹션 */}
           <HeroBanner />

@@ -70,20 +70,32 @@ button:focus-visible {
 }
 
 @font-face {
-  font-family: 'TTLaundryGothic';
-  src: url('/src/assets/fonts/런드리고딕 Regular.woff') format('woff');
+  font-family: 'Pretendard';
   font-weight: 400;
-  font-style: normal;
+  font-display: swap;
+  src:
+    local('Pretendard Regular'),
+    url(./woff/Pretendard-Regular.woff) format('woff');
 }
 
 @font-face {
-  font-family: 'TTLaundryGothic';
-  src: url('/src/assets/fonts/런드리고딕 Bold.woff') format('woff');
+  font-family: 'Pretendard';
+  font-weight: 700;
+  font-display: swap;
+  src:
+    local('Pretendard Bold'),
+    url(./woff/Pretendard-Bold.woff) format('woff');
+}
+
+@font-face {
+  font-family: 'PlexSans';
   font-weight: 700;
   font-style: normal;
+  src: url(./assets/fonts/IBMPlexSansKR-Bold.ttf) format('truetype');
 }
+
 body {
-  font-family: 'TTLaundryGothic', sans-serif;
+  font-family: 'Pretendard', 'PlexSans', sans-serif;
   scroll-behavior: smooth;
 }
 
