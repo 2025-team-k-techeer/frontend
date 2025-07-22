@@ -91,7 +91,7 @@ function DrawerMenu({ isOpen, onClose }) {
             {/* 로그아웃 버튼 */}
             <div
               type="button"
-              className="text-base border-t border-gray-400 text-red-500 w-full text-center mt-4 py-6 hover:bg-red-100 transition-colors duration-200 "
+              className="text-base border-t border-gray-400 text-red-500 w-full text-center mt-4 py-7 hover:bg-red-100 transition-colors duration-200 "
               // onClick={() => { /* 추후 로그아웃 API 연동 */ }}
             >
               로그아웃
