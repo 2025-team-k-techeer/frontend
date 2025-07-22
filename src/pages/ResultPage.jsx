@@ -9,7 +9,8 @@ import Loading from '../components/Loading';
 import { useNavigate } from 'react-router-dom';
 import { useResultGenerationStore } from '../store/useResultGenerationStore';
 import { useRoomStyleStore } from '../store/useRoomStyleStore';
-import { postGenerateResult, saveMyInterior } from '../api/generate-resultApi';
+import { postGenerateResult } from '../api/generate-resultApi';
+import { saveMyInterior } from '../api/librarystoreApi';
 
 function ResultPage() {
   const { result, setResult } = useResultGenerationStore();
@@ -185,16 +186,14 @@ function ResultPage() {
       {/* 푸터 */}
       <footer className="absolute bottom-0 left-0 right-0 p-4 z-20">
         {isSaved ? (
-          <div className="flex w-full max-w-md mx-auto gap-2">
+          <div className="flex justify-between items-center max-w-md mx-auto gap-4">
             <button
               disabled
-              className="flex-1 min-w-0 w-1/2 h-12 bg-gray-400 text-white font-bold py-3 rounded-xl"
+              className="flex-1 bg-gray-400 text-white font-bold py-3 rounded-xl"
             >
               저장됨
             </button>
-            <div className="flex-1 min-w-0 w-1/2 h-12">
-              <OtherRoomButton />
-            </div>
+            <OtherRoomButton />
           </div>
         ) : (
           <button
