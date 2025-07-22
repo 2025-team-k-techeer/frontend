@@ -52,12 +52,12 @@ function DrawerMenu({ isOpen, onClose }) {
         {/* 헤더: 닫기 버튼 */}
         <header className="flex justify-between items-center mb-8">
           {/* 로그인 버튼 */}
-          <div
+          <a
             href="/login"
             className="text-gray-500 w-24 text-center text-base font-bold py-2 rounded-xl border border-gray-300 hover:bg-white hover:text-black transition-colors duration-200"
           >
             로그인하기
-          </div>
+          </a>
           <button onClick={onClose} className="p-2">
             <CloseIcon />
           </button>
