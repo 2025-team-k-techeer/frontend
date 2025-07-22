@@ -11,7 +11,7 @@ function OtherRoomButton() {
   return (
     <button
       onClick={handleClick}
-      className="bg-sage-accent text-white font-bold py-3 px-6 rounded-xl hover:bg-sage-accent/90 transition-colors"
+      className="w-full h-full bg-sage-accent text-white font-bold py-3 rounded-xl hover:bg-sage-accent/90 transition-colors"
     >
       다른 방 꾸미기
     </button>
