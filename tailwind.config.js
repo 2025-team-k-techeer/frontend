@@ -11,7 +11,7 @@ export default {
         'icon-gray': '#A0AEC0',
       },
       fontFamily: {
-        laundry: ['Pretendard', 'sans-serif'],
+        Pretendard: ['Pretendard', 'sans-serif'],
         PlexSans: ['PlexSans', 'sans-serif'],
       },
     },

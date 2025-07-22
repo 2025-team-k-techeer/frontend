@@ -92,7 +92,7 @@ export default function UploadPage() {
   }
 
   return (
-    <div className="bg-white font-ttlaundrygothicb">
+    <div className="bg-white ">
       <div
         className="w-full mx-auto flex flex-col pt-20 min-h-screen 
                    lg:max-w-6xl"

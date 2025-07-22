@@ -12,7 +12,7 @@ function MyLibraryPreview() {
       <div className="flex justify-between items-center mb-3">
         <h3 className="text-lg font-bold text-brand-charcoal">내 라이브러리</h3>
         <a
-          href="./library.html"
+          href="./library"
           className="text-sm font-medium text-sage-accent hover:underline"
         >
           더보기 &gt;
