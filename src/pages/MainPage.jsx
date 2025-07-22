@@ -28,6 +28,12 @@ const sampleStyles = [
     title: '내추럴 스타일',
     description: '자연의 편안함',
   },
+  {
+    id: 4,
+    imageUrl: 'https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc',
+    title: '인더스트리얼 스타일',
+    description: '철과 나무의 조화',
+  },
 ];
 
 function MainPage() {
