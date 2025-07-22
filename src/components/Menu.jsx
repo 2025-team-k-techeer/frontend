@@ -5,7 +5,7 @@ function CloseIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="h-8 w-8 text-black" // 아이콘 색상 변경
+      className="h-8 w-8 text-gray-700" // 아이콘 색상 변경
       fill="none"
       viewBox="0 0 24 24"
       stroke="currentColor"
@@ -45,12 +45,19 @@ function DrawerMenu({ isOpen, onClose }) {
       />
       {/* 드로어 메뉴 */}
       <div
-        className={`fixed top-0 right-0 h-full w-full max-w-52 bg-white text-white z-50 flex flex-col p-6 transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-full max-w-64 bg-white text-white z-50 flex flex-col p-6 transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         {/* 헤더: 닫기 버튼 */}
-        <header className="flex justify-end flex-shrink-0">
+        <header className="flex justify-between items-center mb-8">
+          {/* 로그인 버튼 */}
+          <div
+            href="/login"
+            className="text-gray-500 w-24 text-center text-sm font-bold py-4 rounded-xl border border-gray-300 hover:bg-white hover:text-black transition-colors duration-200"
+          >
+            로그인하기
+          </div>
           <button onClick={onClose} className="p-2">
             <CloseIcon />
           </button>
@@ -58,14 +65,6 @@ function DrawerMenu({ isOpen, onClose }) {
 
         {/* 메인 컨텐츠 */}
         <main className="flex flex-col pt-6">
-          {/* 로그인 버튼 */}
-          <a
-            href="/login"
-            className="text-gray-500 w-24 text-center text-sm font-bold py-3 mb-8 rounded-xl border border-white hover:bg-white hover:text-black transition-colors duration-200 mx-auto"
-          >
-            로그인하기
-          </a>
-
           {/* 메뉴 링크 (사진과 유사하게 변경) */}
           <nav className="flex flex-col mx-auto">
             <a
