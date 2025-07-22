@@ -5,14 +5,66 @@ import Title from '../components/Title/Title';
 import Detail from '../components/Detail';
 import TipSection from '../components/Tip/TipSection'; // 팁 섹션 컴포넌트 불러오기
 import ButtonAction from '../components/Button/ButtonAction';
+import { useRoomStyleStore } from '../store/useRoomStyleStore';
+import { useResultGenerationStore } from '../store/useResultGenerationStore';
+import { postGenerateResult } from '../api/generate-resultApi';
+import { useCallback } from 'react';
+import debounce from 'lodash.debounce';
+import { useNavigate } from 'react-router-dom';
 
 export default function RoomDetail() {
-  // textarea의 입력값을 관리할 state
-  const [detail, setDetail] = useState('');
+  // prompt의 입력값을 관리할 state
+  const prompt = useRoomStyleStore((state) => state.prompt);
+  const setPrompt = useRoomStyleStore((state) => state.setPrompt);
+  const room_type = useRoomStyleStore((state) => state.room_type);
+  const style = useRoomStyleStore((state) => state.style);
+  const image_url = useRoomStyleStore((state) => state.image_url);
+  const setResult = useResultGenerationStore((state) => state.setResult);
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  // debounce 적용
+  const setPromptDebounced = useCallback(
+    debounce((value) => {
+      setPrompt(value);
+      console.log('prompt:', value);
+    }, 700),
+    []
+  );
 
   // textarea의 onChange 이벤트를 처리할 핸들러
-  const handleDetailChange = (e) => {
-    setDetail(e.target.value);
+  const handlePromptChange = (e) => {
+    setPromptDebounced(e.target.value);
+  };
+
+  // 완료 버튼 클릭 시
+  const handleComplete = async () => {
+    setError('');
+    setLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError('로그인이 필요합니다.');
+        setLoading(false);
+        return;
+      }
+      const result = await postGenerateResult({
+        image_url,
+        room_type,
+        style,
+        prompt,
+        token,
+      });
+      setResult(result);
+      console.log('result:', result);
+      navigate('/result');
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -25,20 +77,22 @@ export default function RoomDetail() {
         />
 
         {/* 상세 요구사항 입력란 */}
-        <Detail onChange={handleDetailChange} />
+        <Detail onChange={handlePromptChange} />
 
         {/* 분리된 TipSection 컴포넌트 사용 */}
         <TipSection />
+
+        {/* 에러 메시지 */}
+        {error && <div className="text-red-500 mt-4 text-sm">{error}</div>}
       </main>
 
       <footer className="p-4 flex-shrink-0 bg-white mt-auto">
         <ButtonAction
           hraf="/result"
-          onClick={() => {}}
-          // detail state의 양쪽 공백을 제거한 값이 비어있으면 isDisabled는 true가 됨
-          isDisabled={detail.trim() === ''}
+          onClick={handleComplete}
+          isDisabled={!prompt || prompt.trim() === '' || loading}
         >
-          완료
+          {loading ? '로딩 중...' : '완료'}
         </ButtonAction>
       </footer>
     </div>

@@ -17,6 +17,7 @@ import MinimalIcon from '../assets/Icon/Mimimal.svg?react';
 import TribalIcon from '../assets/Icon/Trival.svg?react';
 import RetroIcon from '../assets/Icon/Retro.svg?react';
 import { useNavigate } from 'react-router-dom';
+import { useRoomStyleStore } from '../store/useRoomStyleStore';
 
 // import { ModernIcon, NordicIcon, ... } from '../components/icons';
 
@@ -45,12 +46,17 @@ function StyleSelectionPage() {
   const navigate = useNavigate();
   const [selectedStyle, setSelectedStyle] = useState(null); // 선택된 스타일 객체 저장
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const setStyle = useRoomStyleStore((state) => state.setStyle);
   // 스타일 버튼 클릭 시 실행될 함수
-  const handleStyleSelect = useCallback((style) => {
-    setSelectedStyle(style); // 클릭된 스타일 정보로 state 업데이트
-    // setIsModalOpen(true); // 모달 열기 제거
-  }, []);
+  const handleStyleSelect = useCallback(
+    (style) => {
+      setSelectedStyle(style); // 클릭된 스타일 정보로 state 업데이트
+      setStyle(style.label); // zustand에 label 저장
+      console.log('style:', style.label);
+      // setIsModalOpen(true); // 모달 열기 제거
+    },
+    [setStyle]
+  );
 
   // 모달 닫기 함수
   const closeModal = useCallback(() => {

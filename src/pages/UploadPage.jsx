@@ -5,6 +5,9 @@ import ImageUploadSection from '../components/ImageUploadSection';
 import ExamplePhotos from '../components/Tip/ExamplePhotos';
 import ActionButton from '../components/Button/ButtonAction.jsx';
 import { useNavigate } from 'react-router-dom';
+import { postUploadImage } from '../api/imageuploadApi';
+import { useRoomStyleStore } from '../store/useRoomStyleStore';
+
 // Shadcn UI는 코드를 직접 복사해서 사용하므로 별도의 import가 필요 없습니다.
 // 아래 컴포넌트 함수들을 이 파일 안에 정의하거나,
 // 별도 파일로 분리한 후 import하여 사용하면 됩니다.
@@ -12,8 +15,9 @@ import { useNavigate } from 'react-router-dom';
 
 // 메인 페이지 컴포넌트
 export default function UploadPage() {
-  const [uploadedImage, setUploadedImage] = useState(null);
-  const fileInputRef = useRef(null);
+  const [uploadedImage, setUploadedImage] = useState(null); // 업로드된 이미지 상태
+  const fileInputRef = useRef(null); // 파일 입력 참조
+  const setImageInfo = useRoomStyleStore((state) => state.setImageInfo);
 
   const navigate = useNavigate();
 
@@ -60,6 +64,33 @@ export default function UploadPage() {
     setUploadedImage(imageDataUrl);
   }
 
+  // 이미지 업로드 및 GCS 업로드 후 store 저장, 페이지 이동
+  async function handleUploadAndNext() {
+    if (!uploadedImage) return;
+    try {
+      // DataURL → File 변환
+      const res = await fetch(uploadedImage);
+      const blob = await res.blob();
+      const file = new File([blob], 'upload.jpg', { type: 'image/jpeg' });
+
+      // access_token 가져오기
+      const access_token = localStorage.getItem('token');
+
+      // 이미지 업로드 (access_token 포함)
+      const { url, filename } = await postUploadImage(file, access_token);
+      console.log('업로드 성공:', { url, filename });
+
+      // 상태 저장 (store)
+      setImageInfo({ url, filename });
+
+      // 다음 페이지 이동
+      navigate('/RoomType');
+    } catch (err) {
+      console.error('이미지 업로드 실패:', err);
+      alert('이미지 업로드 실패: ' + err.message);
+    }
+  }
+
   return (
     <div className="bg-white font-ttlaundrygothicb">
       <div
@@ -90,9 +121,7 @@ export default function UploadPage() {
         </main>
         <footer className="p-4 flex-shrink-0">
           <ActionButton
-            onClick={() => {
-              navigate('/RoomType');
-            }}
+            onClick={handleUploadAndNext}
             isDisabled={!uploadedImage}
           >
             다음
