@@ -23,7 +23,9 @@ function HamburgerIcon() {
 function HeaderM({ onMenuClick }) {
   return (
     <header className="fixed top-0 left-0 right-0 p-4 flex justify-between items-center bg-white z-20 border-b border-gray-200">
-      <div className="text-4xl font-PlexSans text-brand-charcoal">집꾸</div>
+      <div className="text-4xl font-PlexSans px-1 text-brand-charcoal">
+        집꾸
+      </div>
       <button onClick={onMenuClick}>
         <HamburgerIcon />
       </button>

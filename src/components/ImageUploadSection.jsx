@@ -201,10 +201,9 @@ function ImageUploadSection({
         <div className="fixed inset-0 bg-black z-50 flex flex-col">
           {/* 헤더 */}
           <div className="flex justify-between items-center p-4 bg-black text-white">
-            <button onClick={closeCamera} className="text-white rounded-full">
-              {/* LeftArrow 아이콘 추가 */}
-              <LeftArrow className="text-black" />
-            </button>
+            {/* LeftArrow 아이콘 추가 */}
+            <LeftArrow onClick={closeCamera} className="text-white" />
+
             <span>사진 촬영</span>
             <div className="w-6"></div>
           </div>

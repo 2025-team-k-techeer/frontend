@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import Header from '../components/Header/HeaderM';
-import Menu from '../components/Menu';
+import DrawerMenu from '../components/Menu';
 import ButtonL from '../components/Button/ButtonL';
 import InteriorStyleSection from '../components/MainPage/InteriorStyleSection';
 import Navigation from '../components/Navigation/Navigation';
@@ -58,7 +58,7 @@ function MainPage() {
       </main>
 
       {/* 햄버거 메뉴 컴포넌트 사용 */}
-      <Menu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+      <DrawerMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       <Navigation />
     </div>
   );
