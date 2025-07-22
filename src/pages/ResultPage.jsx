@@ -11,6 +11,7 @@ import { useResultGenerationStore } from '../store/useResultGenerationStore';
 import { useRoomStyleStore } from '../store/useRoomStyleStore';
 import { postGenerateResult } from '../api/generate-resultApi';
 import { saveMyInterior } from '../api/librarystoreApi';
+import { fetchSimilarARObject } from '../api/arApi';
 
 function ResultPage() {
   const { result, setResult } = useResultGenerationStore();
@@ -75,43 +76,28 @@ function ResultPage() {
     setSelectedFurniture(null);
   };
 
-  // AR 부분(더미)
+  // AR 부분(API 연동)
   const handleARView = async (furniture) => {
     try {
-      const product =
-        (furniture.danawa_products && furniture.danawa_products[0]) || {};
-      const modelInfo = {
-        label: furniture.label,
-        model_url:
-          'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Binary/Duck.glb',
-        image_url:
-          'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/DuckCM.png',
-        scale: 0.1,
-        width_cm: product.dimensions?.width_cm || 50,
-        depth_cm: product.dimensions?.depth_cm || 50,
-        height_cm: product.dimensions?.height_cm || 50,
-      };
-
-      // 추가 테스트 모델 (다른 가구)
-      const additionalModelInfo = {
-        label: 'chair',
-        model_url:
-          'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Box/glTF-Binary/Box.glb',
-        image_url:
-          'https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Box/glTF/BoxCM.png',
-        scale: 0.1,
-        width_cm: 80,
-        depth_cm: 80,
-        height_cm: 80,
-      };
-      const modelsArray = [modelInfo, additionalModelInfo];
-      navigate('/ar', { state: { models: modelsArray } });
-      setTimeout(() => {
-        showToast('AR이 실행되었습니다!');
-      }, 500);
+      const label =
+        furniture.danawa_products && furniture.danawa_products[0]?.label;
+      if (!label) {
+        showToast('가구 label 정보가 없습니다.');
+        return;
+      }
+      const data = await fetchSimilarARObject({ label });
+      if (data.status === 'success' && Array.isArray(data.objects)) {
+        navigate('/ar', { state: { models: data.objects } });
+        setTimeout(() => {
+          showToast('AR이 실행되었습니다!');
+        }, 500);
+      } else {
+        showToast(data.message || 'AR 모델 정보를 불러올 수 없습니다.');
+      }
     } catch (error) {
-      console.error('Error loading AR data:', error);
-      showToast('AR 데이터 로딩 중 오류가 발생했습니다.');
+      showToast(
+        error.message || 'AR 모델 정보를 불러오는 중 오류가 발생했습니다.'
+      );
     }
   };
 
