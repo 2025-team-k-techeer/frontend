@@ -45,7 +45,7 @@ function DrawerMenu({ isOpen, onClose }) {
       />
       {/* 드로어 메뉴 */}
       <div
-        className={`fixed top-0 right-0 h-full w-full max-w-64 bg-white text-white z-50 flex flex-col p-6 transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-full max-w-64 lg:xl bg-white text-white z-50 flex flex-col p-6 transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -54,7 +54,7 @@ function DrawerMenu({ isOpen, onClose }) {
           {/* 로그인 버튼 */}
           <div
             href="/login"
-            className="text-gray-500 w-24 text-center text-sm font-bold py-4 rounded-xl border border-gray-300 hover:bg-white hover:text-black transition-colors duration-200"
+            className="text-gray-500 w-24 text-center text-base font-bold py-2 rounded-xl border border-gray-300 hover:bg-white hover:text-black transition-colors duration-200"
           >
             로그인하기
           </div>
@@ -64,34 +64,34 @@ function DrawerMenu({ isOpen, onClose }) {
         </header>
 
         {/* 메인 컨텐츠 */}
-        <main className="flex flex-col pt-6">
+        <main className="flex flex-col pt-2">
           {/* 메뉴 링크 (사진과 유사하게 변경) */}
           <nav className="flex flex-col mx-auto">
             <a
               href="/upload"
-              className="text-2xl py-7 border-b border-gray-400 text-gray-700 w-full text-center"
+              className="text-2xl py-8 border-b border-gray-400 text-gray-700 w-full text-center"
             >
               시작하기
             </a>
-            <a href="/library" className="text-xl py-7 text-gray-500 mx-auto">
+            <a href="/library" className="text-xl py-8 text-gray-500 mx-auto">
               라이브러리
             </a>
-            <a href="/profile" className="text-xl py-7 text-gray-500 mx-auto">
+            <a href="/profile" className="text-xl py-8 text-gray-500 mx-auto">
               내 프로필
             </a>
-            <a href="/manual" className="text-xl py-7 text-gray-500 mx-auto">
+            <a href="/manual" className="text-xl py-8 text-gray-500 mx-auto">
               사용법
             </a>
             <a
               href="/stylelist"
-              className="text-xl py-7  text-gray-500 mx-auto"
+              className="text-xl py-8  text-gray-500 mx-auto"
             >
               인테리어 스타일
             </a>
             {/* 로그아웃 버튼 */}
             <div
               type="button"
-              className="text-xs border-t border-gray-400 text-red-500 w-full text-center mt-4 py-6 hover:bg-red-100 transition-colors duration-200 "
+              className="text-base border-t border-gray-400 text-red-500 w-full text-center mt-4 py-6 hover:bg-red-100 transition-colors duration-200 "
               // onClick={() => { /* 추후 로그아웃 API 연동 */ }}
             >
               로그아웃
