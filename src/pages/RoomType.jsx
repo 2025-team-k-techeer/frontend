@@ -10,11 +10,21 @@ import OneroomIcon from '../assets/Icon/OneRoom.svg?react';
 import EtcIcon from '../assets/Icon/Ect.svg?react';
 
 import { useNavigate } from 'react-router-dom';
+import { useRoomStyleStore } from '../store/useRoomStyleStore';
 
 function RoomType() {
   // 2. 어떤 버튼이 선택됐는지 기억할 상태를 만듭니다. 초기값은 null (아무것도 선택 안됨)
   const [selectedRoom, setSelectedRoom] = useState(null);
+  const setRoomType = useRoomStyleStore((state) => state.setRoomType);
   const navigate = useNavigate();
+  // label 매핑
+  const roomLabelMap = {
+    livingroom: '거실',
+    bedroom: '침실',
+    study: '공부방/서재',
+    oneroom: '원룸',
+    etc: '기타',
+  };
   return (
     <div className="pt-20 mx-auto lg:max-w-6xl">
       <HeaderBack
@@ -70,6 +80,8 @@ function RoomType() {
         <ButtonAction
           isDisabled={!selectedRoom}
           onClick={() => {
+            setRoomType(roomLabelMap[selectedRoom]);
+            console.log('roomType:', roomLabelMap[selectedRoom]);
             navigate('/RoomStyle');
           }}
         >

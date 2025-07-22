@@ -5,14 +5,28 @@ import Title from '../components/Title/Title';
 import Detail from '../components/Detail';
 import TipSection from '../components/Tip/TipSection'; // 팁 섹션 컴포넌트 불러오기
 import ButtonAction from '../components/Button/ButtonAction';
+import { useRoomStyleStore } from '../store/useRoomStyleStore';
+import { useCallback } from 'react';
+import debounce from 'lodash.debounce';
 
 export default function RoomDetail() {
   // textarea의 입력값을 관리할 state
   const [detail, setDetail] = useState('');
+  const setDetailStore = useRoomStyleStore((state) => state.setDetail);
+
+  // debounce 적용
+  const setDetailStoreDebounced = useCallback(
+    debounce((value) => {
+      setDetailStore(value);
+      console.log('detail:', value);
+    }, 700),
+    []
+  );
 
   // textarea의 onChange 이벤트를 처리할 핸들러
   const handleDetailChange = (e) => {
     setDetail(e.target.value);
+    setDetailStoreDebounced(e.target.value);
   };
 
   return (
