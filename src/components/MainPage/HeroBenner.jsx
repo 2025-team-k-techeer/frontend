@@ -2,11 +2,11 @@ import React from 'react';
 
 function HeroBanner() {
   return (
-    <section className="relative rounded-2xl overflow-hidden shadow-lg">
+    <section className="relative rounded-2xl overflow-hidden shadow-lg aspect-video">
       <img
         src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7"
         alt="메인 배너"
-        className="w-full h-48 object-cover"
+        className="w-full h-auto object-cover"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
       <div className="absolute bottom-0 left-0 p-5 text-white font-laundry">
