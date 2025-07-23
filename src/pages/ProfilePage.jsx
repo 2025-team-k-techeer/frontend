@@ -29,10 +29,9 @@ function ProfilePage() {
         // 401 에러(인증 실패)인지 확인
         if (err.response?.status === 401) {
           alert('로그인이 필요합니다.');
-          // 실제 프로젝트의 로그인 페이지 경로로 바꿔주세요.
           window.location.href = '/login';
         } else {
-          // 401이 아닌 다른 에러는 그대로 상태에 저장합니다.
+          // 401이 아닌 다른 에러는 그대로 상태에 저장
           setError(err);
         }
       } finally {
@@ -48,7 +47,7 @@ function ProfilePage() {
   }
 
   if (error) {
-    // 401 Unauthorized 에러 등 처리
+    // 401 에러 외 처리
     return (
       <div>
         에러가 발생했습니다:{' '}

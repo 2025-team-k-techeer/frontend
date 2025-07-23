@@ -30,9 +30,6 @@ function MyLibraryPreview({ interiors }) {
             alt={`인테리어 이미지 ${item._id}`}
           />
         ))}
-        <div className="w-full aspect-square bg-gray-100 rounded-lg flex items-center justify-center">
-          <span className="text-gray-400 font-bold">+3</span>
-        </div>
       </div>
     </section>
   );
