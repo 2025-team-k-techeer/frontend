@@ -21,11 +21,13 @@ function ProfilePage() {
       try {
         setIsLoading(true); // 로딩 시작
         const data = await fetchMyPageData();
+        console.log('API 요청 성공:', data); // 성공 시 데이터 콘솔 출력
         if (data.status === 'success') {
           setUserData(data.user);
           setInteriorsData(data.interiors);
         }
       } catch (err) {
+        console.error('API 요청 에러:', err); // 에러 발생 시 콘솔 출력
         // 401 에러(인증 실패)인지 확인
         if (err.response?.status === 401) {
           alert('로그인이 필요합니다.');

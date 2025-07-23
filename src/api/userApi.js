@@ -16,7 +16,7 @@ export const fetchMyPageData = async () => {
   }
 
   try {
-    const response = await jsonAxios.get('/v1/users/mypage', {
+    const response = await jsonAxios.get('/api/user/mypage', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
