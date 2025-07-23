@@ -1,5 +1,3 @@
-import React from 'react';
-
 // 인테리어 스타일 데이터 배열 (갯수를 늘리거나 줄여서 테스트 가능)
 const styleData = [
   {
@@ -54,41 +52,3 @@ const styleData = [
     example_image_url: '/styles/modern.jpg',
   },
 ];
-
-function StyleList() {
-  return (
-    // 전체 영역을 차지하고, 내부 콘텐츠가 많아지면 세로 스크롤이 생깁니다.
-    <main className=" w-full h-full overflow-y-auto bg-gray-50 p-4  padding-bottom-set">
-      <div className="max-w-2xl mx-auto">
-        <div className="space-y-8">
-          {styleData.map((style) => (
-            <div
-              key={style.id}
-              className="bg-white rounded-lg shadow-md overflow-hidden"
-            >
-              {/* 16:9 비율을 유지하는 이미지 컨테이너 */}
-              <div className="aspect-w-16 aspect-h-9">
-                <img
-                  src={style.example_image_url}
-                  alt={`${style.name} 스타일 인테리어`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              {/* 텍스트 설명 영역 */}
-              <div className="p-5">
-                <h2 className="text-lg font-semibold text-gray-800">
-                  {style.name}
-                </h2>
-                <p className="text-sm text-gray-600 mt-2">
-                  {style.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </main>
-  );
-}
-
-export default StyleList;

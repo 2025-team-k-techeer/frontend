@@ -10,7 +10,6 @@ import RoomType from './pages/RoomType.jsx';
 import UploadPage from './pages/UploadPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import SignUpPage from './pages/SignUpPage.jsx';
-import StyleList from './pages/StyleList.jsx';
 import ResultPage from './pages/ResultPage.jsx';
 import ARPage from './pages/ARPage.jsx';
 import RoomDetail from './pages/RoomDetail.jsx';
@@ -29,7 +28,6 @@ export default function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/StyleList" element={<StyleList />} />
           <Route path="/RoomStyle" element={<RoomStyle />} />
           <Route path="/RoomDetail" element={<RoomDetail />} />
           <Route path="/result" element={<ResultPage />} />
