@@ -1,8 +1,8 @@
 import React from 'react';
 // src/components 폴더에서 필요한 컴포넌트들을 임포트합니다.
-import HeaderBack from '../components/Header/HeaderBack.jsx';
-import ImageGrid from '../components/ImageGrid/ImageGrid.jsx';
-import Navigation from '../components/Navigation/Navigation.jsx';
+import HeaderBack from '/src/components/Header/HeaderBack.jsx';
+import ImageGrid from '/src/components/ImageGrid/ImageGrid.jsx';
+import Navigation from '/src/components/Navigation/Navigation.jsx';
 
 function LibraryPage() {
   return (

@@ -1,12 +1,12 @@
 // App.js (예시)
 import React, { useState, useEffect } from 'react';
-import HeaderBack from '../components/Header/HeaderBack'; // HeaderBack 컴포넌트를 import 합니다.
-import ProfileInfo from '../components/ProfileInfo';
-import MyLibraryPreview from '../components/MyLibraryPreview';
-import Navigation from '../components/Navigation/Navigation'; // Navigation 컴포넌트를 import 합니다.
+import HeaderBack from '/src/components/Header/HeaderBack'; // HeaderBack 컴포넌트를 import 합니다.
+import ProfileInfo from '/src/components/ProfileInfo';
+import MyLibraryPreview from '/src/components/MyLibraryPreview';
+import Navigation from '/src/components/Navigation/Navigation'; // Navigation 컴포넌트를 import 합니다.
 
 // API 호출 함수 import
-import { fetchMyPageData } from '../api/userApi';
+import { fetchMyPageData } from '/src/api/userApi';
 
 function ProfilePage() {
   // 1. 데이터, 로딩, 에러 상태 관리

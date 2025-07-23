@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import ResultHeader from '../components/Header/ResultHeader';
-import RegenerateButton from '../components/Button/RegenerateButton';
-import ImageComparisonSlider from '../components/Result/ImageComparisonSlider';
-import FurnitureDrawer from '../components/Result/FurnitureDrawer';
-import ToastMessage from '../components/Result/ToastMessage';
-import OtherRoomButton from '../components/Button/OtherRoomButton';
-import Loading from '../components/Loading';
+import ResultHeader from '/src/components/Header/ResultHeader';
+import RegenerateButton from '/src/components/Button/RegenerateButton';
+import ImageComparisonSlider from '/src/components/Result/ImageComparisonSlider';
+import FurnitureDrawer from '/src/components/Result/FurnitureDrawer';
+import ToastMessage from '/src/components/Result/ToastMessage';
+import OtherRoomButton from '/src/components/Button/OtherRoomButton';
+import Loading from '/src/components/Loading';
 import { useNavigate } from 'react-router-dom';
-import { useResultGenerationStore } from '../store/useResultGenerationStore';
-import { useRoomStyleStore } from '../store/useRoomStyleStore';
-import { postGenerateResult } from '../api/generate-resultApi';
-import { saveMyInterior } from '../api/librarystoreApi';
-import { fetchSimilarARObject } from '../api/arApi';
+import { useResultGenerationStore } from '/src/store/useResultGenerationStore';
+import { useRoomStyleStore } from '/src/store/useRoomStyleStore';
+import { postGenerateResult } from '/src/api/generate-resultApi';
+import { saveMyInterior } from '/src/api/librarystoreApi';
+import { fetchSimilarARObject } from '/src/api/arApi';
 
 function ResultPage() {
   const { result, setResult } = useResultGenerationStore();

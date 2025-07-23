@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-import Header from '../components/Header/HeaderM';
-import DrawerMenu from '../components/Menu';
-import ButtonL from '../components/Button/ButtonL';
-import InteriorStyleSection from '../components/MainPage/InteriorStyleSection';
-import Navigation from '../components/Navigation/Navigation';
-import HowToUse from '../components/MainPage/HowToUse';
-import HeroBanner from '../components/MainPage/HeroBenner';
+import Header from '/src/components/Header/HeaderM';
+import DrawerMenu from '/src/components/Menu';
+import ButtonL from '/src/components/Button/ButtonL';
+import InteriorStyleSection from '/src/components/MainPage/InteriorStyleSection';
+import Navigation from '/src/components/Navigation/Navigation';
+import HowToUse from '/src/components/MainPage/HowToUse';
+import HeroBanner from '/src/components/MainPage/HeroBenner';
 
 // 인테리어 스타일 데이터 예시
 const sampleStyles = [

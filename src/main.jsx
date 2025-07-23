@@ -2,8 +2,8 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 //import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App.jsx';
-import { useAuthStore } from './store/useAuthStore';
+import App from '/src/App.jsx';
+import { useAuthStore } from '/src/store/useAuthStore';
 
 import { registerSW } from 'virtual:pwa-register';
 registerSW({ immediate: true });

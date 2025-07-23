@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import HeaderBack from '../components/Header/HeaderBack';
-import LoginTitle from '../components/Title/LoginTitle';
-import InputEmail from '../components/Sign/InputEmail';
-import InputPassword from '../components/Sign/InputPassword';
-import LoginErrorMessage from '../components/Sign/LoginErrorMessage';
-import ActionButton from '../components/Button/ButtonAction';
-import { postLogin } from '../api/loginApi';
-import { useAuthStore } from '../store/useAuthStore'; // zustand 스토어 import
+import HeaderBack from '/src/components/Header/HeaderBack';
+import LoginTitle from '/src/components/Title/LoginTitle';
+import InputEmail from '/src/components/Sign/InputEmail';
+import InputPassword from '/src/components/Sign/InputPassword';
+import LoginErrorMessage from '/src/components/Sign/LoginErrorMessage';
+import ActionButton from '/src/components/Button/ButtonAction';
+import { postLogin } from '/src/api/loginApi';
+import { useAuthStore } from '/src/store/useAuthStore'; // zustand 스토어 import
 
 function LoginPage() {
   const [email, setEmail] = useState('');

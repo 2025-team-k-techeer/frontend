@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-import HeaderBack from '../components/Header/HeaderBack';
-import Title from '../components/Title/Title';
-import Detail from '../components/Detail';
-import TipSection from '../components/Tip/TipSection'; // 팁 섹션 컴포넌트 불러오기
-import ButtonAction from '../components/Button/ButtonAction';
-import { useRoomStyleStore } from '../store/useRoomStyleStore';
-import { useResultGenerationStore } from '../store/useResultGenerationStore';
-import { postGenerateResult } from '../api/generate-resultApi';
+import HeaderBack from '/src/components/Header/HeaderBack';
+import Title from '/src/components/Title/Title';
+import Detail from '/src/components/Detail';
+import TipSection from '/src/components/Tip/TipSection'; // 팁 섹션 컴포넌트 불러오기
+import ButtonAction from '/src/components/Button/ButtonAction';
+import { useRoomStyleStore } from '/src/store/useRoomStyleStore';
+import { useResultGenerationStore } from '/src/store/useResultGenerationStore';
+import { postGenerateResult } from '/src/api/generate-resultApi';
 import { useCallback } from 'react';
 import debounce from 'lodash.debounce';
 import { useNavigate } from 'react-router-dom';
@@ -30,7 +30,7 @@ export default function RoomDetail() {
     debounce((value) => {
       setPrompt(value);
       console.log('prompt:', value);
-    }, 700),
+    }, 600),
     []
   );
 

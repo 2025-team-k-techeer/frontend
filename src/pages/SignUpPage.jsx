@@ -1,13 +1,13 @@
 // src/pages/SignUpPage.jsx
 import React, { useState } from 'react';
-import HeaderBack from '../components/Header/HeaderBack';
-import InputNickname from '../components/Sign/InputNickname';
-import InputEmail from '../components/Sign/InputEmail';
-import InputPassword from '../components/Sign/InputPassword';
-import InputPasswordConfirm from '../components/Sign/InputPasswordConfirm';
-import SignUpButton from '../components/Button/SignUpButton';
-import { postSignup } from '../api/signupApi';
-//import { useAuthStore } from '../store/useAuthStore';
+import HeaderBack from '/src/components/Header/HeaderBack';
+import InputNickname from '/src/components/Sign/InputNickname';
+import InputEmail from '/src/components/Sign/InputEmail';
+import InputPassword from '/src/components/Sign/InputPassword';
+import InputPasswordConfirm from '/src/components/Sign/InputPasswordConfirm';
+import SignUpButton from '/src/components/Button/SignUpButton';
+import { postSignup } from '/src/api/signupApi';
+//import { useAuthStore } from '/src/store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 
 const SignUpPage = () => {
