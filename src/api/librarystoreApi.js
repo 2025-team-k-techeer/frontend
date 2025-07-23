@@ -1,4 +1,4 @@
-import { jsonAxios } from '../configs/axios.config';
+import { jsonAxios } from '/src/configs/axios.config';
 
 /**
  * 내 인테리어 저장 API (POST /interiors/my-interior)

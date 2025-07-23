@@ -1,5 +1,5 @@
 // src/api/loginApi.js
-import { jsonAxios } from '../configs/axios.config'; // jsonAxios 인스턴스 임포트
+import { jsonAxios } from '/src/configs/axios.config'; // jsonAxios 인스턴스 임포트
 
 /**
  * 인테리어 결과 생성 (POST /interiors/generate)

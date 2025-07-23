@@ -2,9 +2,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './Navigation.css';
-import HomeIcon from '../../assets/Icon/Home.svg?react';
-import LibraryIcon from '../../assets/Icon/Library.svg?react';
-import ProfileIcon from '../../assets/Icon/Profile.svg?react';
+import HomeIcon from '/src/assets/Icon/Home.svg?react';
+import LibraryIcon from '/src/assets/Icon/Library.svg?react';
+import ProfileIcon from '/src/assets/Icon/Profile.svg?react';
 
 function Navigation() {
   // 2. 활성/비활성 스타일에 따라 클래스 이름을 반환하는 함수를 만듭니다.

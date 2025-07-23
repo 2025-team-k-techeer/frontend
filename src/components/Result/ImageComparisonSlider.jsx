@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import PlusIcon from '../../assets/Icon/Plus.jsx';
+import PlusIcon from '/src/assets/Icon/Plus.jsx';
 
 function ImageComparisonSlider({
   originalImageUrl,

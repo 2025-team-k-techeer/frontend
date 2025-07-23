@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import HeaderBack from '../components/Header/HeaderBack';
-import ButtonAction from '../components/Button/ButtonAction';
-import ButtonS from '../components/Button/ButtonS';
-import Title from '../components/Title/Title';
-import LivingRoomIcon from '../assets/Icon/LivingRoom.svg?react';
-import BedroomIcon from '../assets/Icon/Bedroom.svg?react';
-import StudyIcon from '../assets/Icon/StudyRoom.svg?react';
-import OneroomIcon from '../assets/Icon/OneRoom.svg?react';
-import EtcIcon from '../assets/Icon/Ect.svg?react';
+import HeaderBack from '/src/components/Header/HeaderBack';
+import ButtonAction from '/src/components/Button/ButtonAction';
+import ButtonS from '/src/components/Button/ButtonS';
+import Title from '/src/components/Title/Title';
+import LivingRoomIcon from '/src/assets/Icon/LivingRoom.svg?react';
+import BedroomIcon from '/src/assets/Icon/BedRoom.svg?react';
+import StudyIcon from '/src/assets/Icon/StudyRoom.svg?react';
+import OneroomIcon from '/src/assets/Icon/OneRoom.svg?react';
+import EtcIcon from '/src/assets/Icon/Ect.svg?react';
 
 import { useNavigate } from 'react-router-dom';
-import { useRoomStyleStore } from '../store/useRoomStyleStore';
+import { useRoomStyleStore } from '/src/store/useRoomStyleStore';
 
 function RoomType() {
   // 2. 어떤 버튼이 선택됐는지 기억할 상태를 만듭니다. 초기값은 null (아무것도 선택 안됨)

@@ -2,22 +2,22 @@
 
 import React, { useState, useCallback } from 'react';
 
-import HeaderBack from '../components/Header/HeaderBack';
+import HeaderBack from '/src/components/Header/HeaderBack';
 
-import Title from '../components/Title/Title';
-import ButtonS from '../components/Button/ButtonS';
-import StyleModal from '../components/StyleModal';
-import ButtonAction from '../components/Button/ButtonAction';
-import ModernIcon from '../assets/Icon/Modern.svg?react';
-import ClassicIcon from '../assets/Icon/Classic.svg?react';
-import NaturalIcon from '../assets/Icon/Natural.svg?react';
-import EuropeIcon from '../assets/Icon/Europe.svg?react';
-import IndustrialIcon from '../assets/Icon/Industrial.svg?react';
-import MinimalIcon from '../assets/Icon/Mimimal.svg?react';
-import TribalIcon from '../assets/Icon/Trival.svg?react';
-import RetroIcon from '../assets/Icon/Retro.svg?react';
+import Title from '/src/components/Title/Title';
+import ButtonS from '/src/components/Button/ButtonS';
+import StyleModal from '/src/components/StyleModal';
+import ButtonAction from '/src/components/Button/ButtonAction';
+import ModernIcon from '/src/assets/Icon/Modern.svg?react';
+import ClassicIcon from '/src/assets/Icon/Classic.svg?react';
+import NaturalIcon from '/src/assets/Icon/Natural.svg?react';
+import EuropeIcon from '/src/assets/Icon/Europe.svg?react';
+import IndustrialIcon from '/src/assets/Icon/Industrial.svg?react';
+import MinimalIcon from '/src/assets/Icon/Mimimal.svg?react';
+import TribalIcon from '/src/assets/Icon/Trival.svg?react';
+import RetroIcon from '/src/assets/Icon/Retro.svg?react';
 import { useNavigate } from 'react-router-dom';
-import { useRoomStyleStore } from '../store/useRoomStyleStore';
+import { useRoomStyleStore } from '/src/store/useRoomStyleStore';
 
 // import { ModernIcon, NordicIcon, ... } from '../components/icons';
 

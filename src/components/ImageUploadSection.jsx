@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback } from 'react';
-import Camera from '../assets/Icon/Camera.jsx';
-import LeftArrow from '../assets/Icon/LeftArrow.jsx';
-import Circle from '../assets/Icon/Circle.jsx';
+import Camera from '/src/assets/Icon/Camera.jsx';
+import LeftArrow from '/src/assets/Icon/LeftArrow.jsx';
+import Circle from '/src/assets/Icon/Circle.jsx';
 // 카메라 모달 열기
 function ImageUploadSection({
   uploadedImage,

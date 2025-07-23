@@ -1,5 +1,5 @@
 import React from 'react';
-import ArrowCycleIcon from '../../assets/Icon/ArrowCycle.jsx';
+import ArrowCycleIcon from '/src/assets/Icon/ArrowCycle.jsx';
 
 function RegenerateButton({ onRegenerate, isLoading = false }) {
   return (

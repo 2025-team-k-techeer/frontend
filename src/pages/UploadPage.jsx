@@ -1,12 +1,12 @@
 import { useState, useRef } from 'react';
-import HeaderBack from '../components/Header/HeaderBack';
-import Title from '../components/Title/Title.jsx';
-import ImageUploadSection from '../components/ImageUploadSection';
-import ExamplePhotos from '../components/Tip/ExamplePhotos';
-import ActionButton from '../components/Button/ButtonAction.jsx';
+import HeaderBack from '/src/components/Header/HeaderBack';
+import Title from '/src/components/Title/Title.jsx';
+import ImageUploadSection from '/src/components/ImageUploadSection';
+import ExamplePhotos from '/src/components/Tip/ExamplePhotos';
+import ActionButton from '/src/components/Button/ButtonAction.jsx';
 import { useNavigate } from 'react-router-dom';
-import { postUploadImage } from '../api/imageuploadApi';
-import { useRoomStyleStore } from '../store/useRoomStyleStore';
+import { postUploadImage } from '/src/api/imageuploadApi';
+import { useRoomStyleStore } from '/src/store/useRoomStyleStore';
 
 // Shadcn UI는 코드를 직접 복사해서 사용하므로 별도의 import가 필요 없습니다.
 // 아래 컴포넌트 함수들을 이 파일 안에 정의하거나,
