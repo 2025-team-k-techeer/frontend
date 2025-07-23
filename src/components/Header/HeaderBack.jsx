@@ -1,6 +1,6 @@
 // Header.jsx
 import React from 'react';
-import LeftArrow from '../../assets/Icon/LeftArrow';
+import LeftArrow from '/src/assets/Icon/LeftArrow';
 
 function HeaderBack({
   title = '프로필',

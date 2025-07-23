@@ -1,6 +1,6 @@
 // ProfileInfo.jsx
 import React from 'react';
-import EditIcon from '../assets/Icon/Edit.svg?react';
+import EditIcon from '/src/assets/Icon/Edit.svg?react';
 
 // props로 user 객체를 받음
 function ProfileInfo({ user }) {

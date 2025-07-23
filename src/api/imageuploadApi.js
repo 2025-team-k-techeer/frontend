@@ -1,5 +1,5 @@
 // src/api/imageuploadApi.js
-import { jsonAxios } from '../configs/axios.config'; // jsonAxios 인스턴스 임포트
+import { jsonAxios } from '/src/configs/axios.config'; // jsonAxios 인스턴스 임포트
 
 /**
  * 이미지 파일을 GCS에 업로드하고, 공개 URL과 난독화된 파일명을 반환합니다.

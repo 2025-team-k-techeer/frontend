@@ -1,5 +1,5 @@
 import React from 'react';
-import OpenNew from '../../assets/Icon/OpenNew.jsx';
+import OpenNew from '/src/assets/Icon/OpenNew.jsx';
 
 function FurnitureDrawer({ isOpen, furniture, onClose, onARView }) {
   if (!isOpen || !furniture) return null;

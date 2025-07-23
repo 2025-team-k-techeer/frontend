@@ -1,5 +1,5 @@
 // src/api/signupApi.js
-import { jsonAxios } from '../configs/axios.config'; // jsonAxios 인스턴스 임포트
+import { jsonAxios } from '/src/configs/axios.config'; // jsonAxios 인스턴스 임포트
 
 /**
  * 회원가입 (POST /users/signup)

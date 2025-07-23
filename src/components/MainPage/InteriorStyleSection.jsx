@@ -1,5 +1,5 @@
 import React from 'react';
-import StyleCard from './StyleCard'; // StyleCard 컴포넌트를 import 합니다.
+import StyleCard from '/src/components/MainPage/StyleCard'; // StyleCard 컴포넌트를 import 합니다.
 
 const InteriorStyleSection = ({ styles }) => {
   return (

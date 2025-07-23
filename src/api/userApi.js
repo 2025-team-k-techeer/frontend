@@ -1,6 +1,6 @@
 // src/api/userApi.js
-import { jsonAxios } from '../configs/axios.config.js';
-import { useAuthStore } from '../store/useAuthStore';
+import { jsonAxios } from '/src/configs/axios.config.js';
+import { useAuthStore } from '/src/store/useAuthStore';
 
 /**
  * 마이페이지 데이터(프로필 정보, 라이브러리)를 조회하는 API

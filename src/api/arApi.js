@@ -1,4 +1,4 @@
-import { jsonAxios } from '../configs/axios.config';
+import { jsonAxios } from '/src/configs/axios.config';
 
 // AR 유사 객체 모델 요청 API
 export const fetchSimilarARObject = async ({ label }) => {
