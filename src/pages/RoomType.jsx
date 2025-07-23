@@ -4,7 +4,7 @@ import ButtonAction from '/src/components/Button/ButtonAction';
 import ButtonS from '/src/components/Button/ButtonS';
 import Title from '/src/components/Title/Title';
 import LivingRoomIcon from '/src/assets/Icon/LivingRoom.svg?react';
-import BedroomIcon from '/src/assets/Icon/Bedroom.svg?react';
+import BedroomIcon from '/src/assets/Icon/BedRoom.svg?react';
 import StudyIcon from '/src/assets/Icon/StudyRoom.svg?react';
 import OneroomIcon from '/src/assets/Icon/OneRoom.svg?react';
 import EtcIcon from '/src/assets/Icon/Ect.svg?react';
