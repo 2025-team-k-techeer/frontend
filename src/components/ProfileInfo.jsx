@@ -2,12 +2,16 @@
 import React from 'react';
 import EditIcon from '../assets/Icon/Edit.svg?react';
 
-function ProfileInfo() {
+// props로 user 객체를 받음
+function ProfileInfo({ user }) {
+  // user 데이터가 없으면 렌더링하지 않거나 로딩 상태 표시
+  if (!user) return null;
   return (
     <section className="flex items-center gap-5 p-5 bg-sage-bg rounded-2xl mb-8">
       <div className="relative">
         <img
-          src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=1780&auto=format&fit=crop"
+          // API에서 받은 프로필 이미지 URL 사용
+          src={user.profile_image_url}
           className="w-20 h-20 rounded-full object-cover border-2 border-white"
           onError={(e) => {
             e.target.onerror = null;
@@ -20,8 +24,9 @@ function ProfileInfo() {
         </button>
       </div>
       <div>
-        <h2 className="text-xl font-bold text-brand-charcoal">Gemini</h2>
-        <p className="text-sm text-gray-600">gemini.user@email.com</p>
+        {/* API에서 받은 사용자 이름과 이메일 사용 */}
+        <h2 className="text-xl font-bold text-brand-charcoal">{user.name}</h2>
+        <p className="text-sm text-gray-600">{user.email}</p>
       </div>
     </section>
   );
