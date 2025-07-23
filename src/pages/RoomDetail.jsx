@@ -68,7 +68,7 @@ export default function RoomDetail() {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto flex flex-col pt-20 min-h-screen bg-white lg:max-w-6xl">
+    <div className="w-full max-w-7xl mx-auto flex flex-col pt-20 min-h-screen bg-white lg:max-w-4xl">
       <HeaderBack title="" bgColor="bg-sage-bg" />
       <main className="flex-1 flex flex-col px-6 pb-6">
         <Title

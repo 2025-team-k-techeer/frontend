@@ -7,14 +7,16 @@ import ARIcon from '../../assets/Icon/AR.svg?react';
 const HowToUseSection = () => {
   return (
     <section>
-      <h3 className="text-xl font-bold text-brand-charcoal mb-4">사용법</h3>
-      <div className="bg-gray-50 p-4 rounded-2xl flex justify-around items-center text-center">
+      <h3 className="text-xl pb-3 font-bold text-brand-charcoal mb-2 lg:p-5">
+        사용법
+      </h3>
+      <div className="bg-gray-50 pb-3 rounded-2xl flex justify-around items-center text-center">
         {/* 이미지 업로드 */}
         <Link
           to="/Manual#upload"
           className="flex flex-col items-center space-y-2"
         >
-          <div className="bg-white p-4 rounded-full shadow-sm">
+          <div className="bg-white rounded-full shadow-sm pb-1 lg:pb-3">
             <PictureIcon className="h-10 w-10 text-brand-charcoal" />
           </div>
           <span className="text-sm font-medium text-gray-600">
@@ -27,7 +29,7 @@ const HowToUseSection = () => {
           to="/Manual#select"
           className="flex flex-col items-center space-y-2"
         >
-          <div className="bg-white p-4 rounded-full shadow-sm">
+          <div className="bg-white  rounded-full shadow-sm pb-1 lg:pb-3">
             <AIIcon className="h-10 w-10 text-brand-charcoal" />
           </div>
           <span className="text-sm font-medium text-gray-600">AI 생성</span>
@@ -35,10 +37,12 @@ const HowToUseSection = () => {
 
         {/* AR */}
         <Link to="/Manual#ar" className="flex flex-col items-center space-y-2">
-          <div className="w-20 h-20 flex items-center justify-center -m-2">
+          <div className="bg-white  rounded-full shadow-sm pb-1 lg:pb-3">
             <ARIcon className="h-10 w-10 text-brand-charcoal" />
           </div>
-          <span className="text-sm font-medium text-gray-600 mt-0">AR</span>
+          <span className="text-sm font-medium text-gray-600 mt-0">
+            AR로 보기
+          </span>
         </Link>
       </div>
     </section>

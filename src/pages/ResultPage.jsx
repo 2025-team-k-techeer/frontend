@@ -142,7 +142,7 @@ function ResultPage() {
 
   if (isLoading || !result) {
     return (
-      <div className="relative w-full h-screen bg-sage-bg flex items-center justify-center">
+      <div className="relative w-full h-screen bg-sage-bg flex items-center justify-center ">
         <Loading />
       </div>
     );
@@ -160,7 +160,7 @@ function ResultPage() {
       </header>
 
       {/* 이미지 슬라이더 */}
-      <main className="w-full h-full">
+      <main className="w-full h-full ">
         <ImageComparisonSlider
           originalImageUrl={result.original_image_url}
           generatedImageUrl={result.generated_image_url}

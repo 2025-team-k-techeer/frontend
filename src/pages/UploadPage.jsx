@@ -95,7 +95,7 @@ export default function UploadPage() {
     <div className="bg-white font-ttlaundrygothicb">
       <div
         className="w-full mx-auto flex flex-col pt-20 min-h-screen 
-                   lg:max-w-6xl"
+                   lg:max-w-4xl"
       >
         <HeaderBack
           title=""
