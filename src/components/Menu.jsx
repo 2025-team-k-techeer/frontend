@@ -52,12 +52,12 @@ function DrawerMenu({ isOpen, onClose }) {
         {/* 헤더: 닫기 버튼 */}
         <header className="flex justify-between items-center mb-8">
           {/* 로그인 버튼 */}
-          <div
+          <a
             href="/login"
             className="text-gray-500 w-24 text-center text-base font-bold py-2 rounded-xl border border-gray-300 hover:bg-white hover:text-black transition-colors duration-200"
           >
             로그인하기
-          </div>
+          </a>
           <button onClick={onClose} className="p-2">
             <CloseIcon />
           </button>
@@ -69,24 +69,18 @@ function DrawerMenu({ isOpen, onClose }) {
           <nav className="flex flex-col mx-auto">
             <a
               href="/upload"
-              className="text-2xl py-8 border-b border-gray-400 text-gray-700 w-full text-center"
+              className="text-2xl py-9 border-b border-gray-400 text-gray-700 w-full text-center"
             >
               시작하기
             </a>
-            <a href="/library" className="text-xl py-8 text-gray-500 mx-auto">
+            <a href="/library" className="text-xl py-9 text-gray-500 mx-auto">
               라이브러리
             </a>
-            <a href="/profile" className="text-xl py-8 text-gray-500 mx-auto">
+            <a href="/profile" className="text-xl py-9 text-gray-500 mx-auto">
               내 프로필
             </a>
-            <a href="/manual" className="text-xl py-8 text-gray-500 mx-auto">
+            <a href="/manual" className="text-xl py-9 text-gray-500 mx-auto">
               사용법
-            </a>
-            <a
-              href="/stylelist"
-              className="text-xl py-8  text-gray-500 mx-auto"
-            >
-              인테리어 스타일
             </a>
             {/* 로그아웃 버튼 */}
             <div
