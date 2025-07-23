@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '/src/store/useAuthStore';
+import ToastMessage from '/src/components/Result/ToastMessage';
 
 import Header from '/src/components/Header/HeaderM';
 import DrawerMenu from '/src/components/Menu';
@@ -67,6 +70,22 @@ const sampleStyles = [
 
 function MainPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [toastVisible, setToastVisible] = useState(false);
+  const navigate = useNavigate();
+  const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+
+  const handleStartClick = (e) => {
+    e.preventDefault();
+    if (isLoggedIn) {
+      navigate('/upload');
+    } else {
+      setToastVisible(true);
+      setTimeout(() => {
+        setToastVisible(false);
+        navigate('/login');
+      }, 1000);
+    }
+  };
 
   return (
     <div
@@ -81,7 +100,7 @@ function MainPage() {
           <HeroBanner />
 
           {/* 시작하기 버튼 컴포넌트 사용 */}
-          <ButtonL href="/upload" variant="primary">
+          <ButtonL onClick={handleStartClick} variant="primary">
             시작하기
           </ButtonL>
           {/* 사용법 섹션 컴포넌트 사용 */}
@@ -95,6 +114,11 @@ function MainPage() {
       {/* 햄버거 메뉴 컴포넌트 사용 */}
       <DrawerMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       <Navigation />
+      <ToastMessage
+        message="로그인이 필요합니다."
+        isVisible={toastVisible}
+        onClose={() => setToastVisible(false)}
+      />
     </div>
   );
 }
