@@ -112,9 +112,9 @@ function ImageComparisonSlider({
           const { bounding_box } = furniture;
           if (!bounding_box) return null;
           // bounding_box 좌표가 픽셀 단위라고 가정하고 퍼센트로 변환
-          // 실제 이미지 크기에 따라 조정이 필요할 수 있음
-          const left = ((bounding_box.x + bounding_box.width / 2) / 1920) * 100; // 1920px 기준
-          const top = ((bounding_box.y + bounding_box.height / 2) / 1080) * 100; // 1080px 기준
+          // width, height는 사용하지 않고 x, y만 사용
+          const left = (bounding_box.x / 1920) * 100; // 1920px 기준
+          const top = (bounding_box.y / 1080) * 100; // 1080px 기준
 
           return (
             <button

@@ -8,8 +8,11 @@ function FurnitureDrawer({ isOpen, furniture, onClose, onARView }) {
     if (furniture.danawa_products && furniture.danawa_products.length > 0) {
       const product = furniture.danawa_products[0];
       return {
-        name: product.product_name,
-        price: `${product.price.toLocaleString()}원`,
+        name: product.product_name || product.name,
+        price:
+          typeof product.price === 'number'
+            ? `${product.price.toLocaleString()}원`
+            : '가격 정보 없음',
         image: product.image_url,
         url: product.product_url,
       };

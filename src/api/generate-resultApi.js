@@ -38,3 +38,25 @@ export const postGenerateResult = async ({
     throw new Error(msg);
   }
 };
+
+// 내 인테리어 저장 API
+export async function saveMyInterior({ interior_id, token }) {
+  try {
+    const response = await jsonAxios.post(
+      '/interiors/my-interior',
+      { interior_id },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    // axios 에러 처리
+    if (error.response && error.response.data && error.response.data.message) {
+      throw new Error(error.response.data.message);
+    }
+    throw new Error('저장에 실패했습니다.');
+  }
+}
