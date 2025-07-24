@@ -12,7 +12,7 @@ function LibraryPage() {
       <HeaderBack
         className="bg-white"
         title="라이브러리"
-        bgColor="bg-sage" // 배경색을 sage로 변경
+        bgColor="bg-white" // 배경색을 sage로 변경
         showBorder={true} // 구분선 보임 (true는 기본값이므로 생략 가능)
       />
       <main className="bg-white w-full max-w-6xl mx-auto pt-20 flex flex-col min-h-screen">
