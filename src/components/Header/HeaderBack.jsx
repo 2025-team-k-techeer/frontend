@@ -20,7 +20,7 @@ function HeaderBack({
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full p-4 flex items-center z-10 flex-shrink-0 ${headerBgClass} ${borderClass}`}
+      className={`fixed top-0 left-0 w-full p-4 flex items-center z-10 flex-shrink-0 bg-sage-bg ${headerBgClass} ${borderClass}`}
     >
       <button
         onClick={handleGoBack}
