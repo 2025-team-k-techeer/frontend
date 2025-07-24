@@ -71,19 +71,19 @@ button:focus-visible {
 
 @font-face {
   font-family: 'TTLaundryGothic';
-  src: url('/src/assets/fonts/런드리고딕 Regular.woff') format('woff');
+  src: url('/src/assets/fonts/LaundryGothicRegular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'TTLaundryGothic';
-  src: url('/src/assets/fonts/런드리고딕 Bold.woff') format('woff');
+  src: url('/src/assets/fonts/LaundryGothicBold.woff') format('woff');
   font-weight: 700;
   font-style: normal;
 }
 body {
-  font-family: 'TTLaundryGothic', sans-serif;
+  font-family: 'TTLaundryGothic', sans-serif !important;
   scroll-behavior: smooth;
 }
 

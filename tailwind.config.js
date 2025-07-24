@@ -12,6 +12,7 @@ export default {
       },
       fontFamily: {
         laundry: ['TTLaundryGothic', 'sans-serif'],
+        sans: ['TTLaundryGothic', 'sans-serif'],
       },
     },
   },

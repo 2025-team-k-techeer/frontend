@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '/src/store/useAuthStore';
 
 // 닫기 아이콘 (요청대로 strokeWidth를 2로, 색상을 흰색으로 변경)
 function CloseIcon() {
@@ -33,6 +35,15 @@ function DrawerMenu({ isOpen, onClose }) {
       document.body.style.overflow = '';
     };
   }, [isOpen]);
+
+  const logout = useAuthStore((state) => state.logout);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    onClose && onClose();
+    navigate('/');
+  };
 
   return (
     <>
@@ -83,13 +94,13 @@ function DrawerMenu({ isOpen, onClose }) {
               사용법
             </a>
             {/* 로그아웃 버튼 */}
-            <div
+            <button
               type="button"
               className="text-base border-t border-gray-400 text-red-500 w-full text-center mt-4 py-7 hover:text-red-300 transition-colors duration-200 "
-              // onClick={() => { /* 추후 로그아웃 API 연동 */ }}
+              onClick={handleLogout}
             >
               로그아웃
-            </div>
+            </button>
           </nav>
         </main>
       </div>
