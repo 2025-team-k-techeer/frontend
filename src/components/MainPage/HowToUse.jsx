@@ -10,7 +10,7 @@ const HowToUseSection = () => {
       <h3 className="text-xl font-bold text-brand-charcoal mb-2 lg:p-5">
         사용법
       </h3>
-      <div className="bg-gray-200 p-6 rounded-2xl flex justify-around items-center text-center">
+      <div className="bg-sage-bg p-6 rounded-2xl flex justify-around items-center text-center">
         {/* 이미지 업로드 */}
         <Link
           to="/Manual#upload"
