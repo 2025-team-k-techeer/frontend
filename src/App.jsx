@@ -1,38 +1,42 @@
 // src/App.jsx
-import React from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
-import MainPage from '/src/pages/MainPage.jsx';
-import LibraryPage from '/src/pages/LibraryPage.jsx';
-import ProfilePage from '/src/pages/ProfilePage.jsx';
-import ManualPage from '/src/pages/ManualPage.jsx';
-import RoomType from '/src/pages/RoomType.jsx';
-import UploadPage from '/src/pages/UploadPage.jsx';
-import LoginPage from '/src/pages/LoginPage.jsx';
-import SignUpPage from '/src/pages/SignUpPage.jsx';
-import ResultPage from '/src/pages/ResultPage.jsx';
-import ARPage from '/src/pages/ARPage.jsx';
-import RoomDetail from '/src/pages/RoomDetail.jsx';
-import RoomStyle from '/src/pages/RoomStyle.jsx';
+
+// 동적 임포트
+const MainPage = lazy(() => import('/src/pages/MainPage.jsx'));
+const LibraryPage = lazy(() => import('/src/pages/LibraryPage.jsx'));
+const ProfilePage = lazy(() => import('/src/pages/ProfilePage.jsx'));
+const ManualPage = lazy(() => import('/src/pages/ManualPage.jsx'));
+const RoomType = lazy(() => import('/src/pages/RoomType.jsx'));
+const UploadPage = lazy(() => import('/src/pages/UploadPage.jsx'));
+const LoginPage = lazy(() => import('/src/pages/LoginPage.jsx'));
+const SignUpPage = lazy(() => import('/src/pages/SignUpPage.jsx'));
+const ResultPage = lazy(() => import('/src/pages/ResultPage.jsx'));
+const ARPage = lazy(() => import('/src/pages/ARPage.jsx'));
+const RoomDetail = lazy(() => import('/src/pages/RoomDetail.jsx'));
+const RoomStyle = lazy(() => import('/src/pages/RoomStyle.jsx'));
 
 export default function App() {
   return (
     <div>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/RoomType" element={<RoomType />} />
-          <Route path="/library" element={<LibraryPage />} />
-          <Route path="/Manual" element={<ManualPage />} />
-          <Route path="/upload" element={<UploadPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/RoomStyle" element={<RoomStyle />} />
-          <Route path="/RoomDetail" element={<RoomDetail />} />
-          <Route path="/result" element={<ResultPage />} />
-          <Route path="/ar" element={<ARPage />} />
-        </Routes>
+        <Suspense fallback={<div>로딩 중...</div>}>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/RoomType" element={<RoomType />} />
+            <Route path="/library" element={<LibraryPage />} />
+            <Route path="/Manual" element={<ManualPage />} />
+            <Route path="/upload" element={<UploadPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/RoomStyle" element={<RoomStyle />} />
+            <Route path="/RoomDetail" element={<RoomDetail />} />
+            <Route path="/result" element={<ResultPage />} />
+            <Route path="/ar" element={<ARPage />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
       <Analytics />
     </div>

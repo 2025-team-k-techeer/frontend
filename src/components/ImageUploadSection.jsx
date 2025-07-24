@@ -131,7 +131,7 @@ function ImageUploadSection({
             <img
               src={uploadedImage}
               alt="업로드된 사진 미리보기"
-              className="absolute inset-0 w-full h-full object-cover rounded-2xl"
+              className="absolute inset-0 w-full h-full object-contain rounded-2xl bg-white"
             />
             <button
               onClick={onRemoveImage}
