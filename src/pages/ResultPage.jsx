@@ -175,7 +175,7 @@ function ResultPage() {
           <div className="flex justify-between items-center max-w-md mx-auto gap-4">
             <button
               disabled
-              className="flex-1 bg-gray-400 text-white font-bold py-3 rounded-xl"
+              className=" bg-gray-400 text-white font-bold py-3 rounded-xl w-full"
             >
               저장됨
             </button>
