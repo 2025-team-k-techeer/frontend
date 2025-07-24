@@ -4,9 +4,12 @@ function HeroBanner() {
   return (
     <section className="relative rounded-2xl overflow-hidden shadow-lg aspect-video">
       <img
-        src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7"
+        src="/images/mainheader.webp"
         alt="메인 배너"
         className="w-full h-auto object-cover"
+        width={1762} // 실제 이미지 크기 예시
+        height={500} // 실제 이미지 크기 예시
+        loading="lazy"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
       <div className="absolute bottom-0 left-0 p-5 text-white font-laundry">

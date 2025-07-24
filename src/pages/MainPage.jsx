@@ -17,15 +17,13 @@ const sampleStyles = [
     id: 'style_minimal',
     name: '미니멀',
     description: '불필요한 장식을 최소화하고 본질에 집중하는 스타일입니다.',
-    example_image_url:
-      'https://images.unsplash.com/photo-1616046229478-9901c5536a45',
+    example_image_url: '/images/mainsub.webp',
   },
   {
     id: 'style_natural',
     name: '내추럴',
     description: '나무, 흙 등 자연 소재를 사용하여 편안함을 주는 스타일입니다.',
-    example_image_url:
-      'https://images.unsplash.com/photo-1616046229478-9901c5536a45',
+    example_image_url: '/images/mainsub.webp',
   },
   {
     id: 'style_nordic',
