@@ -71,19 +71,26 @@ button:focus-visible {
 
 @font-face {
   font-family: 'TTLaundryGothic';
-  src: url('/src/assets/fonts/LaundryGothicRegular.woff') format('woff');
+  src: url('/fonts/LaundryGothicRegular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'TTLaundryGothic';
-  src: url('/src/assets/fonts/LaundryGothicBold.woff') format('woff');
+  src: url('/fonts/LaundryGothicBold.woff') format('woff');
   font-weight: 700;
   font-style: normal;
 }
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-weight: 45 920;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/PretendardVariable.woff2') format('woff2-variations');
+}
 body {
-  font-family: 'TTLaundryGothic', sans-serif !important;
+  font-family: 'TTLaundryGothic', 'Pretendard Variable', sans-serif;
   scroll-behavior: smooth;
 }
 

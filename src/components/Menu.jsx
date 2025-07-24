@@ -94,13 +94,13 @@ function DrawerMenu({ isOpen, onClose }) {
               사용법
             </a>
             {/* 로그아웃 버튼 */}
-            <button
+            <a
               type="button"
               className="text-base border-t border-gray-400 text-red-500 w-full text-center mt-4 py-7 hover:text-red-300 transition-colors duration-200 "
               onClick={handleLogout}
             >
               로그아웃
-            </button>
+            </a>
           </nav>
         </main>
       </div>
