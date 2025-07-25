@@ -26,13 +26,13 @@ function RoomType() {
     etc: '기타',
   };
   return (
-    <div className="pt-20 mx-auto lg:max-w-4xl">
+    <div className="pt-16 mx-auto min-h -screen lg:max-w-4xl">
       <HeaderBack
         title=""
         bgColor="bg-sage-bg" // 배경색을 sage로 변경
         showBorder={true} // 구분선 보임 (true는 기본값이므로 생략 가능)
       />
-      <div className="p-4 ">
+      <div className="p-4 pb-24">
         <Title
           title="공간 유형을 선택해주세요"
           subtitle="공간 유형에 따라 알맞는 인테리어를 추천해드립니다."
@@ -76,7 +76,7 @@ function RoomType() {
           />
         </div>
       </div>
-      <footer className="p-4 flex-shrink-0">
+      <footer className="p-4 flex-shrink-0 fixed bottom-0 left-0 right-0 bg-white">
         <ButtonAction
           isDisabled={!selectedRoom}
           onClick={() => {

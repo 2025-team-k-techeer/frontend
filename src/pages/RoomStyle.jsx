@@ -64,14 +64,14 @@ function StyleSelectionPage() {
   }, []);
 
   return (
-    <div className="w-full mx-auto flex flex-col pt-20 min-h-screen lg:max-w-4xl">
+    <div className="w-full mx-auto flex flex-col pt-16 min-h-screen lg:max-w-4xl">
       {/* 헤더 부분 */}
       <HeaderBack title="" bgColor="bg-sage-bg" />
       {/* 메인 컨텐츠 */}
-      <main className="flex-1 flex flex-col px-6 pb-6 overflow-y-auto">
+      <main className="flex-1 flex flex-col px-6 pb-24 overflow-y-auto">
         <Title
-          title="원하는 인테리어 스타일을 선택해주세요"
-          subtitle="선택한 스타일에 맞춰 AI가 공간을 꾸며줍니다."
+          title="인테리어 스타일을 선택해주세요"
+          subtitle="선택한 스타일에 맞춰 AI가 공간을 꾸며줍니다.<br/>꾹 누르면 스타일에 대한 설명을 확인할 수 있습니다."
         />
 
         {/* 스타일 버튼 그리드, map 형식으로 데이터를 불러옵니다. */}
@@ -92,7 +92,7 @@ function StyleSelectionPage() {
         </div>
       </main>
       {/* 푸터 (다음 버튼) */}
-      <footer className="p-4 flex-shrink-0">
+      <footer className="fixed bottom-0 left-0 right-0 p-4 flex-shrink-0 bg-white">
         <ButtonAction
           onClick={() => {
             navigate('/RoomDetail');

@@ -61,7 +61,7 @@ function ButtonS({
         {/* Icon이 존재할 때만 렌더링하도록 변경 */}
         {Icon && <Icon className={`h-8 w-8 ${iconColor}`} />}
       </div>
-      <span className="font-semibold text-base text-center">{label}</span>
+      <span className="font-bold text-base text-center">{label}</span>
     </button>
   );
 }
