@@ -26,7 +26,7 @@ function RoomType() {
     etc: '기타',
   };
   return (
-    <div className="pt-16 mx-auto min-h -screen lg:max-w-4xl">
+    <div className="pt-16 mx-auto min-h-screen lg:max-w-4xl">
       <HeaderBack
         title=""
         bgColor="bg-sage-bg" // 배경색을 sage로 변경
