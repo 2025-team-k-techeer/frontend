@@ -119,7 +119,7 @@ export default function UploadPage() {
           />
           <ExamplePhotos />
         </main>
-        <footer className="p-4 flex-shrink-0">
+        <footer className="fixed bottom-0 left-0 right-0 p-4 flex-shrink-0">
           <ActionButton
             onClick={handleUploadAndNext}
             isDisabled={!uploadedImage}
