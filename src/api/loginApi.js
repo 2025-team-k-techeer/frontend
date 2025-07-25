@@ -5,15 +5,15 @@ import qs from 'qs'; // qs 라이브러리로 urlencoded 변환
 /**
  * 로그인 (POST /users/login)
  */
-export const postLogin = async ({ username, password }) => {
+export const postLogin = async ({ email, password }) => {
   // (Optional) Frontend validation for required fields
-  if (!username || !password) {
+  if (!email || !password) {
     throw new Error('Please fill in all fields.');
   }
 
   try {
     const requestData = qs.stringify({
-      username: username,
+      username: email,
       password: password,
       grant_type: 'password',
     });
