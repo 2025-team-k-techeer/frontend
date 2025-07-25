@@ -12,9 +12,12 @@ import { useRoomStyleStore } from '/src/store/useRoomStyleStore';
 import { postGenerateResult } from '/src/api/generate-resultApi';
 import { saveMyInterior } from '/src/api/librarystoreApi';
 import { fetchSimilarARObject } from '/src/api/arApi';
+import useLibraryStore from '/src/store/uselibraryStore.js';
 
 function ResultPage() {
+  // 두 경로 모두 지원
   const { result, setResult } = useResultGenerationStore();
+  const { interiors, selectedIndex } = useLibraryStore();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedFurniture, setSelectedFurniture] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -29,14 +32,17 @@ function ResultPage() {
   const style = useRoomStyleStore((state) => state.style);
   const prompt = useRoomStyleStore((state) => state.prompt);
 
-  // mount 시 zustand result가 없으면 로딩
+  // 어떤 result를 쓸지 결정
+  const pageResult =
+    result ||
+    (Array.isArray(interiors) &&
+      selectedIndex !== null &&
+      interiors[selectedIndex]) ||
+    null;
+
   useEffect(() => {
-    if (!result) {
-      setIsLoading(true);
-    } else {
-      setIsLoading(false);
-    }
-  }, [result]);
+    setIsLoading(!pageResult);
+  }, [pageResult]);
 
   // 재생성 버튼 클릭 시
   const handleRegenerate = async () => {
@@ -120,7 +126,7 @@ function ResultPage() {
         setIsLoading(false);
         return;
       }
-      const data = await saveMyInterior({ interior_id: result.id, token });
+      const data = await saveMyInterior({ interior_id: pageResult.id, token });
       showToast('저장 성공!');
       setIsSaved(true);
       console.log(data);
@@ -133,14 +139,14 @@ function ResultPage() {
 
   // detected_parts를 furnitures로 변환(구조 맞추기)
   const furnitures =
-    result?.detected_parts?.map((part) => ({
+    pageResult?.detected_parts?.map((part) => ({
       ...part,
       label: part.label || part.id,
       danawa_products: part.danawa_products,
       bounding_box: part.bounding_box,
     })) || [];
 
-  if (isLoading || !result) {
+  if (isLoading || !pageResult) {
     return (
       <div className="relative w-full h-screen bg-sage-bg flex items-center justify-center ">
         <Loading />
@@ -162,8 +168,8 @@ function ResultPage() {
       {/* 이미지 슬라이더 */}
       <main className="w-full h-full ">
         <ImageComparisonSlider
-          originalImageUrl={result.original_image_url}
-          generatedImageUrl={result.generated_image_url}
+          originalImageUrl={pageResult.original_image_url}
+          generatedImageUrl={pageResult.generated_image_url}
           furnitures={furnitures}
           onFurnitureClick={handleFurnitureClick}
         />

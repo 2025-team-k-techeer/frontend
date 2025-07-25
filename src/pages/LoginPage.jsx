@@ -27,14 +27,13 @@ function LoginPage() {
     setErrorMsg('');
     try {
       const data = await postLogin({ email, password });
-      console.log('post 성공', data);
+      console.log('post 성공');
 
-      if (data.status === 'success' && data.access_token) {
-        login({ token: data.access_token }); // zustand에 access_token 저장
-        //localStorage.setItem('token', data.access_token); // localStorage에도 access_token 저장
+      if (data.access_token) {
+        login({ access_token: data.access_token }); // zustand에 access_token 저장 및 localStorage 저장
         navigate('/'); //로그인 성공 시 메인 페이지로 이동
       } else {
-        setErrorMsg(data.message || '로그인에 실패했습니다.'); //API 응답 메시지 표시
+        setErrorMsg('로그인에 실패했습니다.'); //API 응답 메시지 표시
         setPassword(''); //비밀번호 입력 필드 초기화
         setTimeout(() => setErrorMsg(''), 1000); //1초 후 에러 메시지 초기화
       }
