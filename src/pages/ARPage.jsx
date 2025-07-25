@@ -45,6 +45,8 @@ function ARPage() {
   // 크기 정보 카드 관련 변수들
 
   useEffect(() => {
+    // models 배열 콘솔 출력
+    console.log('AR models:', models);
     // 컴포넌트가 마운트될 때만 실행
     init();
     setupFurnitureSelection();

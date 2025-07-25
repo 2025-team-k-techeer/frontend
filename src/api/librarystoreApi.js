@@ -25,3 +25,23 @@ export async function saveMyInterior({ interior_id, token }) {
     throw new Error('저장에 실패했습니다.');
   }
 }
+
+/**
+ * 내 라이브러리 조회 API (GET /api/interior/user-library)
+ * @param {string} token - Bearer 토큰
+ */
+export async function getUserLibrary(token) {
+  try {
+    const response = await jsonAxios.get('/api/interior/user-library', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.message) {
+      throw new Error(error.response.data.message);
+    }
+    throw new Error('라이브러리 조회에 실패했습니다.');
+  }
+}

@@ -9,17 +9,12 @@ function FurnitureDrawer({ isOpen, furniture, onClose, onARView }) {
       const product = furniture.danawa_products[0];
       return {
         name: product.product_name || product.name,
-        price:
-          typeof product.price === 'number'
-            ? `${product.price.toLocaleString()}원`
-            : '가격 정보 없음',
         image: product.image_url,
         url: product.product_url,
       };
     }
     return {
       name: furniture.label,
-      price: '가격 정보 없음',
       image: 'https://placehold.co/56x56/cccccc/ffffff?text=Img',
       url: '',
     };
@@ -64,7 +59,6 @@ function FurnitureDrawer({ isOpen, furniture, onClose, onARView }) {
         />
         <div className="flex-1">
           <p className="font-semibold text-gray-800">{furnitureInfo.name}</p>
-          <p className="text-sm text-gray-500">{furnitureInfo.price}</p>
         </div>
         <button
           onClick={() => onARView(furniture)}
