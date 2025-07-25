@@ -13,7 +13,7 @@ export const postLogin = async ({ email, password }) => {
   try {
     // jsonAxios 인스턴스를 사용하여 POST 요청을 보냅니다.
     // 두 번째 인자(객체)는 요청 본문(Request Body)으로 JSON 형태로 서버에 전송됩니다.
-    const response = await jsonAxios.post('/api/user/login', {
+    const response = await jsonAxios.post('/users/login', {
       email,
       password,
     });
