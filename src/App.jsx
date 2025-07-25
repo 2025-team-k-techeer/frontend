@@ -2,6 +2,7 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
+import ScrollToTop from './components/ScrollToTop';
 
 // 동적 임포트
 const MainPage = lazy(() => import('/src/pages/MainPage.jsx'));
@@ -21,6 +22,7 @@ export default function App() {
   return (
     <div>
       <BrowserRouter>
+        <ScrollToTop />
         <Suspense fallback={<div>로딩 중...</div>}>
           <Routes>
             <Route path="/" element={<MainPage />} />
