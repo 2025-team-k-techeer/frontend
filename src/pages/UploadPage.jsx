@@ -102,7 +102,7 @@ export default function UploadPage() {
           bgColor="bg-sage-bg"
           showBorder={false} // 구분선 보임 (true는 기본값이므로 생략 가능)
         />
-        <main className="flex-1 flex flex-col p-4">
+        <main className="flex-1 flex flex-col p-4 pb-24">
           <Title
             title="방의 사진을 업로드해주세요."
             subtitle="인테리어를 적용할 공간의 사진을 올리면 AI가 분석합니다."
