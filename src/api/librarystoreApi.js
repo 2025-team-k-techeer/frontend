@@ -32,7 +32,7 @@ export async function saveMyInterior({ interior_id, token }) {
  */
 export async function getUserLibrary(token) {
   try {
-    const response = await jsonAxios.get('/api/interior/user-library', {
+    const response = await jsonAxios.get('/interiors/user-library', {
       headers: {
         Authorization: `Bearer ${token}`,
       },

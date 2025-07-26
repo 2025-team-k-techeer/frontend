@@ -68,13 +68,21 @@ export default function UploadPage() {
   async function handleUploadAndNext() {
     if (!uploadedImage) return;
     try {
+      // access_token 가져오기
+      const access_token = localStorage.getItem('token');
+
+      if (!access_token) {
+        alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+        navigate('/login');
+        return;
+      }
+
       // DataURL → File 변환
       const res = await fetch(uploadedImage);
       const blob = await res.blob();
       const file = new File([blob], 'upload.jpg', { type: 'image/jpeg' });
 
-      // access_token 가져오기
-      const access_token = localStorage.getItem('token');
+      console.log('토큰 확인:', access_token ? '토큰 존재' : '토큰 없음');
 
       // 이미지 업로드 (access_token 포함)
       const { url, filename } = await postUploadImage(file, access_token);
@@ -87,7 +95,15 @@ export default function UploadPage() {
       navigate('/RoomType');
     } catch (err) {
       console.error('이미지 업로드 실패:', err);
-      alert('이미지 업로드 실패: ' + err.message);
+
+      if (err.message.includes('로그인이 필요하거나 토큰이 만료되었습니다')) {
+        alert(
+          '로그인이 필요하거나 토큰이 만료되었습니다. 로그인 페이지로 이동합니다.'
+        );
+        navigate('/login');
+      } else {
+        alert('이미지 업로드 실패: ' + err.message);
+      }
     }
   }
 
