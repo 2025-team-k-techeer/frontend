@@ -15,7 +15,6 @@ export const postLogin = async ({ email, password }) => {
     const requestData = qs.stringify({
       username: email,
       password: password,
-      grant_type: 'password',
     });
     console.log('[LOGIN] Request body:', requestData);
 
