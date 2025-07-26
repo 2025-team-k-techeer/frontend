@@ -1,67 +1,82 @@
 // src/pages/StyleSelectionPage.jsx
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+// 컴포넌트 import
 import HeaderBack from '/src/components/Header/HeaderBack';
-
 import Title from '/src/components/Title/Title';
 import ButtonS from '/src/components/Button/ButtonS';
 import StyleModal from '/src/components/StyleModal';
 import ButtonAction from '/src/components/Button/ButtonAction';
+import { useRoomStyleStore } from '/src/store/useRoomStyleStore';
+import { fetchAllStyles } from '/src/api/styleApi'; //API 함수
+
+// 아이콘 import
 import ModernIcon from '/src/assets/Icon/Modern.svg?react';
 import ClassicIcon from '/src/assets/Icon/Classic.svg?react';
 import NaturalIcon from '/src/assets/Icon/Natural.svg?react';
 import EuropeIcon from '/src/assets/Icon/Europe.svg?react';
 import IndustrialIcon from '/src/assets/Icon/Industrial.svg?react';
 import MinimalIcon from '/src/assets/Icon/Mimimal.svg?react';
-import TribalIcon from '/src/assets/Icon/Trival.svg?react';
+import TribalIcon from '/src/assets/Icon/Tribal.svg?react';
 import RetroIcon from '/src/assets/Icon/Retro.svg?react';
-import { useNavigate } from 'react-router-dom';
-import { useRoomStyleStore } from '/src/store/useRoomStyleStore';
 
-// import { ModernIcon, NordicIcon, ... } from '../components/icons';
-
-// 데이터는 컴포넌트 바깥에 두거나 API로 받아옵니다.
-const styleData = [
-  {
-    label: '모던',
-    icon: ModernIcon,
-    description: '모던 스타일 설명',
-  },
-  { label: '클래식', icon: ClassicIcon, description: '클래식 스타일 설명' },
-  { label: '내츄럴', icon: NaturalIcon, description: '내츄럴 스타일 설명' },
-  { label: '북유럽', icon: EuropeIcon, description: '북유럽 스타일 설명' },
-  {
-    label: '인더스트리얼',
-    icon: IndustrialIcon,
-    description: '인더스트리얼 스타일 설명',
-  },
-  { label: '미니멀', icon: MinimalIcon, description: '미니멀 스타일 설명' },
-  { label: '트라이벌', icon: TribalIcon, description: '트라이벌 스타일 설명' },
-  { label: '빈티지', icon: RetroIcon, description: '빈티지 스타일 설명' },
-  // ... 나머지 8개 스타일 데이터
-];
+// API의 style_id와 프론트엔드의 아이콘 컴포넌트를 연결하는 객체
+// styleIconMap 으로 명확하게 바꿈
+const styleIconMap = {
+  style_modern: ModernIcon,
+  style_classic: ClassicIcon,
+  style_natural: NaturalIcon,
+  style_nordic: EuropeIcon,
+  style_industrial: IndustrialIcon,
+  style_minimal: MinimalIcon,
+  style_tribal: TribalIcon,
+  style_vintage: RetroIcon,
+};
 
 function StyleSelectionPage() {
   const navigate = useNavigate();
-  const [selectedStyle, setSelectedStyle] = useState(null); // 선택된 스타일 객체 저장
+  const [styles, setStyles] = useState([]); // API로 받아온 스타일 목록 전체 저장
+  const [selectedStyle, setSelectedStyle] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const setStyle = useRoomStyleStore((state) => state.setStyle);
-  // 스타일 버튼 클릭 시 실행될 함수
-  const handleStyleSelect = useCallback(
-    (style) => {
-      setSelectedStyle(style); // 클릭된 스타일 정보로 state 업데이트
-      setStyle(style.label); // zustand에 label 저장
-      console.log('style:', style.label);
-      // setIsModalOpen(true); // 모달 열기 제거
-    },
-    [setStyle]
-  );
+  const setStyleInStore = useRoomStyleStore((state) => state.setStyle);
 
-  // 모달 닫기 함수
-  const closeModal = useCallback(() => {
-    setIsModalOpen(false);
+  // 페이지가 처음 렌더링될 때 API 호출
+  useEffect(() => {
+    const getStyles = async () => {
+      try {
+        const allStyles = await fetchAllStyles();
+        console.log('서버가 준 스타일 목록:', allStyles);
+        console.log('API 응답 데이터:', allStyles);
+        console.log('데이터 타입:', typeof allStyles);
+        console.log('배열인가?', Array.isArray(allStyles));
+        // API 응답이 배열인지 확인하고, 배열이 아니면 빈 배열로 설정
+        setStyles(Array.isArray(allStyles) ? allStyles : []);
+      } catch (error) {
+        console.error('스타일 목록을 불러오는 데 실패했습니다:', error);
+        alert('스타일 목록을 불러오는 데 실패했습니다.');
+        setStyles([]); // 에러 시에도 빈 배열로 설정
+      }
+    };
+    getStyles();
   }, []);
+
+  // 스타일 버튼 클릭 시
+  function handleStyleSelect(style) {
+    setSelectedStyle(style);
+    setStyleInStore(style.style_id);
+  }
+
+  // 버튼을 꾹 눌렀을 때
+  function handleLongPress(style) {
+    setSelectedStyle(style); // 모달에 보여줄 스타일 정보 업데이트
+    setIsModalOpen(true);
+  }
+
+  function closeModal() {
+    setIsModalOpen(false);
+  }
 
   return (
     <div className="w-full mx-auto flex flex-col pt-16 min-h-screen lg:max-w-4xl">
@@ -76,21 +91,20 @@ function StyleSelectionPage() {
 
         {/* 스타일 버튼 그리드, map 형식으로 데이터를 불러옵니다. */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-          {styleData.map((style) => (
-            <ButtonS
-              key={style.label}
-              label={style.label}
-              icon={style.icon}
-              isSelected={selectedStyle?.label === style.label}
-              onClick={() => handleStyleSelect(style)}
-              onLongPress={() => {
-                setSelectedStyle(style);
-                setIsModalOpen(true);
-              }}
-            />
-          ))}
+          {Array.isArray(styles) &&
+            styles.map((style) => (
+              <ButtonS
+                key={style.style_id}
+                label={style.name}
+                icon={styleIconMap[style.style_id]}
+                isSelected={selectedStyle?.style_id === style.style_id}
+                onClick={() => handleStyleSelect(style)}
+                onLongPress={() => handleLongPress(style)}
+              />
+            ))}
         </div>
       </main>
+
       {/* 푸터 (다음 버튼) */}
       <footer className="fixed bottom-0 left-0 right-0 p-4 flex-shrink-0 bg-white">
         <ButtonAction
@@ -107,8 +121,8 @@ function StyleSelectionPage() {
       <StyleModal
         isOpen={isModalOpen}
         onClose={closeModal}
-        label={selectedStyle?.label}
-        description={selectedStyle?.description}
+        label={selectedStyle?.name}
+        description={selectedStyle?.description} // API로 받아온 description
       />
     </div>
   );
