@@ -1,0 +1,94 @@
+import React, { useState } from 'react';
+import HeaderBack from '/src/components/Header/HeaderBack';
+import ButtonAction from '/src/components/Button/ButtonAction';
+import ButtonS from '/src/components/Button/ButtonS';
+import Title from '/src/components/Title/Title';
+import LivingRoomIcon from '/src/assets/Icon/LivingRoom.svg?react';
+import BedroomIcon from '/src/assets/Icon/BedRoom.svg?react';
+import StudyIcon from '/src/assets/Icon/StudyRoom.svg?react';
+import OneroomIcon from '/src/assets/Icon/OneRoom.svg?react';
+import EtcIcon from '/src/assets/Icon/Ect.svg?react';
+
+import { useNavigate } from 'react-router-dom';
+import { useRoomStyleStore } from '/src/store/useRoomStyleStore';
+
+function RoomType() {
+  // 2. 어떤 버튼이 선택됐는지 기억할 상태를 만듭니다. 초기값은 null (아무것도 선택 안됨)
+  const [selectedRoom, setSelectedRoom] = useState(null);
+  const setRoomType = useRoomStyleStore((state) => state.setRoomType);
+  const navigate = useNavigate();
+  // label 매핑
+  const roomLabelMap = {
+    livingroom: '거실',
+    bedroom: '침실',
+    study: '공부방/서재',
+    oneroom: '원룸',
+    etc: '기타',
+  };
+  return (
+    <div className="pt-16 mx-auto min-h-screen lg:max-w-4xl">
+      <HeaderBack
+        title=""
+        bgColor="bg-sage-bg" // 배경색을 sage로 변경
+        showBorder={true} // 구분선 보임 (true는 기본값이므로 생략 가능)
+      />
+      <div className="p-4 pb-24">
+        <Title
+          title="공간 유형을 선택해주세요"
+          subtitle="공간 유형에 따라 알맞는 인테리어를 추천해드립니다."
+        />
+        {/* 버튼 그리드 */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          <ButtonS
+            label="거실"
+            icon={LivingRoomIcon}
+            isSelected={selectedRoom === 'livingroom'}
+            onClick={() => setSelectedRoom('livingroom')}
+            layout="square"
+          />
+          <ButtonS
+            label="침실"
+            icon={BedroomIcon}
+            isSelected={selectedRoom === 'bedroom'}
+            onClick={() => setSelectedRoom('bedroom')}
+            layout="square"
+          />
+          <ButtonS
+            label="공부방/서재"
+            icon={StudyIcon}
+            isSelected={selectedRoom === 'study'}
+            onClick={() => setSelectedRoom('study')}
+            layout="square"
+          />
+          <ButtonS
+            label="원룸"
+            icon={OneroomIcon}
+            isSelected={selectedRoom === 'oneroom'}
+            onClick={() => setSelectedRoom('oneroom')}
+            layout="square"
+          />
+          <ButtonS
+            label="기타"
+            icon={EtcIcon}
+            isSelected={selectedRoom === 'etc'}
+            onClick={() => setSelectedRoom('etc')}
+            layout="square"
+          />
+        </div>
+      </div>
+      <footer className="p-4 flex-shrink-0 fixed bottom-0 left-0 right-0 bg-white">
+        <ButtonAction
+          isDisabled={!selectedRoom}
+          onClick={() => {
+            setRoomType(roomLabelMap[selectedRoom]);
+            console.log('roomType:', roomLabelMap[selectedRoom]);
+            navigate('/RoomStyle');
+          }}
+        >
+          다음
+        </ButtonAction>
+      </footer>
+    </div>
+  );
+}
+export default RoomType;
