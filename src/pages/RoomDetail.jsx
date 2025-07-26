@@ -68,9 +68,9 @@ export default function RoomDetail() {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto flex flex-col pt-20 min-h-screen bg-white lg:max-w-4xl">
+    <div className="w-full max-w-7xl mx-auto flex flex-col  min-h-screen box-border bg-white lg:max-w-4xl">
       <HeaderBack title="" bgColor="bg-sage-bg" />
-      <main className="flex-1 flex flex-col px-6 pb-6">
+      <main className="flex-1 flex flex-col px-6 pt-16">
         <Title
           title="추가 요구사항을 입력해주세요"
           subtitle="더 들어갔으면 하는 가구 등 디테일한 요청을 적어주시면 <br>인테리어에 반영됩니다."
@@ -86,7 +86,7 @@ export default function RoomDetail() {
         {error && <div className="text-red-500 mt-4 text-sm">{error}</div>}
       </main>
 
-      <footer className="p-4 flex-shrink-0 bg-white mt-auto">
+      <footer className="fixed bottom-0 left-0 right-0 p-4 flex-shrink-0 bg-white mt-auto">
         <ButtonAction
           hraf="/result"
           onClick={handleComplete}

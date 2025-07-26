@@ -94,7 +94,7 @@ export default function UploadPage() {
   return (
     <div className="bg-white font-ttlaundrygothicb">
       <div
-        className="w-full mx-auto flex flex-col pt-20 min-h-screen 
+        className="w-full mx-auto flex flex-col pt-16 min-h-screen 
                    lg:max-w-4xl"
       >
         <HeaderBack
@@ -102,7 +102,7 @@ export default function UploadPage() {
           bgColor="bg-sage-bg"
           showBorder={false} // 구분선 보임 (true는 기본값이므로 생략 가능)
         />
-        <main className="flex-1 flex flex-col p-6">
+        <main className="flex-1 flex flex-col p-4 pb-24">
           <Title
             title="방의 사진을 업로드해주세요."
             subtitle="인테리어를 적용할 공간의 사진을 올리면 AI가 분석합니다."
@@ -119,7 +119,7 @@ export default function UploadPage() {
           />
           <ExamplePhotos />
         </main>
-        <footer className="p-4 flex-shrink-0">
+        <footer className="fixed bottom-0 left-0 right-0 p-4 flex-shrink-0 bg-white">
           <ActionButton
             onClick={handleUploadAndNext}
             isDisabled={!uploadedImage}
