@@ -1,18 +1,19 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import svgr from 'vite-plugin-svgr';
 import mkcert from 'vite-plugin-mkcert';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// ✅ 환경 변수 로드 (기본 모드는 'development'로 설정)
+const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd(), '');
+const BASE_URL = env.VITE_API_URL;
+
 // ✅ config loaded
 console.log('✅ vite.config.js loaded');
-
-const BASE_URL = 'https://api.zipkku.shop'; // 간단하게 고정
 
 export default defineConfig({
   resolve: {
