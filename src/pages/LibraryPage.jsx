@@ -11,6 +11,16 @@ function LibraryPage() {
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState('');
 
+  // toast가 바뀔 때마다 2초 후에 사라지게
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => {
+        setToast('');
+      }, 700);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
+
   useEffect(() => {
     const fetchLibrary = async () => {
       setLoading(true);

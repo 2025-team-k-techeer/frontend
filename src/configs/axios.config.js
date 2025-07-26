@@ -2,6 +2,7 @@ import axios from 'axios';
 
 export const jsonAxios = axios.create({
   baseURL: '/api', // 프록시 설정으로 인해 /api 경로로 요청
+
   headers: {
     'Content-Type': 'application/json',
   },

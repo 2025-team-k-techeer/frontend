@@ -1,6 +1,6 @@
 // src/pages/StyleSelectionPage.jsx
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // 컴포넌트 import
@@ -25,14 +25,14 @@ import RetroIcon from '/src/assets/Icon/Retro.svg?react';
 // API의 style_id와 프론트엔드의 아이콘 컴포넌트를 연결하는 객체
 // styleIconMap 으로 명확하게 바꿈
 const styleIconMap = {
-  modern: ModernIcon,
-  classic: ClassicIcon,
-  natural: NaturalIcon,
-  europe: EuropeIcon,
-  industrial: IndustrialIcon,
-  minimal: MinimalIcon,
-  tribal: TribalIcon,
-  vintage: RetroIcon,
+  style_modern: ModernIcon,
+  style_classic: ClassicIcon,
+  style_natural: NaturalIcon,
+  style_nordic: EuropeIcon,
+  style_industrial: IndustrialIcon,
+  style_minimal: MinimalIcon,
+  style_tribal: TribalIcon,
+  style_vintage: RetroIcon,
 };
 
 function StyleSelectionPage() {
@@ -47,9 +47,16 @@ function StyleSelectionPage() {
     const getStyles = async () => {
       try {
         const allStyles = await fetchAllStyles();
-        setStyles(allStyles);
+        console.log('서버가 준 스타일 목록:', allStyles);
+        console.log('API 응답 데이터:', allStyles);
+        console.log('데이터 타입:', typeof allStyles);
+        console.log('배열인가?', Array.isArray(allStyles));
+        // API 응답이 배열인지 확인하고, 배열이 아니면 빈 배열로 설정
+        setStyles(Array.isArray(allStyles) ? allStyles : []);
       } catch (error) {
+        console.error('스타일 목록을 불러오는 데 실패했습니다:', error);
         alert('스타일 목록을 불러오는 데 실패했습니다.');
+        setStyles([]); // 에러 시에도 빈 배열로 설정
       }
     };
     getStyles();
@@ -72,33 +79,34 @@ function StyleSelectionPage() {
   }
 
   return (
-    <div className="w-full mx-auto flex flex-col pt-20 min-h-screen lg:max-w-4xl">
+    <div className="w-full mx-auto flex flex-col pt-16 min-h-screen lg:max-w-4xl">
       {/* 헤더 부분 */}
       <HeaderBack title="" bgColor="bg-sage-bg" />
       {/* 메인 컨텐츠 */}
-      <main className="flex-1 flex flex-col px-6 pb-6 overflow-y-auto">
+      <main className="flex-1 flex flex-col px-6 pb-24 overflow-y-auto">
         <Title
-          title="원하는 인테리어 스타일을 선택해주세요"
-          subtitle="선택한 스타일에 맞춰 AI가 공간을 꾸며줍니다."
+          title="인테리어 스타일을 선택해주세요"
+          subtitle="선택한 스타일에 맞춰 AI가 공간을 꾸며줍니다.<br/>꾹 누르면 스타일에 대한 설명을 확인할 수 있습니다."
         />
 
         {/* 스타일 버튼 그리드, map 형식으로 데이터를 불러옵니다. */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-          {styles.map((style) => (
-            <ButtonS
-              key={style.style_id}
-              label={style.name}
-              icon={styleIconMap[style.style_id]}
-              isSelected={selectedStyle?.style_id === style.style_id}
-              onClick={() => handleStyleSelect(style)}
-              onLongPress={() => handleLongPress(style)}
-            />
-          ))}
+          {Array.isArray(styles) &&
+            styles.map((style) => (
+              <ButtonS
+                key={style.style_id}
+                label={style.name}
+                icon={styleIconMap[style.style_id]}
+                isSelected={selectedStyle?.style_id === style.style_id}
+                onClick={() => handleStyleSelect(style)}
+                onLongPress={() => handleLongPress(style)}
+              />
+            ))}
         </div>
       </main>
 
       {/* 푸터 (다음 버튼) */}
-      <footer className="p-4 flex-shrink-0">
+      <footer className="fixed bottom-0 left-0 right-0 p-4 flex-shrink-0 bg-white">
         <ButtonAction
           onClick={() => {
             navigate('/RoomDetail');
