@@ -18,15 +18,40 @@ export default function UploadPage() {
   const [uploadedImage, setUploadedImage] = useState(null); // 업로드된 이미지 상태
   const fileInputRef = useRef(null); // 파일 입력 참조
   const setImageInfo = useRoomStyleStore((state) => state.setImageInfo);
+  const setImageSize = useRoomStyleStore((state) => state.setImageSize);
 
   const navigate = useNavigate();
+
+  // 이미지 해상도 얻기 함수
+  const getImageSize = (imageUrl) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        resolve({
+          width: img.naturalWidth,
+          height: img.naturalHeight,
+        });
+      };
+      img.src = imageUrl;
+    });
+  };
 
   function handleFileChange(e) {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setUploadedImage(reader.result);
+      reader.onloadend = async () => {
+        const imageUrl = reader.result;
+        setUploadedImage(imageUrl);
+
+        // 이미지 해상도 얻기 및 저장
+        try {
+          const imageSize = await getImageSize(imageUrl);
+          setImageSize(imageSize);
+          console.log('이미지 해상도:', imageSize);
+        } catch (error) {
+          console.error('이미지 해상도 얻기 실패:', error);
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -37,8 +62,18 @@ export default function UploadPage() {
     const file = e.dataTransfer.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setUploadedImage(reader.result);
+      reader.onloadend = async () => {
+        const imageUrl = reader.result;
+        setUploadedImage(imageUrl);
+
+        // 이미지 해상도 얻기 및 저장
+        try {
+          const imageSize = await getImageSize(imageUrl);
+          setImageSize(imageSize);
+          console.log('이미지 해상도:', imageSize);
+        } catch (error) {
+          console.error('이미지 해상도 얻기 실패:', error);
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -62,6 +97,16 @@ export default function UploadPage() {
   // 카메라로 촬영된 이미지 처리
   function handleImageCaptured(imageDataUrl) {
     setUploadedImage(imageDataUrl);
+
+    // 카메라로 촬영된 이미지의 해상도도 얻기
+    getImageSize(imageDataUrl)
+      .then((imageSize) => {
+        setImageSize(imageSize);
+        console.log('카메라 이미지 해상도:', imageSize);
+      })
+      .catch((error) => {
+        console.error('카메라 이미지 해상도 얻기 실패:', error);
+      });
   }
 
   // 이미지 업로드 및 GCS 업로드 후 store 저장, 페이지 이동

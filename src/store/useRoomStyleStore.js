@@ -13,4 +13,7 @@ export const useRoomStyleStore = create((set) => ({
   imageFilename: null,
   setImageInfo: ({ url, filename }) =>
     set({ image_url: url, imageFilename: filename }),
+  // 이미지 해상도 정보 추가
+  imageSize: { width: 0, height: 0 },
+  setImageSize: (imageSize) => set({ imageSize }),
 }));
