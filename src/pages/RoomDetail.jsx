@@ -21,6 +21,14 @@ export default function RoomDetail() {
   const image_url = useRoomStyleStore((state) => state.image_url);
   const setResult = useResultGenerationStore((state) => state.setResult);
 
+  // 디버깅을 위한 store 값 출력
+  console.log('RoomDetail - Store values:', {
+    image_url,
+    room_type,
+    style,
+    prompt,
+  });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -50,6 +58,32 @@ export default function RoomDetail() {
         setLoading(false);
         return;
       }
+
+      // 필수 필드 검증
+      if (!image_url) {
+        setError('이미지를 업로드해주세요.');
+        setLoading(false);
+        return;
+      }
+
+      if (!room_type) {
+        setError('공간 유형을 선택해주세요.');
+        setLoading(false);
+        return;
+      }
+
+      if (!style) {
+        setError('인테리어 스타일을 선택해주세요.');
+        setLoading(false);
+        return;
+      }
+
+      if (!prompt || prompt.trim() === '') {
+        setError('추가 요구사항을 입력해주세요.');
+        setLoading(false);
+        return;
+      }
+
       const result = await postGenerateResult({
         image_url,
         room_type,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '/src/store/useAuthStore';
 import ToastMessage from '/src/components/Result/ToastMessage';
@@ -11,66 +11,26 @@ import Navigation from '/src/components/Navigation/Navigation';
 import HowToUse from '/src/components/MainPage/HowToUse';
 import HeroBanner from '/src/components/MainPage/HeroBenner';
 
-// 인테리어 스타일 데이터 예시
-const sampleStyles = [
-  {
-    id: 'style_minimal',
-    name: '미니멀',
-    description: '불필요한 장식을 최소화하고 본질에 집중하는 스타일입니다.',
-    example_image_url: '/images/mainsub.webp',
-  },
-  {
-    id: 'style_natural',
-    name: '내추럴',
-    description: '나무, 흙 등 자연 소재를 사용하여 편안함을 주는 스타일입니다.',
-    example_image_url: '/images/mainsub.webp',
-  },
-  {
-    id: 'style_nordic',
-    name: '북유럽',
-    description: '실용성과 따뜻한 감성이 조화된 밝고 아늑한 스타일입니다.',
-    example_image_url: '/styles/nordic.jpg',
-  },
-  {
-    id: 'style_industrial',
-    name: '인더스트리얼',
-    description:
-      '노출 콘크리트, 벽돌 등 거친 마감재를 그대로 살린 스타일입니다.',
-    example_image_url: '/styles/industrial.jpg',
-  },
-  {
-    id: 'style_classic',
-    name: '클래식',
-    description:
-      '우아한 곡선과 고급스러운 장식이 돋보이는 전통적인 스타일입니다.',
-    example_image_url: '/styles/classic.jpg',
-  },
-  {
-    id: 'style_vintage',
-    name: '빈티지',
-    description: '과거의 디자인을 재현하여 향수를 불러일으키는 스타일입니다.',
-    example_image_url: '/styles/classic.jpg',
-  },
-  {
-    id: 'style_tribal',
-    name: '트라이벌',
-    description:
-      '다채로운 색상을 과감하게 사용하여 생동감을 주는 스타일입니다.',
-    example_image_url: '/styles/classic.jpg',
-  },
-  {
-    id: 'style_modern',
-    name: '모던',
-    description: '기능적이고 깔끔한 선과 면으로 구성된 현대적인 스타일입니다.',
-    example_image_url: '/styles/modern.jpg',
-  },
-];
+import { fetchAllStyles } from '/src/api/styleApi'; // API 함수 import
 
 function MainPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [toastVisible, setToastVisible] = useState(false);
+  const [styles, setStyles] = useState([]); // API에서 불러온 스타일 목록
   const navigate = useNavigate();
   const isLoggedIn = useAuthStore((state) => state.isLoggedIn);
+
+  useEffect(() => {
+    const getStyles = async () => {
+      try {
+        const allStyles = await fetchAllStyles();
+        setStyles(Array.isArray(allStyles) ? allStyles : []);
+      } catch (error) {
+        setStyles([]);
+      }
+    };
+    getStyles();
+  }, []);
 
   const handleStartClick = (e) => {
     e.preventDefault();
@@ -105,7 +65,7 @@ function MainPage() {
           <HowToUse />
 
           {/* 인테리어 스타일 섹션 컴포넌트 사용 */}
-          <InteriorStyleSection styles={sampleStyles} />
+          <InteriorStyleSection styles={styles} />
         </div>
       </main>
 

@@ -14,18 +14,38 @@ export const postUploadImage = async (imageFile, access_token) => {
   formData.append('image', imageFile);
 
   try {
-    const response = await jsonAxios.post('/api/interiors/image', formData, {
+    const response = await jsonAxios.post('/interiors/image', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
         ...(access_token && { Authorization: `Bearer ${access_token}` }),
       },
     });
-    const { url, filename, status, message } = response.data;
+
+    console.log('Image upload response:', response.data);
+
+    const { data, status, message } = response.data;
     if (status !== 'success') {
       throw new Error(message || '이미지 업로드에 실패했습니다.');
     }
-    return { url, filename };
+
+    const { public_url, filename } = data;
+    console.log(
+      'Image upload success - url:',
+      public_url,
+      'filename:',
+      filename
+    );
+    return { url: public_url, filename };
   } catch (error) {
+    console.error('Image upload error:', error);
+    console.error('Error response:', error.response);
+
+    if (error.response?.status === 401) {
+      throw new Error(
+        '로그인이 필요하거나 토큰이 만료되었습니다. 다시 로그인해주세요.'
+      );
+    }
+
     const msg = error.response?.data?.message || error.message;
     throw new Error(msg);
   }
