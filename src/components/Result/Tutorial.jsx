@@ -77,12 +77,24 @@ export default function WelcomeModal() {
   // 보여줄 설명 데이터 배열2
   const featureDescriptions2 = [
     {
-      title: '뒤로가기',
-      description: '결과 페이지로 다시 돌아갈 수 있습니다.',
+      title: '시작',
+      description: '하단에 StartAR 버튼을 눌러 시작합니다.',
     },
     {
-      title: 'AR객체 선택',
-      description: '버튼을 눌러 배치해보고 싶은 가구를 선택해보세요.',
+      title: '배치하기',
+      description: '횐 색 원을 두 번 터치하여여 선택한 가구를 배치합니다.',
+    },
+    {
+      title: '회전하기',
+      description: '두 손가락으로 화면을 좌우로 밀어 가구를 회전시킵니다.',
+    },
+    {
+      title: '삭제하기',
+      description: '버튼을 꾹 눌러 배치한 가구를 삭제합니다.',
+    },
+    {
+      title: '종료',
+      description: '시작할 때 눌렀던 버튼을 한 번 더 눌러 종료합니다.',
     },
   ];
 
@@ -153,6 +165,13 @@ export default function WelcomeModal() {
               ))}
             </div>
           </div>
+          {/* 확인 버튼 */}
+          <button
+            onClick={handleClose}
+            className="w-full bg-sage-accent text-white font-bold py-3 px-12 rounded-lg hover:bg-sage-accent/80 transition-colors"
+          >
+            확인
+          </button>
         </div>
       )}
     </div>
