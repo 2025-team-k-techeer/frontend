@@ -10,9 +10,6 @@ const BASE_URL = isDev
 export const jsonAxios = axios.create({
   baseURL: BASE_URL, // 프록시 설정으로 인해 /api 경로로 요청
   withCredentials: true, // ✅ 추가!
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
 // 🔒 Bearer 토큰 자동 삽입

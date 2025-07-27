@@ -6,7 +6,7 @@ function ImageComparisonSlider({
   furnitures = [],
   onFurnitureClick,
 }) {
-  const [sliderPosition, setSliderPosition] = useState(50);
+  const [sliderPosition, setSliderPosition] = useState(30);
   const [isDragging, setIsDragging] = useState(false);
   const sliderContainerRef = useRef(null);
   const sliderHandleRef = useRef(null);
