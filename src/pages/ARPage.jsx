@@ -34,7 +34,7 @@ function ARPage() {
   const initialObjectYRotationRef = useRef(0); // 초기 객체 Y축 회전값
 
   // 상수 정의
-  const DOUBLE_TAP_THRESHOLD = 300; // 더블탭 감지 임계값 (ms)
+  const DOUBLE_TAP_THRESHOLD = 400; // 더블탭 감지 임계값 (ms)
   const LONG_PRESS_DURATION = 500; // 롱프레스 감지 시간 (ms)
   const RING_SCALE_FACTOR = 0.3; // 선택 링 크기 조정 팩터
   const ROTATION_SENSITIVITY = 0.01; // 회전 감도
@@ -240,6 +240,7 @@ function ARPage() {
       new THREE.MeshBasicMaterial({ color: 0x00ff00 })
     );
     selectionRingRef.current.visible = false;
+    sceneRef.current.add(selectionRingRef.current); // 씬에만 add
   }
 
   // 크기 정보 카드 생성 함수 (3D 텍스처 방식)
@@ -466,7 +467,6 @@ function ARPage() {
   function selectObject(object) {
     deselectObject(); // 기존 선택 해제
     selectedObjectRef.current = object;
-    selectedObjectRef.current.add(selectionRingRef.current);
 
     const box = new THREE.Box3().setFromObject(selectedObjectRef.current);
     const size = box.getSize(new THREE.Vector3());
@@ -491,12 +491,18 @@ function ARPage() {
     // 카드가 뒤집히지 않도록 Y축 회전만 사용
     card.rotation.x = 0;
     card.rotation.z = 0;
-
     sceneRef.current.add(card);
 
-    // 링 설정
-    selectionRingRef.current.position.set(0, -size.y / 2, 0);
-    selectionRingRef.current.scale.set(1, 1, 1);
+    // selectionRing을 오브젝트의 월드 좌표에 위치
+    selectedObjectRef.current.updateMatrixWorld();
+    const worldPos = new THREE.Vector3();
+    selectedObjectRef.current.getWorldPosition(worldPos);
+    selectionRingRef.current.position.copy(worldPos);
+    // 오브젝트의 회전도 맞춰줌
+    const worldQuat = new THREE.Quaternion();
+    selectedObjectRef.current.getWorldQuaternion(worldQuat);
+    selectionRingRef.current.quaternion.copy(worldQuat);
+    // 크기 맞추기
     const maxDim = Math.max(size.x, size.z) / selectedObjectRef.current.scale.x;
     selectionRingRef.current.scale.set(
       maxDim * RING_SCALE_FACTOR,
@@ -653,6 +659,17 @@ function ARPage() {
       sizeInfoCardRef.current.lookAt(cameraRef.current.position);
     }
 
+    // selectionRing 위치/회전 동기화
+    if (selectedObjectRef.current && selectionRingRef.current) {
+      selectedObjectRef.current.updateMatrixWorld();
+      const worldPos = new THREE.Vector3();
+      selectedObjectRef.current.getWorldPosition(worldPos);
+      selectionRingRef.current.position.copy(worldPos);
+      const worldQuat = new THREE.Quaternion();
+      selectedObjectRef.current.getWorldQuaternion(worldQuat);
+      selectionRingRef.current.quaternion.copy(worldQuat);
+    }
+
     rendererRef.current.render(sceneRef.current, cameraRef.current);
     // 주석 처리된 CSS3D 렌더링
     // cssRenderer.render(cssScene, camera); // CSS3D 렌더링 제거
@@ -699,12 +716,12 @@ function ARPage() {
         바닥을 인식 중입니다...
       </div>
       {/* 가구 선택 UI */}
-      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 flex gap-2">
+      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 overflow-x-auto whitespace-nowrap px-2 w-[90vw] max-w-2xl">
         {models.map((model, index) => (
           <button
             key={index}
             id={`item${index}`}
-            className="bg-white/80 backdrop-blur-sm rounded-lg p-3 hover:bg-white transition-colors"
+            className="inline-block bg-white/80 backdrop-blur-sm rounded-lg p-3 hover:bg-white transition-colors mr-2 last:mr-0"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
