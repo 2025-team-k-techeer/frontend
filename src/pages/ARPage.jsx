@@ -5,6 +5,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { XREstimatedLight } from 'three/examples/jsm/webxr/XREstimatedLight';
 import { useLocation, useNavigate } from 'react-router-dom';
 // CSS3DRenderer 제거 - 3D 텍스처 방식으로 대체하여 성능 향상
+import Tutorial from '../components/Result/Tutorial';
 
 function ARPage() {
   const location = useLocation();
@@ -729,6 +730,7 @@ function ARPage() {
           </button>
         ))}
       </div>
+      <Tutorial />
     </div>
   );
 }
