@@ -648,9 +648,9 @@ function ARPage() {
     canvas.height = 128;
     const ctx = canvas.getContext('2d');
 
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#ffffff';
+    ctx.fillStyle = '#000000';
     ctx.font = 'bold 40px Arial';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -676,13 +676,26 @@ function ARPage() {
     const group = new THREE.Group();
     const offsetY = 0.05;
     const offsetText = 0.1;
+    const tipLength = 0.03; // 짧은 선 길이
 
     // === 가로 (X)
     const xY = box.min.y + offsetY;
     const xZ = box.max.z + 0.05;
     const x1 = new THREE.Vector3(box.min.x, xY, xZ);
     const x2 = new THREE.Vector3(box.max.x, xY, xZ);
-    const lineX = createLine(x1, x2, 0xff0000);
+    const lineX = createLine(x1, x2, 0xff7700);
+    // 가로선 끝에 수직선 추가 (Z축 양방향)
+    const x1Tip1 = x1.clone();
+    const x1Tip2a = x1.clone().add(new THREE.Vector3(0, 0, tipLength));
+    const x1Tip2b = x1.clone().add(new THREE.Vector3(0, 0, -tipLength));
+    const x2Tip1 = x2.clone();
+    const x2Tip2a = x2.clone().add(new THREE.Vector3(0, 0, tipLength));
+    const x2Tip2b = x2.clone().add(new THREE.Vector3(0, 0, -tipLength));
+    const xTipLine1a = createLine(x1Tip1, x1Tip2a, 0xff7700);
+    const xTipLine1b = createLine(x1Tip1, x1Tip2b, 0xff7700);
+    const xTipLine2a = createLine(x2Tip1, x2Tip2a, 0xff7700);
+    const xTipLine2b = createLine(x2Tip1, x2Tip2b, 0xff7700);
+
     const labelX = createTextLabel(`가로: ${size.x.toFixed(2)}m`);
     labelX.position.set(center.x, xY + offsetText, xZ);
     labelX.lookAt(camera.position);
@@ -692,7 +705,19 @@ function ARPage() {
     const zX = box.min.x - 0.05;
     const z1 = new THREE.Vector3(zX, zY, box.min.z);
     const z2 = new THREE.Vector3(zX, zY, box.max.z);
-    const lineZ = createLine(z1, z2, 0x0000ff);
+    const lineZ = createLine(z1, z2, 0xff7700);
+    // 세로선 끝에 수직선 추가 (X축 양방향)
+    const z1Tip1 = z1.clone();
+    const z1Tip2a = z1.clone().add(new THREE.Vector3(-tipLength, 0, 0));
+    const z1Tip2b = z1.clone().add(new THREE.Vector3(tipLength, 0, 0));
+    const z2Tip1 = z2.clone();
+    const z2Tip2a = z2.clone().add(new THREE.Vector3(-tipLength, 0, 0));
+    const z2Tip2b = z2.clone().add(new THREE.Vector3(tipLength, 0, 0));
+    const zTipLine1a = createLine(z1Tip1, z1Tip2a, 0xff7700);
+    const zTipLine1b = createLine(z1Tip1, z1Tip2b, 0xff7700);
+    const zTipLine2a = createLine(z2Tip1, z2Tip2a, 0xff7700);
+    const zTipLine2b = createLine(z2Tip1, z2Tip2b, 0xff7700);
+
     const labelZ = createTextLabel(`세로: ${size.z.toFixed(2)}m`);
     labelZ.position.set(zX, zY + offsetText, center.z);
     labelZ.lookAt(camera.position);
@@ -700,14 +725,48 @@ function ARPage() {
     // === 높이 (Y)
     const yX = box.max.x + 0.05;
     const yZ = box.max.z + 0.05;
-    const y1 = new THREE.Vector3(yX, box.min.y, yZ);
+    // y1의 y좌표를 xY로 맞춤
+    const y1 = new THREE.Vector3(yX, xY, yZ);
     const y2 = new THREE.Vector3(yX, box.max.y, yZ);
-    const lineY = createLine(y1, y2, 0x00ff00);
+    const lineY = createLine(y1, y2, 0xff7700);
+    // 높이선 끝에 수직선 추가 (Z축 양방향)
+    const y1Tip1 = y1.clone();
+    const y1Tip2a = y1.clone().add(new THREE.Vector3(0, 0, tipLength));
+    const y1Tip2b = y1.clone().add(new THREE.Vector3(0, 0, -tipLength));
+    const y2Tip1 = y2.clone();
+    const y2Tip2a = y2.clone().add(new THREE.Vector3(0, 0, tipLength));
+    const y2Tip2b = y2.clone().add(new THREE.Vector3(0, 0, -tipLength));
+    const yTipLine1a = createLine(y1Tip1, y1Tip2a, 0xff7700);
+    const yTipLine1b = createLine(y1Tip1, y1Tip2b, 0xff7700);
+    const yTipLine2a = createLine(y2Tip1, y2Tip2a, 0xff7700);
+    const yTipLine2b = createLine(y2Tip1, y2Tip2b, 0xff7700);
+    // 중간 위치 계산
+    const midY = (box.min.y + box.max.y) / 2;
+    const delta = 0.05; // 카메라 쪽으로 이동할 거리
     const labelY = createTextLabel(`높이: ${size.y.toFixed(2)}m`);
-    labelY.position.set(yX, box.max.y + offsetText, yZ);
+    labelY.position.set(yX, midY, yZ + delta);
     labelY.lookAt(camera.position);
 
-    group.add(lineX, labelX, lineZ, labelZ, lineY, labelY);
+    group.add(
+      lineX,
+      xTipLine1a,
+      xTipLine1b,
+      xTipLine2a,
+      xTipLine2b,
+      labelX,
+      lineZ,
+      zTipLine1a,
+      zTipLine1b,
+      zTipLine2a,
+      zTipLine2b,
+      labelZ,
+      lineY,
+      yTipLine1a,
+      yTipLine1b,
+      yTipLine2a,
+      yTipLine2b,
+      labelY
+    );
     scene.add(group);
     measurementGroupRef.current = group;
   }
