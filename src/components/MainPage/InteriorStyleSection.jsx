@@ -13,7 +13,7 @@ const InteriorStyleSection = ({ styles }) => {
         {styles.map((style, index) => (
           <StyleCard
             key={index}
-            imageUrl={style.example_image_url}
+            imageUrl={style.image_url}
             title={style.name}
             description={style.description}
           />
