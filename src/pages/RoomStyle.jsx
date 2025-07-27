@@ -98,6 +98,7 @@ function StyleSelectionPage() {
                 label={style.name}
                 icon={styleIconMap[style.style_id]}
                 isSelected={selectedStyle?.style_id === style.style_id}
+                imageSrc={Style.image_url}
                 onClick={() => handleStyleSelect(style)}
                 onLongPress={() => handleLongPress(style)}
               />

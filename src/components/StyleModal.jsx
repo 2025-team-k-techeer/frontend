@@ -1,6 +1,6 @@
 // src/components/StyleModal.jsx
 
-function StyleModal({ isOpen, onClose, label, description }) {
+function StyleModal({ isOpen, onClose, label, description, imageSrc }) {
   // isOpen이 false이면 아무것도 렌더링하지 않습니다.
   if (!isOpen) {
     return null;
@@ -39,6 +39,14 @@ function StyleModal({ isOpen, onClose, label, description }) {
         </button>
         <h3 className="text-xl font-bold text-sage-accent mb-3">{label}</h3>
         <p className="text-gray-600 leading-relaxed">{description}</p>
+        {/* 이미지를 조건부로 렌더링합니다. */}
+        {imageSrc && (
+          <img
+            src={imageSrc}
+            alt={label} // 접근성을 위해 alt 속성 추가
+            className="w-full h-auto rounded-t-2xl object-cover"
+          />
+        )}
       </div>
     </div>
   );
