@@ -128,6 +128,8 @@ function ARPage() {
   const RING_SCALE_FACTOR = 1.2;
   const ROTATION_SENSITIVITY = 0.01;
 
+  const measurementGroupRef = useRef(null); // 크기 측정 선 그룹
+
   // let reticleDetectedFrames = 0;
   //const RETICLE_THRESHOLD = 300;
 
@@ -555,6 +557,12 @@ function ARPage() {
     selectionRingRef.current.position.set(center.x, box.min.y, center.z);
     sceneRef.current.add(selectionRingRef.current); // 씬에 직접 추가
 
+    showMeasurementLines(
+      selectedObjectRef.current,
+      sceneRef.current,
+      cameraRef.current
+    );
+
     const maxDim = Math.max(size.x, size.z);
     selectionRingRef.current.scale.set(
       maxDim * RING_SCALE_FACTOR,
@@ -617,6 +625,97 @@ function ARPage() {
   //   selectedObject.add(lineGroup);
   // }
 
+  function createLine(start, end, color = 0x00ff00, radius = 0.005) {
+    const dir = new THREE.Vector3().subVectors(end, start);
+    const len = dir.length();
+
+    const geometry = new THREE.CylinderGeometry(radius, radius, len, 8);
+    const material = new THREE.MeshBasicMaterial({ color });
+    const cylinder = new THREE.Mesh(geometry, material);
+
+    const mid = new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5);
+    cylinder.position.copy(mid);
+
+    const axis = new THREE.Vector3(0, 1, 0);
+    cylinder.quaternion.setFromUnitVectors(axis, dir.clone().normalize());
+
+    return cylinder;
+  }
+
+  function createTextLabel(text = '100cm', size = 0.08) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 256;
+    canvas.height = 128;
+    const ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = '#00ff00';
+    ctx.font = 'bold 40px Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+
+    const texture = new THREE.CanvasTexture(canvas);
+    const material = new THREE.MeshBasicMaterial({
+      map: texture,
+      transparent: true,
+    });
+
+    const geometry = new THREE.PlaneGeometry(size * 2, size);
+    const mesh = new THREE.Mesh(geometry, material);
+
+    return mesh;
+  }
+
+  // 가구 크기 측정 선 표시 함수
+  function showMeasurementLines(object, scene, camera) {
+    const box = new THREE.Box3().setFromObject(object);
+    const size = new THREE.Vector3();
+    const center = new THREE.Vector3();
+    box.getSize(size);
+    box.getCenter(center);
+
+    const offset = 0.05; // 텍스트와 선 위치를 살짝 띄우기 위함
+
+    const group = new THREE.Group(); // 그룹 생성
+
+    // === 가로(X)
+    const x1 = new THREE.Vector3(box.min.x, box.min.y + offset, center.z);
+    const x2 = new THREE.Vector3(box.max.x, box.min.y + offset, center.z);
+    const lineX = createLine(x1, x2, 0xff0000); // 빨간색
+    const labelX = createTextLabel(`가로: ${size.x.toFixed(2)}m`);
+    labelX.position.copy(center);
+    labelX.position.y = box.min.y + offset;
+    labelX.position.z += 0.05;
+    labelX.lookAt(camera.position);
+
+    // === 세로(Z)
+    const z1 = new THREE.Vector3(center.x, box.min.y + offset, box.min.z);
+    const z2 = new THREE.Vector3(center.x, box.min.y + offset, box.max.z);
+    const lineZ = createLine(z1, z2, 0x0000ff); // 파란색
+    const labelZ = createTextLabel(`세로: ${size.z.toFixed(2)}m`);
+    labelZ.position.copy(center);
+    labelZ.position.y = box.min.y + offset;
+    labelZ.position.x += 0.05;
+    labelZ.lookAt(camera.position);
+
+    // === 높이(Y)
+    const y1 = new THREE.Vector3(center.x, box.min.y, center.z);
+    const y2 = new THREE.Vector3(center.x, box.max.y, center.z);
+    const lineY = createLine(y1, y2, 0x00ff00); // 초록색
+    const labelY = createTextLabel(`높이: ${size.y.toFixed(2)}m`);
+    labelY.position.copy(center);
+    labelY.position.y = box.max.y + 0.1;
+    labelY.lookAt(camera.position);
+
+    group.add(lineX, labelX, lineY, labelY, lineZ, labelZ);
+    scene.add(group);
+
+    measurementGroupRef.current = group; // 👈 나중에 제거하기 위해 저장
+  }
+
   function deselectObject() {
     if (selectedObjectRef.current) {
       selectedObjectRef.current.remove(selectionRingRef.current);
@@ -631,7 +730,20 @@ function ARPage() {
     //   sceneRef.current.remove(sizeInfoCardRef.current);
     //   sizeInfoCardRef.current = null;
     // }
-
+    if (measurementGroupRef.current) {
+      sceneRef.current.remove(measurementGroupRef.current);
+      measurementGroupRef.current.traverse((child) => {
+        if (child.geometry) child.geometry.dispose();
+        if (child.material) {
+          if (Array.isArray(child.material)) {
+            child.material.forEach((m) => m.dispose());
+          } else {
+            child.material.dispose();
+          }
+        }
+      });
+      measurementGroupRef.current = null;
+    }
     selectedObjectRef.current = null;
     selectionRingRef.current.visible = false;
   }
