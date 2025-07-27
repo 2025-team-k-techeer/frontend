@@ -557,6 +557,7 @@ function ARPage() {
     selectionRingRef.current.position.set(center.x, box.min.y, center.z);
     sceneRef.current.add(selectionRingRef.current); // 씬에 직접 추가
 
+    // 크기 측정 선 표시
     showMeasurementLines(
       selectedObjectRef.current,
       sceneRef.current,
@@ -628,18 +629,17 @@ function ARPage() {
   function createLine(start, end, color = 0x00ff00, radius = 0.005) {
     const dir = new THREE.Vector3().subVectors(end, start);
     const len = dir.length();
-
     const geometry = new THREE.CylinderGeometry(radius, radius, len, 8);
     const material = new THREE.MeshBasicMaterial({ color });
-    const cylinder = new THREE.Mesh(geometry, material);
+    const mesh = new THREE.Mesh(geometry, material);
 
     const mid = new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5);
-    cylinder.position.copy(mid);
+    mesh.position.copy(mid);
 
     const axis = new THREE.Vector3(0, 1, 0);
-    cylinder.quaternion.setFromUnitVectors(axis, dir.clone().normalize());
+    mesh.quaternion.setFromUnitVectors(axis, dir.clone().normalize());
 
-    return cylinder;
+    return mesh;
   }
 
   function createTextLabel(text = '100cm', size = 0.08) {
@@ -648,10 +648,9 @@ function ARPage() {
     canvas.height = 128;
     const ctx = canvas.getContext('2d');
 
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = '#00ff00';
+    ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 40px Arial';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -662,11 +661,8 @@ function ARPage() {
       map: texture,
       transparent: true,
     });
-
     const geometry = new THREE.PlaneGeometry(size * 2, size);
-    const mesh = new THREE.Mesh(geometry, material);
-
-    return mesh;
+    return new THREE.Mesh(geometry, material);
   }
 
   // 가구 크기 측정 선 표시 함수
@@ -677,43 +673,43 @@ function ARPage() {
     box.getSize(size);
     box.getCenter(center);
 
-    const offset = 0.05; // 텍스트와 선 위치를 살짝 띄우기 위함
+    const group = new THREE.Group();
+    const offsetY = 0.05;
+    const offsetText = 0.1;
 
-    const group = new THREE.Group(); // 그룹 생성
-
-    // === 가로(X)
-    const x1 = new THREE.Vector3(box.min.x, box.min.y + offset, center.z);
-    const x2 = new THREE.Vector3(box.max.x, box.min.y + offset, center.z);
-    const lineX = createLine(x1, x2, 0xff0000); // 빨간색
+    // === 가로 (X)
+    const xY = box.min.y + offsetY;
+    const xZ = box.max.z + 0.05;
+    const x1 = new THREE.Vector3(box.min.x, xY, xZ);
+    const x2 = new THREE.Vector3(box.max.x, xY, xZ);
+    const lineX = createLine(x1, x2, 0xff0000);
     const labelX = createTextLabel(`가로: ${size.x.toFixed(2)}m`);
-    labelX.position.copy(center);
-    labelX.position.y = box.min.y + offset;
-    labelX.position.z += 0.05;
+    labelX.position.set(center.x, xY + offsetText, xZ);
     labelX.lookAt(camera.position);
 
-    // === 세로(Z)
-    const z1 = new THREE.Vector3(center.x, box.min.y + offset, box.min.z);
-    const z2 = new THREE.Vector3(center.x, box.min.y + offset, box.max.z);
-    const lineZ = createLine(z1, z2, 0x0000ff); // 파란색
+    // === 세로 (Z)
+    const zY = box.min.y + offsetY;
+    const zX = box.min.x - 0.05;
+    const z1 = new THREE.Vector3(zX, zY, box.min.z);
+    const z2 = new THREE.Vector3(zX, zY, box.max.z);
+    const lineZ = createLine(z1, z2, 0x0000ff);
     const labelZ = createTextLabel(`세로: ${size.z.toFixed(2)}m`);
-    labelZ.position.copy(center);
-    labelZ.position.y = box.min.y + offset;
-    labelZ.position.x += 0.05;
+    labelZ.position.set(zX, zY + offsetText, center.z);
     labelZ.lookAt(camera.position);
 
-    // === 높이(Y)
-    const y1 = new THREE.Vector3(center.x, box.min.y, center.z);
-    const y2 = new THREE.Vector3(center.x, box.max.y, center.z);
-    const lineY = createLine(y1, y2, 0x00ff00); // 초록색
+    // === 높이 (Y)
+    const yX = box.max.x + 0.05;
+    const yZ = box.max.z + 0.05;
+    const y1 = new THREE.Vector3(yX, box.min.y, yZ);
+    const y2 = new THREE.Vector3(yX, box.max.y, yZ);
+    const lineY = createLine(y1, y2, 0x00ff00);
     const labelY = createTextLabel(`높이: ${size.y.toFixed(2)}m`);
-    labelY.position.copy(center);
-    labelY.position.y = box.max.y + 0.1;
+    labelY.position.set(yX, box.max.y + offsetText, yZ);
     labelY.lookAt(camera.position);
 
-    group.add(lineX, labelX, lineY, labelY, lineZ, labelZ);
+    group.add(lineX, labelX, lineZ, labelZ, lineY, labelY);
     scene.add(group);
-
-    measurementGroupRef.current = group; // 👈 나중에 제거하기 위해 저장
+    measurementGroupRef.current = group;
   }
 
   function deselectObject() {
