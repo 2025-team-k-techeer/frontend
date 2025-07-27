@@ -7,9 +7,100 @@ import { useLocation, useNavigate } from 'react-router-dom';
 // CSS3DRenderer 제거
 
 function ARPage() {
+  const defaultMockModels = [
+    {
+      label: '테스트 가구',
+      model_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/VintageChair.glb',
+      image_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/VintageChair.png',
+      width_cm: 1000,
+      height_cm: 100,
+      depth_cm: 60,
+      scale: 1.0,
+    },
+    {
+      label: '테스트 가구2',
+      model_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/WoodenChair.glb',
+      image_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/WoodenChair.png',
+      width_cm: 1000,
+      height_cm: 100,
+      depth_cm: 60,
+      scale: 1.0,
+    },
+    {
+      label: '테스트 가구3',
+      model_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/VintageChair.glb',
+      image_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/VintageChair.png',
+      width_cm: 1000,
+      height_cm: 100,
+      depth_cm: 60,
+      scale: 1.0,
+    },
+    {
+      label: '테스트 가구4',
+      model_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/beige_modernchair.glb',
+      image_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/beige_modernchair.png',
+      width_cm: 1000,
+      height_cm: 100,
+      depth_cm: 60,
+      scale: 1.0,
+    },
+    {
+      label: '테스트 가구5',
+      model_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/black_leather_officechair.glb',
+      image_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/black_leather_officechair.png',
+      width_cm: 1000,
+      height_cm: 100,
+      depth_cm: 60,
+      scale: 1.0,
+    },
+    {
+      label: '테스트 가구6',
+      model_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/black_officechair.glb',
+      image_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/black_officechair.png',
+      width_cm: 1000,
+      height_cm: 100,
+      depth_cm: 60,
+      scale: 1.0,
+    },
+    {
+      label: '테스트 가구7',
+      model_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/brown_leather_officechair.glb',
+      image_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/brown_leather_officechair.png',
+      width_cm: 1000,
+      height_cm: 100,
+      depth_cm: 60,
+      scale: 1.0,
+    },
+    {
+      label: '테스트 가구8',
+      model_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/grey_armchair.glb',
+      image_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/grey_armchair.png',
+      width_cm: 1000,
+      height_cm: 100,
+      depth_cm: 60,
+      scale: 1.0,
+    },
+  ];
+
   const location = useLocation();
   const navigate = useNavigate();
-  const models = location.state?.models || [];
+  const models = location.state?.models || defaultMockModels;
   // scale은 models 배열의 각 객체에 포함되어 있음
 
   // useRef를 사용하여 변수들을 관리 (React 렌더링과 분리)
@@ -22,7 +113,7 @@ function ARPage() {
   const itemsRef = useRef([]);
   const placedObjectsRef = useRef([]);
   const selectedObjectRef = useRef(null);
-  const sizeInfoCardRef = useRef(null);
+  // const sizeInfoCardRef = useRef(null);
   const itemSelectedIndexRef = useRef(0);
   const hitTestSourceRef = useRef(null);
   const hitTestSourceRequestedRef = useRef(false);
@@ -34,7 +125,7 @@ function ARPage() {
 
   const DOUBLE_TAP_THRESHOLD = 300;
   const LONG_PRESS_DURATION = 500;
-  const RING_SCALE_FACTOR = 0.3;
+  const RING_SCALE_FACTOR = 1.2;
   const ROTATION_SENSITIVITY = 0.01;
 
   // let reticleDetectedFrames = 0;
@@ -229,76 +320,76 @@ function ARPage() {
     selectionRingRef.current.visible = false;
   }
 
-  // 크기 정보 카드 생성 함수 (3D 텍스처 방식)
-  function createSizeInfoCard(width, height, depth) {
-    // 기존 카드가 있다면 제거
-    if (sizeInfoCardRef.current) {
-      sceneRef.current.remove(sizeInfoCardRef.current);
-      sizeInfoCardRef.current = null;
-    }
+  // // 크기 정보 카드 생성 함수 (3D 텍스처 방식)
+  // function createSizeInfoCard(width, height, depth) {
+  //   // 기존 카드가 있다면 제거
+  //   if (sizeInfoCardRef.current) {
+  //     sceneRef.current.remove(sizeInfoCardRef.current);
+  //     sizeInfoCardRef.current = null;
+  //   }
 
-    // 캔버스 생성하여 텍스트 그리기
-    const canvas = document.createElement('canvas');
-    canvas.width = 512;
-    canvas.height = 256;
-    const context = canvas.getContext('2d');
+  //   // 캔버스 생성하여 텍스트 그리기
+  //   const canvas = document.createElement('canvas');
+  //   canvas.width = 512;
+  //   canvas.height = 256;
+  //   const context = canvas.getContext('2d');
 
-    // 배경 그리기
-    context.fillStyle = 'rgba(0, 0, 0, 0.8)';
-    context.fillRect(0, 0, canvas.width, canvas.height);
+  //   // 배경 그리기
+  //   context.fillStyle = 'rgba(0, 0, 0, 0.8)';
+  //   context.fillRect(0, 0, canvas.width, canvas.height);
 
-    // 테두리 그리기
-    context.strokeStyle = '#00ff00';
-    context.lineWidth = 4;
-    context.strokeRect(0, 0, canvas.width, canvas.height);
+  //   // 테두리 그리기
+  //   context.strokeStyle = '#00ff00';
+  //   context.lineWidth = 4;
+  //   context.strokeRect(0, 0, canvas.width, canvas.height);
 
-    // 텍스트 설정
-    context.fillStyle = 'white';
-    context.font = 'bold 32px Arial';
-    context.textAlign = 'center';
+  //   // 텍스트 설정
+  //   context.fillStyle = 'white';
+  //   context.font = 'bold 32px Arial';
+  //   context.textAlign = 'center';
 
-    // 제목 그리기
-    context.fillStyle = '#00ff00';
-    context.fillText('가구 크기', canvas.width / 2, 50);
+  //   // 제목 그리기
+  //   context.fillStyle = '#00ff00';
+  //   context.fillText('가구 크기', canvas.width / 2, 50);
 
-    // 크기 정보 그리기
-    context.fillStyle = 'white';
-    context.font = '28px Arial';
-    context.fillText(
-      `가로: ${(width / 100).toFixed(2)}m`,
-      canvas.width / 2,
-      100
-    );
-    context.fillText(
-      `세로: ${(depth / 100).toFixed(2)}m`,
-      canvas.width / 2,
-      140
-    );
-    context.fillText(
-      `높이: ${(height / 100).toFixed(2)}m`,
-      canvas.width / 2,
-      180
-    );
+  //   // 크기 정보 그리기
+  //   context.fillStyle = 'white';
+  //   context.font = '28px Arial';
+  //   context.fillText(
+  //     `가로: ${(width / 100).toFixed(2)}m`,
+  //     canvas.width / 2,
+  //     100
+  //   );
+  //   context.fillText(
+  //     `세로: ${(depth / 100).toFixed(2)}m`,
+  //     canvas.width / 2,
+  //     140
+  //   );
+  //   context.fillText(
+  //     `높이: ${(height / 100).toFixed(2)}m`,
+  //     canvas.width / 2,
+  //     180
+  //   );
 
-    // 텍스처 생성
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.needsUpdate = true;
+  //   // 텍스처 생성
+  //   const texture = new THREE.CanvasTexture(canvas);
+  //   texture.needsUpdate = true;
 
-    // 카드 메시 생성
-    const cardGeometry = new THREE.PlaneGeometry(0.5, 0.25);
-    const cardMaterial = new THREE.MeshBasicMaterial({
-      map: texture,
-      transparent: true,
-      alphaTest: 0.1,
-    });
+  //   // 카드 메시 생성
+  //   const cardGeometry = new THREE.PlaneGeometry(0.5, 0.25);
+  //   const cardMaterial = new THREE.MeshBasicMaterial({
+  //     map: texture,
+  //     transparent: true,
+  //     alphaTest: 0.1,
+  //   });
 
-    sizeInfoCardRef.current = new THREE.Mesh(cardGeometry, cardMaterial);
+  //   sizeInfoCardRef.current = new THREE.Mesh(cardGeometry, cardMaterial);
 
-    // 회전 초기화
-    sizeInfoCardRef.current.rotation.set(0, 0, 0);
+  //   // 회전 초기화
+  //   sizeInfoCardRef.current.rotation.set(0, 0, 0);
 
-    return sizeInfoCardRef.current;
-  }
+  //   return sizeInfoCardRef.current;
+  // }
 
   function onSelectStart() {
     if (isRotatingRef.current) return;
@@ -438,46 +529,40 @@ function ARPage() {
   function selectObject(object) {
     deselectObject();
     selectedObjectRef.current = object;
-    selectedObjectRef.current.add(selectionRingRef.current);
 
     const box = new THREE.Box3().setFromObject(selectedObjectRef.current);
-    const size = box.getSize(new THREE.Vector3());
+    const center = new THREE.Vector3();
+    const size = new THREE.Vector3();
+    box.getCenter(center);
+    box.getSize(size);
 
-    // 객체에 저장된 모델 정보에서 크기 정보 가져오기
-    const modelInfo = selectedObjectRef.current.userData?.modelInfo;
-    const widthCm = modelInfo?.width_cm || 100;
-    const heightCm = modelInfo?.height_cm || 100;
-    const depthCm = modelInfo?.depth_cm || 100;
+    // // 크기 정보 카드 생성
+    // const modelInfo = selectedObjectRef.current.userData?.modelInfo;
+    // const widthCm = modelInfo?.width_cm || 100;
+    // const heightCm = modelInfo?.height_cm || 100;
+    // const depthCm = modelInfo?.depth_cm || 100;
+    // const card = createSizeInfoCard(widthCm, heightCm, depthCm);
 
-    // 크기 정보 카드 생성
-    const card = createSizeInfoCard(widthCm, heightCm, depthCm);
+    // // 카드 위치: 객체 위로
+    // card.position.copy(center);
+    // card.position.y = box.max.y + 0.3;
+    // card.lookAt(cameraRef.current.position);
+    // card.rotation.x = 0;
+    // card.rotation.z = 0;
+    // sceneRef.current.add(card);
 
-    // 카드 위치 설정 (객체 위쪽에 배치)
-    card.position.copy(selectedObjectRef.current.position);
-    card.position.y += size.y / 2 + 0.3;
+    // 링 위치: 바닥 중심
+    selectionRingRef.current.position.set(center.x, box.min.y, center.z);
+    sceneRef.current.add(selectionRingRef.current); // 씬에 직접 추가
 
-    // 카메라와 카드 사이의 방향 벡터 계산
-    //const direction = new THREE.Vector3().subVectors(camera.position, card.position);
-    card.lookAt(cameraRef.current.position);
-
-    // 카드가 뒤집히지 않도록 Y축 회전만 사용
-    card.rotation.x = 0;
-    card.rotation.z = 0;
-
-    sceneRef.current.add(card);
-
-    // 링 설정
-    selectionRingRef.current.position.set(0, -size.y / 2, 0);
-    selectionRingRef.current.scale.set(1, 1, 1);
-    const maxDim = Math.max(size.x, size.z) / selectedObjectRef.current.scale.x;
+    const maxDim = Math.max(size.x, size.z);
     selectionRingRef.current.scale.set(
       maxDim * RING_SCALE_FACTOR,
       maxDim * RING_SCALE_FACTOR,
       maxDim * RING_SCALE_FACTOR
     );
-    selectionRingRef.current.visible = true;
 
-    //makeSizeLine(size);
+    selectionRingRef.current.visible = true;
   }
 
   // function createThickLine(start, end, radius = 0.8, color = 0xff0000) {
@@ -541,11 +626,11 @@ function ARPage() {
       // }
     }
 
-    // 크기 정보 카드 제거
-    if (sizeInfoCardRef.current) {
-      sceneRef.current.remove(sizeInfoCardRef.current);
-      sizeInfoCardRef.current = null;
-    }
+    // // 크기 정보 카드 제거
+    // if (sizeInfoCardRef.current) {
+    //   sceneRef.current.remove(sizeInfoCardRef.current);
+    //   sizeInfoCardRef.current = null;
+    // }
 
     selectedObjectRef.current = null;
     selectionRingRef.current.visible = false;
@@ -609,10 +694,10 @@ function ARPage() {
       }
     }
 
-    // 성능 최적화: 카드 업데이트를 선택적으로만 실행
-    if (sizeInfoCardRef.current && selectedObjectRef.current) {
-      sizeInfoCardRef.current.lookAt(cameraRef.current.position);
-    }
+    // // 성능 최적화: 카드 업데이트를 선택적으로만 실행
+    // if (sizeInfoCardRef.current && selectedObjectRef.current) {
+    //   sizeInfoCardRef.current.lookAt(cameraRef.current.position);
+    // }
 
     rendererRef.current.render(sceneRef.current, cameraRef.current);
     // cssRenderer.render(cssScene, camera); // CSS3D 렌더링 제거
@@ -659,12 +744,12 @@ function ARPage() {
         바닥을 인식 중입니다...
       </div>
       {/* 가구 선택 UI */}
-      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 flex gap-2">
+      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 overflow-x-auto whitespace-nowrap px-2 w-[90vw] max-w-2xl">
         {models.map((model, index) => (
           <button
             key={index}
             id={`item${index}`}
-            className="bg-white/80 backdrop-blur-sm rounded-lg p-3 hover:bg-white transition-colors"
+            className="inline-block bg-white/80 backdrop-blur-sm rounded-lg p-3 hover:bg-white transition-colors mr-2 last:mr-0"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();

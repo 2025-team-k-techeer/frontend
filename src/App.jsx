@@ -17,6 +17,38 @@ const ResultPage = lazy(() => import('/src/pages/ResultPage.jsx'));
 const ARPage = lazy(() => import('/src/pages/ARPage.jsx'));
 const RoomDetail = lazy(() => import('/src/pages/RoomDetail.jsx'));
 const RoomStyle = lazy(() => import('/src/pages/RoomStyle.jsx'));
+const ARPageWrapper = lazy(() => import('/src/pages/ArpageWrapper.jsx'));
+// 예시 mock 데이터
+const mockModels = [
+  {
+    label: '의자',
+    model_url: 'https://example.com/model1.glb',
+    image_url: 'https://example.com/image1.png',
+    width_cm: 50,
+    height_cm: 80,
+    depth_cm: 50,
+    scale: 1.0,
+  },
+  {
+    label: '책상',
+    model_url: 'https://example.com/model2.glb',
+    image_url: 'https://example.com/image2.png',
+    width_cm: 120,
+    height_cm: 75,
+    depth_cm: 60,
+    scale: 1.2,
+  },
+];
+
+<BrowserRouter>
+  <Routes>
+    {/* 기존 라우트 */}
+    <Route path="/" element={<MainPage />} />
+    <Route path="/login" element={<LoginPage />} />
+    {/* 테스트용 AR 페이지 경로 */}
+    <Route path="/ar-test" element={<ARPageWrapper />} />
+  </Routes>
+</BrowserRouter>;
 
 export default function App() {
   return (
@@ -37,6 +69,7 @@ export default function App() {
             <Route path="/RoomDetail" element={<RoomDetail />} />
             <Route path="/result" element={<ResultPage />} />
             <Route path="/ar" element={<ARPage />} />
+            <Route path="/ar-test" element={<ARPageWrapper />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
