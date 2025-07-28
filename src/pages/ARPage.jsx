@@ -8,45 +8,142 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Tutorial from '../components/Result/Tutorial';
 
 function ARPage() {
+  const defaultMockModels = [
+    {
+      label: '테스트 가구',
+      model_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/VintageChair.glb',
+      image_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/VintageChair.png',
+      width_cm: 1000,
+      height_cm: 100,
+      depth_cm: 60,
+      scale: 1.0,
+    },
+    {
+      label: '테스트 가구2',
+      model_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/WoodenChair.glb',
+      image_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/WoodenChair.png',
+      width_cm: 1000,
+      height_cm: 100,
+      depth_cm: 60,
+      scale: 1.0,
+    },
+    {
+      label: '테스트 가구3',
+      model_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/VintageChair.glb',
+      image_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/VintageChair.png',
+      width_cm: 1000,
+      height_cm: 100,
+      depth_cm: 60,
+      scale: 1.0,
+    },
+    // {
+    //   label: '테스트 가구4',
+    //   model_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/beige_modernchair.glb',
+    //   image_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/beige_modernchair.png',
+    //   width_cm: 1000,
+    //   height_cm: 100,
+    //   depth_cm: 60,
+    //   scale: 1.0,
+    // },
+    // {
+    //   label: '테스트 가구5',
+    //   model_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/black_leather_officechair.glb',
+    //   image_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/black_leather_officechair.png',
+    //   width_cm: 1000,
+    //   height_cm: 100,
+    //   depth_cm: 60,
+    //   scale: 1.0,
+    // },
+    // {
+    //   label: '테스트 가구6',
+    //   model_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/black_officechair.glb',
+    //   image_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/black_officechair.png',
+    //   width_cm: 1000,
+    //   height_cm: 100,
+    //   depth_cm: 60,
+    //   scale: 1.0,
+    // },
+    // {
+    //   label: '테스트 가구7',
+    //   model_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/brown_leather_officechair.glb',
+    //   image_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/brown_leather_officechair.png',
+    //   width_cm: 1000,
+    //   height_cm: 100,
+    //   depth_cm: 60,
+    //   scale: 1.0,
+    // },
+    // {
+    //   label: '테스트 가구8',
+    //   model_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/grey_armchair.glb',
+    //   image_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/grey_armchair.png',
+    //   width_cm: 1000,
+    //   height_cm: 100,
+    //   depth_cm: 60,
+    //   scale: 1.0,
+    // },
+  ];
+  console.log('defaultMockModels', defaultMockModels);
   const location = useLocation();
   const navigate = useNavigate();
-  const models = location.state?.models || []; // ResultPage에서 전달받은 가구 모델 데이터
+
+  const models = location.state?.models || defaultMockModels;
+
   // scale은 models 배열의 각 객체에 포함되어 있음
 
   // 튜토리얼 상태 관리
   const [showTutorial, setShowTutorial] = useState(false);
 
   // useRef를 사용하여 변수들을 관리 (React 렌더링과 분리)
-  // React의 상태 변경으로 인한 불필요한 리렌더링 방지
-  const sceneRef = useRef(null); // Three.js 씬 객체
-  const cameraRef = useRef(null); // 카메라 객체
-  const rendererRef = useRef(null); // WebGL 렌더러
-  const controllerRef = useRef(null); // AR 컨트롤러 (VR 컨트롤러)
-  const reticleRef = useRef(null); // AR 조준선 (바닥 표시)
-  const selectionRingRef = useRef(null); // 선택된 객체 주변 링
-  const itemsRef = useRef([]); // 로드된 3D 모델들
-  const placedObjectsRef = useRef([]); // 배치된 가구 객체들
-  const selectedObjectRef = useRef(null); // 현재 선택된 객체
-  const sizeInfoCardRef = useRef(null); // 크기 정보 카드
-  const itemSelectedIndexRef = useRef(0); // 선택된 가구 인덱스
-  const hitTestSourceRef = useRef(null); // AR 히트 테스트 소스
-  const hitTestSourceRequestedRef = useRef(false); // 히트 테스트 요청 상태
-  const lastTapTimeRef = useRef(0); // 마지막 탭 시간 (더블탭 감지용)
-  const longPressTimeoutRef = useRef(null); // 롱프레스 타이머
-  const isRotatingRef = useRef(false); // 회전 중인지 상태
-  const initialTouchCenterXRef = useRef(0); // 초기 터치 중심점 X
-  const initialObjectYRotationRef = useRef(0); // 초기 객체 Y축 회전값
 
-  // 상수 정의
-  const DOUBLE_TAP_THRESHOLD = 300; // 더블탭 감지 임계값 (ms)
-  const LONG_PRESS_DURATION = 500; // 롱프레스 감지 시간 (ms)
-  const RING_SCALE_FACTOR = 0.3; // 선택 링 크기 조정 팩터
-  const ROTATION_SENSITIVITY = 0.01; // 회전 감도
+  const sceneRef = useRef(null);
+  const cameraRef = useRef(null);
+  const rendererRef = useRef(null);
+  const controllerRef = useRef(null);
+  const reticleRef = useRef(null);
+  const selectionRingRef = useRef(null);
+  const itemsRef = useRef([]);
+  const placedObjectsRef = useRef([]);
+  const selectedObjectRef = useRef(null);
+  // const sizeInfoCardRef = useRef(null);
+  const itemSelectedIndexRef = useRef(0);
+  const hitTestSourceRef = useRef(null);
+  const hitTestSourceRequestedRef = useRef(false);
+  const lastTapTimeRef = useRef(0);
+  const longPressTimeoutRef = useRef(null);
+  const isRotatingRef = useRef(false);
+  const initialTouchCenterXRef = useRef(0);
+  const initialObjectYRotationRef = useRef(0);
 
-  // 주석 처리된 변수들 (성능 최적화로 제거)
-  // let reticleDetectedFrames = 0; // 조준선 감지 프레임 수
-  //const RETICLE_THRESHOLD = 300; // 조준선 임계값
-  //let lineGroup = null; // 크기 표시선 그룹
+  const DOUBLE_TAP_THRESHOLD = 400;
+  const LONG_PRESS_DURATION = 500;
+  const RING_SCALE_FACTOR = 1.2;
+  const ROTATION_SENSITIVITY = 0.01;
+
+  const measurementGroupRef = useRef(null); // 크기 측정 선 그룹
+
+  // let reticleDetectedFrames = 0;
+  //const RETICLE_THRESHOLD = 300;
+
+  //let lineGroup = null;
+
+  // 크기 정보 카드 관련 변수들
+
 
   useEffect(() => {
     // models 배열 콘솔 출력
@@ -253,77 +350,23 @@ function ARPage() {
     selectionRingRef.current.visible = false;
   }
 
-  // 크기 정보 카드 생성 함수 (3D 텍스처 방식)
-  // CSS3DRenderer 대신 Canvas 텍스처 사용으로 성능 향상
-  function createSizeInfoCard(width, height, depth) {
-    // 기존 카드가 있다면 제거
-    if (sizeInfoCardRef.current) {
-      sceneRef.current.remove(sizeInfoCardRef.current);
-      sizeInfoCardRef.current = null;
-    }
 
-    // 캔버스 생성하여 텍스트 그리기
-    const canvas = document.createElement('canvas');
-    canvas.width = 512;
-    canvas.height = 256;
-    const context = canvas.getContext('2d');
 
-    // 배경 그리기
-    context.fillStyle = 'rgba(0, 0, 0, 0.8)';
-    context.fillRect(0, 0, canvas.width, canvas.height);
+  //   // 카드 메시 생성
+  //   const cardGeometry = new THREE.PlaneGeometry(0.5, 0.25);
+  //   const cardMaterial = new THREE.MeshBasicMaterial({
+  //     map: texture,
+  //     transparent: true,
+  //     alphaTest: 0.1,
+  //   });
 
-    // 테두리 그리기
-    context.strokeStyle = '#00ff00';
-    context.lineWidth = 4;
-    context.strokeRect(0, 0, canvas.width, canvas.height);
+  //   sizeInfoCardRef.current = new THREE.Mesh(cardGeometry, cardMaterial);
 
-    // 텍스트 설정
-    context.fillStyle = 'white';
-    context.font = 'bold 32px Arial';
-    context.textAlign = 'center';
+  //   // 회전 초기화
+  //   sizeInfoCardRef.current.rotation.set(0, 0, 0);
 
-    // 제목 그리기
-    context.fillStyle = '#00ff00';
-    context.fillText('가구 크기', canvas.width / 2, 50);
-
-    // 크기 정보 그리기 (cm를 m로 변환)
-    context.fillStyle = 'white';
-    context.font = '28px Arial';
-    context.fillText(
-      `가로: ${(width / 100).toFixed(2)}m`,
-      canvas.width / 2,
-      100
-    );
-    context.fillText(
-      `세로: ${(depth / 100).toFixed(2)}m`,
-      canvas.width / 2,
-      140
-    );
-    context.fillText(
-      `높이: ${(height / 100).toFixed(2)}m`,
-      canvas.width / 2,
-      180
-    );
-
-    // 텍스처 생성
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.needsUpdate = true;
-
-    // 카드 메시 생성
-    const cardGeometry = new THREE.PlaneGeometry(0.5, 0.25);
-    const cardMaterial = new THREE.MeshBasicMaterial({
-      map: texture,
-      transparent: true,
-      alphaTest: 0.1,
-    });
-
-    sizeInfoCardRef.current = new THREE.Mesh(cardGeometry, cardMaterial);
-
-    // 회전 초기화
-    sizeInfoCardRef.current.rotation.set(0, 0, 0);
-
-    return sizeInfoCardRef.current;
-  }
+  //   return sizeInfoCardRef.current;
+  // }
 
   // 컨트롤러 선택 시작 이벤트 - 롱프레스 처리
   function onSelectStart() {
@@ -477,103 +520,199 @@ function ARPage() {
   function selectObject(object) {
     deselectObject(); // 기존 선택 해제
     selectedObjectRef.current = object;
-    selectedObjectRef.current.add(selectionRingRef.current);
 
     const box = new THREE.Box3().setFromObject(selectedObjectRef.current);
-    const size = box.getSize(new THREE.Vector3());
+    const center = new THREE.Vector3();
+    const size = new THREE.Vector3();
+    box.getCenter(center);
+    box.getSize(size);
 
-    // 객체에 저장된 모델 정보에서 크기 정보 가져오기
-    const modelInfo = selectedObjectRef.current.userData?.modelInfo;
-    const widthCm = modelInfo?.width_cm || 100;
-    const heightCm = modelInfo?.height_cm || 100;
-    const depthCm = modelInfo?.depth_cm || 100;
+    // // 크기 정보 카드 생성
+    // const modelInfo = selectedObjectRef.current.userData?.modelInfo;
+    // const widthCm = modelInfo?.width_cm || 100;
+    // const heightCm = modelInfo?.height_cm || 100;
+    // const depthCm = modelInfo?.depth_cm || 100;
+    // const card = createSizeInfoCard(widthCm, heightCm, depthCm);
 
-    // 크기 정보 카드 생성
-    const card = createSizeInfoCard(widthCm, heightCm, depthCm);
+    // // 카드 위치: 객체 위로
+    // card.position.copy(center);
+    // card.position.y = box.max.y + 0.3;
+    // card.lookAt(cameraRef.current.position);
+    // card.rotation.x = 0;
+    // card.rotation.z = 0;
+    // sceneRef.current.add(card);
 
-    // 카드 위치 설정 (객체 위쪽에 배치)
-    card.position.copy(selectedObjectRef.current.position);
-    card.position.y += size.y / 2 + 0.3;
+    // 링 위치: 바닥 중심
+    selectionRingRef.current.position.set(center.x, box.min.y, center.z);
+    sceneRef.current.add(selectionRingRef.current); // 씬에 직접 추가
 
-    // 카메라와 카드 사이의 방향 벡터 계산
-    //const direction = new THREE.Vector3().subVectors(camera.position, card.position);
-    card.lookAt(cameraRef.current.position);
+    // 크기 측정 선 표시
+    showMeasurementLines(
+      selectedObjectRef.current,
+      sceneRef.current,
+      cameraRef.current
+    );
 
-    // 카드가 뒤집히지 않도록 Y축 회전만 사용
-    card.rotation.x = 0;
-    card.rotation.z = 0;
-
-    sceneRef.current.add(card);
-
-    // 링 설정
-    selectionRingRef.current.position.set(0, -size.y / 2, 0);
-    selectionRingRef.current.scale.set(1, 1, 1);
-    const maxDim = Math.max(size.x, size.z) / selectedObjectRef.current.scale.x;
+    const maxDim = Math.max(size.x, size.z);
     selectionRingRef.current.scale.set(
       maxDim * RING_SCALE_FACTOR,
       maxDim * RING_SCALE_FACTOR,
       maxDim * RING_SCALE_FACTOR
     );
+
+
     selectionRingRef.current.visible = true;
 
-    // 주석 처리된 크기선 표시 기능
-    //makeSizeLine(size);
   }
 
-  // 주석 처리된 크기선 생성 함수들 (성능 최적화로 제거)
-  // function createThickLine(start, end, radius = 0.8, color = 0xff0000) {
-  //   const direction = new THREE.Vector3().subVectors(end, start);
-  //   const length = direction.length();
 
-  //   const material = new THREE.MeshBasicMaterial({ color });
-  //   const geometry = new THREE.CylinderGeometry(radius, radius, length, 16);
 
-  //   const cylinder = new THREE.Mesh(geometry, material);
+  function createLine(start, end, color = 0x00ff00, radius = 0.005) {
+    const dir = new THREE.Vector3().subVectors(end, start);
+    const len = dir.length();
+    const geometry = new THREE.CylinderGeometry(radius, radius, len, 8);
+    const material = new THREE.MeshBasicMaterial({ color });
+    const mesh = new THREE.Mesh(geometry, material);
 
-  //   const midPoint = new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5);
-  //   cylinder.position.copy(midPoint);
+    const mid = new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5);
+    mesh.position.copy(mid);
 
-  //   const axis = new THREE.Vector3(0, 1, 0);
-  //   cylinder.quaternion.setFromUnitVectors(axis, direction.clone().normalize());
+    const axis = new THREE.Vector3(0, 1, 0);
+    mesh.quaternion.setFromUnitVectors(axis, dir.clone().normalize());
 
-  //   return cylinder;
-  // }
+    return mesh;
+  }
 
-  // function makeSizeLine(size) {
-  //   const scale = selectedObject.scale;
+  function createTextLabel(text = '100cm', size = 0.08) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 256;
+    canvas.height = 128;
+    const ctx = canvas.getContext('2d');
 
-  //   const trueSize = new THREE.Vector3(
-  //     size.x / scale.x,
-  //     size.y / scale.y,
-  //     size.z / scale.z
-  //   );
+    ctx.fillStyle = 'rgba(0, 0, 0, 0)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 40px Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, canvas.width / 2, canvas.height / 2);
 
-  //   const scaleFactor = 0.27;
-  //   const halfX = (trueSize.x / 2) * scaleFactor;
-  //   const halfY = (trueSize.y / 2) * scaleFactor;
-  //   const halfZ = (trueSize.z / 2) * scaleFactor;
+    const texture = new THREE.CanvasTexture(canvas);
+    const material = new THREE.MeshBasicMaterial({
+      map: texture,
+      transparent: true,
+    });
+    const geometry = new THREE.PlaneGeometry(size * 2, size);
+    return new THREE.Mesh(geometry, material);
+  }
 
-  //   const xLine = createThickLine(
-  //     new THREE.Vector3(-halfX, -halfY, halfZ),
-  //     new THREE.Vector3(halfX, -halfY, halfZ)
-  //   );
+  // 가구 크기 측정 선 표시 함수
+  function showMeasurementLines(object, scene, camera) {
+    const box = new THREE.Box3().setFromObject(object);
+    const size = new THREE.Vector3();
+    const center = new THREE.Vector3();
+    box.getSize(size);
+    box.getCenter(center);
 
-  //   const zLine = createThickLine(
-  //     new THREE.Vector3(halfX, -halfY, halfZ),
-  //     new THREE.Vector3(halfX, -halfY, -halfZ)
-  //   );
+    const group = new THREE.Group();
+    const offsetY = 0.05;
+    const offsetText = 0.1;
+    const tipLength = 0.03; // 짧은 선 길이
 
-  //   const yLine = createThickLine(
-  //     new THREE.Vector3(-halfX, -halfY, halfZ),
-  //     new THREE.Vector3(-halfX, halfY * 7, halfZ)
-  //   );
+    // === 가로 (X)
+    const xY = box.min.y + offsetY;
+    const xZ = box.max.z + 0.05;
+    const x1 = new THREE.Vector3(box.min.x, xY, xZ);
+    const x2 = new THREE.Vector3(box.max.x, xY, xZ);
+    const lineX = createLine(x1, x2, 0xff7700);
+    // 가로선 끝에 수직선 추가 (Z축 양방향)
+    const x1Tip1 = x1.clone();
+    const x1Tip2a = x1.clone().add(new THREE.Vector3(0, 0, tipLength));
+    const x1Tip2b = x1.clone().add(new THREE.Vector3(0, 0, -tipLength));
+    const x2Tip1 = x2.clone();
+    const x2Tip2a = x2.clone().add(new THREE.Vector3(0, 0, tipLength));
+    const x2Tip2b = x2.clone().add(new THREE.Vector3(0, 0, -tipLength));
+    const xTipLine1a = createLine(x1Tip1, x1Tip2a, 0xff7700);
+    const xTipLine1b = createLine(x1Tip1, x1Tip2b, 0xff7700);
+    const xTipLine2a = createLine(x2Tip1, x2Tip2a, 0xff7700);
+    const xTipLine2b = createLine(x2Tip1, x2Tip2b, 0xff7700);
 
-  //   lineGroup = new THREE.Group();
-  //   lineGroup.add(xLine, zLine, yLine);
-  //   selectedObject.add(lineGroup);
-  // }
+    const labelX = createTextLabel(`가로: ${size.x.toFixed(2)}m`);
+    labelX.position.set(center.x, xY + offsetText, xZ);
+    labelX.lookAt(camera.position);
 
-  // 객체 선택 해제 함수
+    // === 세로 (Z)
+    const zY = box.min.y + offsetY;
+    const zX = box.min.x - 0.05;
+    const z1 = new THREE.Vector3(zX, zY, box.min.z);
+    const z2 = new THREE.Vector3(zX, zY, box.max.z);
+    const lineZ = createLine(z1, z2, 0xff7700);
+    // 세로선 끝에 수직선 추가 (X축 양방향)
+    const z1Tip1 = z1.clone();
+    const z1Tip2a = z1.clone().add(new THREE.Vector3(-tipLength, 0, 0));
+    const z1Tip2b = z1.clone().add(new THREE.Vector3(tipLength, 0, 0));
+    const z2Tip1 = z2.clone();
+    const z2Tip2a = z2.clone().add(new THREE.Vector3(-tipLength, 0, 0));
+    const z2Tip2b = z2.clone().add(new THREE.Vector3(tipLength, 0, 0));
+    const zTipLine1a = createLine(z1Tip1, z1Tip2a, 0xff7700);
+    const zTipLine1b = createLine(z1Tip1, z1Tip2b, 0xff7700);
+    const zTipLine2a = createLine(z2Tip1, z2Tip2a, 0xff7700);
+    const zTipLine2b = createLine(z2Tip1, z2Tip2b, 0xff7700);
+
+    const labelZ = createTextLabel(`세로: ${size.z.toFixed(2)}m`);
+    labelZ.position.set(zX, zY + offsetText, center.z);
+    labelZ.lookAt(camera.position);
+
+    // === 높이 (Y)
+    const yX = box.max.x + 0.05;
+    const yZ = box.max.z + 0.05;
+    // y1의 y좌표를 xY로 맞춤
+    const y1 = new THREE.Vector3(yX, xY, yZ);
+    const y2 = new THREE.Vector3(yX, box.max.y, yZ);
+    const lineY = createLine(y1, y2, 0xff7700);
+    // 높이선 끝에 수직선 추가 (Z축 양방향)
+    const y1Tip1 = y1.clone();
+    const y1Tip2a = y1.clone().add(new THREE.Vector3(0, 0, tipLength));
+    const y1Tip2b = y1.clone().add(new THREE.Vector3(0, 0, -tipLength));
+    const y2Tip1 = y2.clone();
+    const y2Tip2a = y2.clone().add(new THREE.Vector3(0, 0, tipLength));
+    const y2Tip2b = y2.clone().add(new THREE.Vector3(0, 0, -tipLength));
+    const yTipLine1a = createLine(y1Tip1, y1Tip2a, 0xff7700);
+    const yTipLine1b = createLine(y1Tip1, y1Tip2b, 0xff7700);
+    const yTipLine2a = createLine(y2Tip1, y2Tip2a, 0xff7700);
+    const yTipLine2b = createLine(y2Tip1, y2Tip2b, 0xff7700);
+    // 중간 위치 계산
+    const midY = (box.min.y + box.max.y) / 2;
+    const delta = 0.05; // 카메라 쪽으로 이동할 거리
+    const labelY = createTextLabel(`높이: ${size.y.toFixed(2)}m`);
+    labelY.position.set(yX, midY, yZ + delta);
+    labelY.lookAt(camera.position);
+
+    group.add(
+      lineX,
+      xTipLine1a,
+      xTipLine1b,
+      xTipLine2a,
+      xTipLine2b,
+      labelX,
+      lineZ,
+      zTipLine1a,
+      zTipLine1b,
+      zTipLine2a,
+      zTipLine2b,
+      labelZ,
+      lineY,
+      yTipLine1a,
+      yTipLine1b,
+      yTipLine2a,
+      yTipLine2b,
+      labelY
+    );
+    scene.add(group);
+    measurementGroupRef.current = group;
+  }
+
+
   function deselectObject() {
     if (selectedObjectRef.current) {
       selectedObjectRef.current.remove(selectionRingRef.current);
@@ -584,12 +723,25 @@ function ARPage() {
       // }
     }
 
-    // 크기 정보 카드 제거
-    if (sizeInfoCardRef.current) {
-      sceneRef.current.remove(sizeInfoCardRef.current);
-      sizeInfoCardRef.current = null;
+    // // 크기 정보 카드 제거
+    // if (sizeInfoCardRef.current) {
+    //   sceneRef.current.remove(sizeInfoCardRef.current);
+    //   sizeInfoCardRef.current = null;
+    // }
+    if (measurementGroupRef.current) {
+      sceneRef.current.remove(measurementGroupRef.current);
+      measurementGroupRef.current.traverse((child) => {
+        if (child.geometry) child.geometry.dispose();
+        if (child.material) {
+          if (Array.isArray(child.material)) {
+            child.material.forEach((m) => m.dispose());
+          } else {
+            child.material.dispose();
+          }
+        }
+      });
+      measurementGroupRef.current = null;
     }
-
     selectedObjectRef.current = null;
     selectionRingRef.current.visible = false;
   }
@@ -659,10 +811,10 @@ function ARPage() {
       }
     }
 
-    // 성능 최적화: 카드 업데이트를 선택적으로만 실행
-    if (sizeInfoCardRef.current && selectedObjectRef.current) {
-      sizeInfoCardRef.current.lookAt(cameraRef.current.position);
-    }
+    // // 성능 최적화: 카드 업데이트를 선택적으로만 실행
+    // if (sizeInfoCardRef.current && selectedObjectRef.current) {
+    //   sizeInfoCardRef.current.lookAt(cameraRef.current.position);
+    // }
 
     rendererRef.current.render(sceneRef.current, cameraRef.current);
     // 주석 처리된 CSS3D 렌더링
@@ -739,32 +891,29 @@ function ARPage() {
         바닥을 인식 중입니다...
       </div>
       {/* 가구 선택 UI */}
-      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 flex gap-2">
-        {models.map((model, index) => (
+      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 flex justify-center gap-6 w-full max-w-md px-2">
+        {models.slice(0, 3).map((model, index) => (
           <button
             key={index}
             id={`item${index}`}
-            className="bg-white/80 backdrop-blur-sm rounded-lg p-3 hover:bg-white transition-colors"
+            className={`bg-[#F0F0F0] rounded-xl p-3 flex-shrink-0 shadow-md w-24 h-24 flex items-center justify-center border-4  focus:outline-none focus:ring-0`}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               onClicked(e, null, index);
             }}
           >
-            <div className="w-12 h-12 rounded overflow-hidden">
+            <div className="w-20 h-20 rounded overflow-hidden flex items-center justify-center">
               <img
                 src={model.image_url}
                 alt={model.label}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src =
                     'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yNCAyOEMyNi4yMDkxIDI4IDI4IDI2LjIwOTEgMjggMjRDMjggMjEuNzkwOSAyNi4yMDkxIDIwIDI0IDIwQzIxLjc5MDkgMjAgMjAgMjEuNzkwOSAyMCAyNEMyMCAyNi4yMDkxIDIxLjc5MDkgMjggMjQgMjhaIiBmaWxsPSIjOUI5QkEwIi8+CjxwYXRoIGQ9Ik0yNCA0QzEyLjk1NDMgNCA0IDEyLjk1NDMgNCAyNFMxMi45NTQzIDQ0IDI0IDQ0QzM1LjA0NTcgNDQgNDQgMzUuMDQ1NyA0NCAyNFMzNS4wNDU3IDQgMjQgNFpNMjQgNDBDMTUuMTY0IDQwIDggMzIuODM2IDggMjRTMTUuMTY0IDggMjQgOEMzMi44MzYgOCA0MCAxNS4xNjQgNDAgMjRTMzIuODM2IDQwIDI0IDQwWiIgZmlsbD0iIzlCOUJBQCIvPgo8L3N2Zz4K';
                 }}
               />
-            </div>
-            <div className="text-xs font-bold text-gray-600 mt-1 text-center">
-              {model.label}
             </div>
           </button>
         ))}

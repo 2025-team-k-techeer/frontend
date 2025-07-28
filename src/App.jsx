@@ -17,6 +17,7 @@ const ResultPage = lazy(() => import('/src/pages/ResultPage.jsx'));
 const ARPage = lazy(() => import('/src/pages/ARPage.jsx'));
 const RoomDetail = lazy(() => import('/src/pages/RoomDetail.jsx'));
 const RoomStyle = lazy(() => import('/src/pages/RoomStyle.jsx'));
+// const ARPageWrapper = lazy(() => import('/src/pages/ArpageWrapper.jsx'));
 
 export default function App() {
   return (
@@ -37,6 +38,7 @@ export default function App() {
             <Route path="/RoomDetail" element={<RoomDetail />} />
             <Route path="/result" element={<ResultPage />} />
             <Route path="/ar" element={<ARPage />} />
+            {/* <Route path="/ar-test" element={<ARPageWrapper />} /> */}
           </Routes>
         </Suspense>
       </BrowserRouter>
