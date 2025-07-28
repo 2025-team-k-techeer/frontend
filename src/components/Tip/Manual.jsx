@@ -46,15 +46,15 @@ function Manual() {
             <strong className="text-gray-800">3. 공간 유형 선택:</strong>
             업로드한 사진 속 방의 공간 유형을 선택해주세요.
             <br />
-            <strong className="text-gray-800">3. 인테리어 스타일 선택:</strong>
+            <strong className="text-gray-800">4. 인테리어 스타일 선택:</strong>
             원하는 인테리어 스타일을 선택해주세요. 버튼을 꾹 누르면 해당
             인테리어 스타일의 설명을 볼 수 있어요.
             <br />
-            <strong className="text-gray-800">4. 추가 요구사항:</strong>
+            <strong className="text-gray-800">5. 추가 요구사항:</strong>
             추가로 방에 들어갔으면 하는 점을 적어주세요. AI가 똑똑하게
             반영해줘요.
             <br />
-            <strong className="text-gray-800">5. 완료:</strong>
+            <strong className="text-gray-800">6. 완료:</strong>
             이제 완료버튼을 누르면 끝! 결과를 확인해보세요.
           </p>
         </section>
