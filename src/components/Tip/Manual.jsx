@@ -59,7 +59,7 @@ function Manual() {
           </p>
         </section>
 
-        {/* 2. 스타일 선택 섹션 */}
+        {/* 2. AR */}
         <section id="AR">
           <div className="flex items-center mb-4">
             <span className="bg-sage-accent text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg mr-3">
@@ -88,7 +88,7 @@ function Manual() {
           </p>
         </section>
 
-        {/* 3. AR로 보기 섹션 */}
+        {/* 3. 라이브러리 */}
         <section id="library">
           <div className="flex items-center mb-4">
             <span className="bg-sage-accent text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-lg mr-3">
