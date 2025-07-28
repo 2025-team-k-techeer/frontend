@@ -38,7 +38,7 @@ export default function App() {
             <Route path="/RoomDetail" element={<RoomDetail />} />
             <Route path="/result" element={<ResultPage />} />
             <Route path="/ar" element={<ARPage />} />
-            {/* <Route path="/ar-test" element={<ARPageWrapper />} /> */}
+            {/* {<Route path="/ar-test" element={<ARPageWrapper />} />} */}
           </Routes>
         </Suspense>
       </BrowserRouter>

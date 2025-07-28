@@ -41,17 +41,18 @@ function ARPage() {
       depth_cm: 60,
       scale: 1.0,
     },
-    // {
-    //   label: '테스트 가구4',
-    //   model_url:
-    //     'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/beige_modernchair.glb',
-    //   image_url:
-    //     'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/beige_modernchair.png',
-    //   width_cm: 1000,
-    //   height_cm: 100,
-    //   depth_cm: 60,
-    //   scale: 1.0,
-    // },
+    {
+      label: '테스트 가구4',
+      model_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/beige_modernchair.glb',
+      image_url:
+        'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/beige_modernchair.png',
+      width_cm: 1000,
+      height_cm: 100,
+      depth_cm: 60,
+      scale: 1.0,
+    },
+
     // {
     //   label: '테스트 가구5',
     //   model_url:
@@ -911,19 +912,19 @@ function ARPage() {
         바닥을 인식 중입니다...
       </div>
       {/* 가구 선택 UI */}
-      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 flex justify-center gap-6 w-full max-w-md px-2">
-        {models.slice(0, 3).map((model, index) => (
+      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 flex gap-4 w-full max-w-lg px-2  rounded-xl py-4 overflow-x-auto whitespace-nowrap">
+        {models.slice(0, 4).map((model, index) => (
           <button
             key={index}
             id={`item${index}`}
-            className={`bg-[#F0F0F0] rounded-xl p-3 flex-shrink-0 shadow-md w-24 h-24 flex items-center justify-center border-4  focus:outline-none focus:ring-0`}
+            className={`bg-[#F0F0F0] rounded-xl p-3 flex-shrink-0 shadow-md w-20 h-20 flex items-center justify-center border-4 focus:outline-none focus:ring-0`}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               onClicked(e, null, index);
             }}
           >
-            <div className="w-20 h-20 rounded overflow-hidden flex items-center justify-center">
+            <div className="w-16 h-16 rounded overflow-hidden flex items-center justify-center">
               <img
                 src={model.image_url}
                 alt={model.label}
