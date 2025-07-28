@@ -1,16 +1,20 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { ARButton } from 'three/examples/jsm/webxr/ARButton';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { XREstimatedLight } from 'three/examples/jsm/webxr/XREstimatedLight';
 import { useLocation, useNavigate } from 'react-router-dom';
 // CSS3DRenderer 제거 - 3D 텍스처 방식으로 대체하여 성능 향상
+import Tutorial from '../components/Result/Tutorial';
 
 function ARPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const models = location.state?.models || []; // ResultPage에서 전달받은 가구 모델 데이터
   // scale은 models 배열의 각 객체에 포함되어 있음
+
+  // 튜토리얼 상태 관리
+  const [showTutorial, setShowTutorial] = useState(false);
 
   // useRef를 사용하여 변수들을 관리 (React 렌더링과 분리)
   // React의 상태 변경으로 인한 불필요한 리렌더링 방지
@@ -47,6 +51,13 @@ function ARPage() {
   useEffect(() => {
     // models 배열 콘솔 출력
     console.log('AR models:', models);
+
+    // 첫 방문자인지 확인하여 튜토리얼 표시
+    const hasVisitedARTutorial = localStorage.getItem('hasVisitedARTutorial');
+    if (!hasVisitedARTutorial) {
+      setShowTutorial(true);
+    }
+
     // 컴포넌트가 마운트될 때만 실행
     init();
     setupFurnitureSelection();
@@ -658,6 +669,11 @@ function ARPage() {
     // cssRenderer.render(cssScene, camera); // CSS3D 렌더링 제거
   }
 
+  // 튜토리얼 닫기 핸들러
+  const handleTutorialClose = () => {
+    setShowTutorial(false);
+  };
+
   // 뒤로가기 버튼 UI (오른쪽 위 고정)
   // 실제 AR 캔버스 위에 겹치게 absolute/fixed로 배치
   // 아이콘+텍스트 형태
@@ -684,9 +700,33 @@ function ARPage() {
     </button>
   );
 
+  // 튜토리얼 버튼 UI (좌측 상단 고정)
+  const TutorialButton = () => (
+    <button
+      onClick={() => setShowTutorial(true)}
+      className="fixed top-4 left-4 z-50 bg-black/60 text-white p-2 rounded-full hover:bg-black/80 transition-colors"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+    </button>
+  );
+
   return (
     <div className="App">
       <BackButton />
+      <TutorialButton />
       <canvas
         id="canvas"
         className="w-full h-screen"
@@ -729,6 +769,7 @@ function ARPage() {
           </button>
         ))}
       </div>
+      <Tutorial isVisible={showTutorial} onClose={handleTutorialClose} />
     </div>
   );
 }
