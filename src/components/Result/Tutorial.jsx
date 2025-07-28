@@ -33,7 +33,7 @@ export default function WelcomeModal() {
     {
       // SVG 아이콘을 JSX 컴포넌트처럼 사용
       icon: (
-        <div className="bg-black/60 p-4 rounded-full">
+        <div className="bg-black/60 p-3 rounded-full">
           <div className="text-white flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,11 @@ export default function WelcomeModal() {
         </div>
       ),
       title: '뒤로가기',
-      description: '결과 페이지로 다시 돌아갈 수 있습니다.',
+      description: (
+        <>
+          결과 페이지로 다시 돌아갈 수<br /> 있습니다.
+        </>
+      ),
     },
     {
       icon: (
@@ -70,7 +74,14 @@ export default function WelcomeModal() {
         </div>
       ),
       title: 'AR객체 선택',
-      description: '버튼을 눌러 배치해보고 싶은 가구를 선택해보세요.',
+      // description을 JSX로 작성하여 줄바꿈 적용
+      description: (
+        <>
+          버튼을 눌러 배치해보고 싶은
+          <br />
+          가구를 선택해보세요.
+        </>
+      ),
     },
   ];
 
@@ -82,11 +93,21 @@ export default function WelcomeModal() {
     },
     {
       title: '배치하기',
-      description: '횐 색 원을 두 번 터치하여여 선택한 가구를 배치합니다.',
+      description: (
+        <>
+          횐 색 원을 두 번 터치하여 선택한 가구를 <br />
+          배치합니다.
+        </>
+      ),
     },
     {
       title: '회전하기',
-      description: '두 손가락으로 화면을 좌우로 밀어 가구를 회전시킵니다.',
+      description: (
+        <>
+          두 손가락으로 화면을 좌우로 밀어 가구를 <br />
+          회전시킵니다.
+        </>
+      ),
     },
     {
       title: '삭제하기',
@@ -94,7 +115,7 @@ export default function WelcomeModal() {
     },
     {
       title: '종료',
-      description: '시작할 때 눌렀던 버튼을 한 번 더 눌러 종료합니다.',
+      description: 'Stop AR 버튼을 눌러 종료합니다.',
     },
   ];
 
@@ -111,16 +132,16 @@ export default function WelcomeModal() {
             {featureDescriptions.map((feature, index) => (
               <div key={index} className="flex items-center gap-4">
                 {/* 아이콘 (왼쪽) */}
-                <div className=" text-white p-4 rounded-full flex-shrink-0">
+                <div className=" text-white p-4 rounded-3xl flex-shrink-0 bg-transparent w-40 h-30 flex items-center justify-center">
                   {feature.icon} {/* 배열에서 아이콘 가져오기 */}
                 </div>
 
                 {/* 설명 그룹 (오른쪽) */}
                 <div className="text-left">
-                  <h2 className="text-xl text-gray-400 font-bold">
+                  <h2 className="text-xl text-gray-200 font-bold">
                     {feature.title} {/* 배열에서 제목 가져오기 */}
                   </h2>
-                  <p className="text-gray-200">
+                  <p className="text-gray-300">
                     {feature.description} {/* 배열에서 설명 가져오기 */}
                   </p>
                 </div>
@@ -140,7 +161,7 @@ export default function WelcomeModal() {
 
       {/* 페이지 2 내용 */}
       {currentPage === 2 && (
-        <div className="flex flex-col justify-center items-center h-full gap-8">
+        <div className="flex flex-col items-center gap-8 pb-28">
           <div className="flex flex-col justify-center items-center h-full gap-8">
             {/* 설명 묶음들을 담을 컨테이너 */}
             <div className="space-y-6">
@@ -154,10 +175,10 @@ export default function WelcomeModal() {
 
                   {/* 설명 그룹 (오른쪽) */}
                   <div className="text-left">
-                    <h2 className="text-xl text-gray-400 font-bold">
+                    <h2 className="text-xl text-gray-200 font-bold">
                       {feature.title} {/* 배열에서 제목 가져오기 */}
                     </h2>
-                    <p className="text-gray-200">
+                    <p className="text-gray-300">
                       {feature.description} {/* 배열에서 설명 가져오기 */}
                     </p>
                   </div>
@@ -166,12 +187,14 @@ export default function WelcomeModal() {
             </div>
           </div>
           {/* 확인 버튼 */}
-          <button
-            onClick={handleClose}
-            className="w-full bg-sage-accent text-white font-bold py-3 px-12 rounded-lg hover:bg-sage-accent/80 transition-colors"
-          >
-            확인
-          </button>
+          <div className="items-center">
+            <button
+              onClick={handleClose}
+              className="w-full bg-sage-accent text-white font-bold py-3 px-12 rounded-lg hover:bg-sage-accent/80 transition-colors"
+            >
+              확인
+            </button>
+          </div>
         </div>
       )}
     </div>
