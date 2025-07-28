@@ -1,18 +1,22 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // 이 컴포넌트를 원하는 곳에서 import하여 사용하세요.
-export default function WelcomeModal() {
-  // 로컬 스토리지에 방문 기록이 없으면 true, 있으면 false
-  const [showModal, setShowModal] = useState(true);
+export default function Tutorial({ isVisible, onClose }) {
+  // isVisible prop을 받아서 모달 표시 여부를 제어
+  const [showModal, setShowModal] = useState(isVisible);
   // 현재 페이지를 관리하는 상태 (1페이지부터 시작)
   const [currentPage, setCurrentPage] = useState(1);
 
   // '확인' 버튼 (2페이지) 또는 모달을 닫아야 할 때 실행되는 함수
   function handleClose() {
     // 1. 로컬 스토리지에 방문 기록을 남겨서 다시 보지 않도록 합니다.
-    localStorage.setItem('hasVisitedWelcomeModal', 'true');
+    localStorage.setItem('hasVisitedARTutorial', 'true');
     // 2. 모달을 보이지 않게 상태를 변경합니다.
     setShowModal(false);
+    // 3. 부모 컴포넌트에 닫기 이벤트 전달
+    if (onClose) {
+      onClose();
+    }
   }
 
   // '다음' 버튼 (1페이지)을 눌렀을 때 실행되는 함수
@@ -20,6 +24,15 @@ export default function WelcomeModal() {
     // 다음 페이지로 이동
     setCurrentPage(currentPage + 1);
   }
+
+  // isVisible prop이 변경될 때 showModal 상태 업데이트
+  useEffect(() => {
+    setShowModal(isVisible);
+    // 튜토리얼이 열릴 때마다 첫 페이지로 리셋
+    if (isVisible) {
+      setCurrentPage(1);
+    }
+  }, [isVisible]);
 
   // 모달을 보여줄 필요가 없으면 아무것도 렌더링하지 않음
   if (!showModal) {

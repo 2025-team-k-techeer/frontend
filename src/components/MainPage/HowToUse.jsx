@@ -22,10 +22,7 @@ const HowToUseSection = () => {
           <span className="text-sm font-medium text-gray-600">AI 인테리어</span>
         </Link>
         {/* AI 생성 */}
-        <Link
-          to="/Manual#select"
-          className="flex flex-col items-center space-y-2"
-        >
+        <Link to="/Manual#AR" className="flex flex-col items-center space-y-2">
           <div className="bg-white rounded-xl shadow-sm p-1">
             <ARIcon className="h-10 w-10 text-brand-charcoal" />
           </div>
@@ -33,7 +30,10 @@ const HowToUseSection = () => {
         </Link>
 
         {/* AR */}
-        <Link to="/Manual#ar" className="flex flex-col items-center space-y-2">
+        <Link
+          to="/Manual#library"
+          className="flex flex-col items-center space-y-2"
+        >
           <div className="bg-white rounded-xl shadow-sm p-1">
             <PictureIcon className="h-10 w-10 text-brand-charcoal" />
           </div>

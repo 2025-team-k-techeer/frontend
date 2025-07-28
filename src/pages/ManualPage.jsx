@@ -26,7 +26,7 @@ function ManualPage() {
 
   // 스크롤 핸들러
   function handleScroll() {
-    const sections = ['upload', 'select', 'ar'];
+    const sections = ['upload', 'AR', 'library'];
     let currentSection = 'upload';
 
     sections.forEach(function (sectionId) {
