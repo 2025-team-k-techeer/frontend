@@ -130,7 +130,7 @@ export default function WelcomeModal() {
           <div className="space-y-6">
             {/* featureDescriptions 배열을 순회하며 각 설명을 렌더링 */}
             {featureDescriptions.map((feature, index) => (
-              <div key={index} className="flex items-center gap-4">
+              <div key={index} className="flex items-center pr-9">
                 {/* 아이콘 (왼쪽) */}
                 <div className=" text-white p-4 rounded-3xl flex-shrink-0 bg-transparent w-40 h-30 flex items-center justify-center">
                   {feature.icon} {/* 배열에서 아이콘 가져오기 */}
@@ -168,11 +168,6 @@ export default function WelcomeModal() {
               {/* featureDescriptions 배열을 순회하며 각 설명을 렌더링 */}
               {featureDescriptions2.map((feature, index) => (
                 <div key={index} className="flex items-center gap-4">
-                  {/* 아이콘 (왼쪽) */}
-                  <div className=" text-white p-4 rounded-full flex-shrink-0">
-                    {feature.icon} {/* 배열에서 아이콘 가져오기 */}
-                  </div>
-
                   {/* 설명 그룹 (오른쪽) */}
                   <div className="text-left">
                     <h2 className="text-xl text-gray-200 font-bold">
