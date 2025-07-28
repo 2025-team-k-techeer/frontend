@@ -41,63 +41,63 @@ function ARPage() {
       depth_cm: 60,
       scale: 1.0,
     },
-    {
-      label: '테스트 가구4',
-      model_url:
-        'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/beige_modernchair.glb',
-      image_url:
-        'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/beige_modernchair.png',
-      width_cm: 1000,
-      height_cm: 100,
-      depth_cm: 60,
-      scale: 1.0,
-    },
-    {
-      label: '테스트 가구5',
-      model_url:
-        'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/black_leather_officechair.glb',
-      image_url:
-        'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/black_leather_officechair.png',
-      width_cm: 1000,
-      height_cm: 100,
-      depth_cm: 60,
-      scale: 1.0,
-    },
-    {
-      label: '테스트 가구6',
-      model_url:
-        'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/black_officechair.glb',
-      image_url:
-        'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/black_officechair.png',
-      width_cm: 1000,
-      height_cm: 100,
-      depth_cm: 60,
-      scale: 1.0,
-    },
-    {
-      label: '테스트 가구7',
-      model_url:
-        'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/brown_leather_officechair.glb',
-      image_url:
-        'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/brown_leather_officechair.png',
-      width_cm: 1000,
-      height_cm: 100,
-      depth_cm: 60,
-      scale: 1.0,
-    },
-    {
-      label: '테스트 가구8',
-      model_url:
-        'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/grey_armchair.glb',
-      image_url:
-        'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/grey_armchair.png',
-      width_cm: 1000,
-      height_cm: 100,
-      depth_cm: 60,
-      scale: 1.0,
-    },
+    // {
+    //   label: '테스트 가구4',
+    //   model_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/beige_modernchair.glb',
+    //   image_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/beige_modernchair.png',
+    //   width_cm: 1000,
+    //   height_cm: 100,
+    //   depth_cm: 60,
+    //   scale: 1.0,
+    // },
+    // {
+    //   label: '테스트 가구5',
+    //   model_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/black_leather_officechair.glb',
+    //   image_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/black_leather_officechair.png',
+    //   width_cm: 1000,
+    //   height_cm: 100,
+    //   depth_cm: 60,
+    //   scale: 1.0,
+    // },
+    // {
+    //   label: '테스트 가구6',
+    //   model_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/black_officechair.glb',
+    //   image_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/black_officechair.png',
+    //   width_cm: 1000,
+    //   height_cm: 100,
+    //   depth_cm: 60,
+    //   scale: 1.0,
+    // },
+    // {
+    //   label: '테스트 가구7',
+    //   model_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/brown_leather_officechair.glb',
+    //   image_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/brown_leather_officechair.png',
+    //   width_cm: 1000,
+    //   height_cm: 100,
+    //   depth_cm: 60,
+    //   scale: 1.0,
+    // },
+    // {
+    //   label: '테스트 가구8',
+    //   model_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/glb_chair/grey_armchair.glb',
+    //   image_url:
+    //     'https://storage.googleapis.com/teamk-backend/ar_assets/thumbnail_chair/grey_armchair.png',
+    //   width_cm: 1000,
+    //   height_cm: 100,
+    //   depth_cm: 60,
+    //   scale: 1.0,
+    // },
   ];
-
+  console.log('defaultMockModels', defaultMockModels);
   const location = useLocation();
   const navigate = useNavigate();
   const models = location.state?.models || defaultMockModels;
@@ -123,7 +123,7 @@ function ARPage() {
   const initialTouchCenterXRef = useRef(0);
   const initialObjectYRotationRef = useRef(0);
 
-  const DOUBLE_TAP_THRESHOLD = 300;
+  const DOUBLE_TAP_THRESHOLD = 400;
   const LONG_PRESS_DURATION = 500;
   const RING_SCALE_FACTOR = 1.2;
   const ROTATION_SENSITIVITY = 0.01;
@@ -650,7 +650,7 @@ function ARPage() {
 
     ctx.fillStyle = 'rgba(0, 0, 0, 0)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#000000';
+    ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 40px Arial';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -911,32 +911,29 @@ function ARPage() {
         바닥을 인식 중입니다...
       </div>
       {/* 가구 선택 UI */}
-      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 overflow-x-auto whitespace-nowrap px-2 w-[90vw] max-w-2xl">
-        {models.map((model, index) => (
+      <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 flex justify-center gap-6 w-full max-w-md px-2">
+        {models.slice(0, 3).map((model, index) => (
           <button
             key={index}
             id={`item${index}`}
-            className="inline-block bg-white/80 backdrop-blur-sm rounded-lg p-3 hover:bg-white transition-colors mr-2 last:mr-0"
+            className={`bg-[#F0F0F0] rounded-xl p-3 flex-shrink-0 shadow-md w-24 h-24 flex items-center justify-center border-4  focus:outline-none focus:ring-0`}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               onClicked(e, null, index);
             }}
           >
-            <div className="w-12 h-12 rounded overflow-hidden">
+            <div className="w-20 h-20 rounded overflow-hidden flex items-center justify-center">
               <img
                 src={model.image_url}
                 alt={model.label}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src =
                     'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0yNCAyOEMyNi4yMDkxIDI4IDI4IDI2LjIwOTEgMjggMjRDMjggMjEuNzkwOSAyNi4yMDkxIDIwIDI0IDIwQzIxLjc5MDkgMjAgMjAgMjEuNzkwOSAyMCAyNEMyMCAyNi4yMDkxIDIxLjc5MDkgMjggMjQgMjhaIiBmaWxsPSIjOUI5QkEwIi8+CjxwYXRoIGQ9Ik0yNCA0QzEyLjk1NDMgNCA0IDEyLjk1NDMgNCAyNFMxMi45NTQzIDQ0IDI0IDQ0QzM1LjA0NTcgNDQgNDQgMzUuMDQ1NyA0NCAyNFMzNS4wNDU3IDQgMjQgNFpNMjQgNDBDMTUuMTY0IDQwIDggMzIuODM2IDggMjRTMTUuMTY0IDggMjQgOEMzMi44MzYgOCA0MCAxNS4xNjQgNDAgMjRTMzIuODM2IDQwIDI0IDQwWiIgZmlsbD0iIzlCOUJBQCIvPgo8L3N2Zz4K';
                 }}
               />
-            </div>
-            <div className="text-xs font-bold text-gray-600 mt-1 text-center">
-              {model.label}
             </div>
           </button>
         ))}
