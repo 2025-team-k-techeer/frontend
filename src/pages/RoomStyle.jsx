@@ -123,6 +123,7 @@ function StyleSelectionPage() {
         onClose={closeModal}
         label={selectedStyle?.name}
         description={selectedStyle?.description} // API로 받아온 description
+        imageSrc={selectedStyle?.image_url}
       />
     </div>
   );
