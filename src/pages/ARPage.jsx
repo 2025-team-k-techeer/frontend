@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { ARButton } from 'three/examples/jsm/webxr/ARButton';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { XREstimatedLight } from 'three/examples/jsm/webxr/XREstimatedLight';
 import { useLocation, useNavigate } from 'react-router-dom';
-// CSS3DRenderer 제거
+// CSS3DRenderer 제거 - 3D 텍스처 방식으로 대체하여 성능 향상
+import Tutorial from '../components/Result/Tutorial';
 
 function ARPage() {
   const defaultMockModels = [
@@ -100,10 +101,16 @@ function ARPage() {
   console.log('defaultMockModels', defaultMockModels);
   const location = useLocation();
   const navigate = useNavigate();
+
   const models = location.state?.models || defaultMockModels;
+
   // scale은 models 배열의 각 객체에 포함되어 있음
 
+  // 튜토리얼 상태 관리
+  const [showTutorial, setShowTutorial] = useState(false);
+
   // useRef를 사용하여 변수들을 관리 (React 렌더링과 분리)
+
   const sceneRef = useRef(null);
   const cameraRef = useRef(null);
   const rendererRef = useRef(null);
@@ -137,22 +144,32 @@ function ARPage() {
 
   // 크기 정보 카드 관련 변수들
 
+
   useEffect(() => {
     // models 배열 콘솔 출력
     console.log('AR models:', models);
+
+    // 첫 방문자인지 확인하여 튜토리얼 표시
+    const hasVisitedARTutorial = localStorage.getItem('hasVisitedARTutorial');
+    if (!hasVisitedARTutorial) {
+      setShowTutorial(true);
+    }
+
     // 컴포넌트가 마운트될 때만 실행
     init();
     setupFurnitureSelection();
     animate();
 
-    // Cleanup 함수
+    // Cleanup 함수 - 컴포넌트 언마운트 시 실행
     return () => {
       // 애니메이션 루프 중지
       if (rendererRef.current) {
         rendererRef.current.setAnimationLoop(null);
       }
 
-      // 이벤트 리스너 제거
+      // 이벤트 리스너 제거 - 메모리 누수 방지
+      // React 컴포넌트가 언마운트될 때 DOM 이벤트 리스너를 제거하지 않으면
+      // 메모리 누수가 발생하고, 다른 페이지에서도 이벤트가 계속 실행될 수 있음
       if (rendererRef.current?.domElement) {
         rendererRef.current.domElement.removeEventListener(
           'touchstart',
@@ -184,51 +201,56 @@ function ARPage() {
         arButton.remove();
       }
 
-      // 렌더러 정리
+      // 렌더러 정리 - GPU 메모리 해제
       if (rendererRef.current) {
         rendererRef.current.dispose();
       }
 
-      // 씬 정리
+      // 씬 정리 - 3D 객체들 메모리 해제
       if (sceneRef.current) {
         sceneRef.current.clear();
       }
     };
   }, []);
 
+  // AR 환경 초기화 함수
   function init() {
     const myCanvas = document.getElementById('canvas');
     sceneRef.current = new THREE.Scene();
 
+    // 원근 카메라 설정 (AR용)
     cameraRef.current = new THREE.PerspectiveCamera(
-      70,
-      myCanvas.innerWidth / myCanvas.innerHeight,
-      0.01,
-      20
+      70, // 시야각- 수직으로 얼마나 넓은 영역을 볼 수 있는지를 각도
+      myCanvas.innerWidth / myCanvas.innerHeight, // 종횡비- 가로 대비 세로 비율
+      0.01, // 근평면- 가까운 물체까지의 거리
+      20 // 원평면- 먼 물체까지의 거리
     );
 
+    // 환경 조명 설정
     const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
     light.position.set(0.5, 1, 0.25);
     sceneRef.current.add(light);
 
+    // WebGL 렌더러 설정 - 3D 객체를 화면에 그리는 역할
     rendererRef.current = new THREE.WebGLRenderer({
       canvas: myCanvas,
-      antialias: true,
-      alpha: true,
-      powerPreference: 'high-performance',
-      stencil: false,
-      depth: true,
+      antialias: true, // 안티앨리어싱 - 모서리가 더 부드럽게 보이도록 함
+      alpha: true, // 투명 배경
+      powerPreference: 'high-performance', // 고성능 모드 - 성능 최적화
+      stencil: false, // 스텐실 버퍼 비활성화 (성능 향상)
+      depth: true, // 깊이 버퍼 활성화 - 객체 간 깊이 순서 관리
     });
     rendererRef.current.setPixelRatio(window.devicePixelRatio);
     rendererRef.current.setSize(myCanvas.innerWidth, myCanvas.innerHeight);
-    rendererRef.current.xr.enabled = true;
-    rendererRef.current.setClearColor(0x000000, 0);
+    rendererRef.current.xr.enabled = true; // WebXR 활성화
+    rendererRef.current.setClearColor(0x000000, 0); // 투명 배경
 
+    // 터치 이벤트 리스너 추가 (가구 회전용) - 터치 이벤트 처리
     rendererRef.current.domElement.addEventListener(
       'touchstart',
       handleTouchStart,
       {
-        passive: false,
+        passive: false, // preventDefault 사용 가능 - 기본 동작 방지
       }
     );
     rendererRef.current.domElement.addEventListener(
@@ -255,6 +277,7 @@ function ARPage() {
       }
     );
 
+    // AR 조명 추정 설정
     const xrLight = new XREstimatedLight(rendererRef.current);
     xrLight.addEventListener('estimationstart', () => {
       sceneRef.current.add(xrLight);
@@ -268,14 +291,16 @@ function ARPage() {
       sceneRef.current.remove(xrLight);
     });
 
+    // AR 버튼 생성
     let arButton = ARButton.createButton(rendererRef.current, {
-      requiredFeatures: ['hit-test'],
-      optionalFeatures: ['dom-overlay', 'light-estimation'],
-      domOverlay: { root: document.body },
+      requiredFeatures: ['hit-test'], // 히트 테스트 필수 - 카메라 조준 기능
+      optionalFeatures: ['dom-overlay', 'light-estimation'], // 선택적 기능 - 화면 오버레이, 조명 추정
+      domOverlay: { root: document.body }, // 버튼 위치 설정
     });
     arButton.style.bottom = '20%';
     document.body.appendChild(arButton);
 
+    // 3D 모델 로드
     for (let i = 0; i < models.length; i++) {
       const loader = new GLTFLoader();
       loader.load(
@@ -283,12 +308,12 @@ function ARPage() {
         function (glb) {
           let model = glb.scene;
           itemsRef.current[i] = model;
-          // 모델 최적화
+          // 모델 최적화 - 성능 향상
           model.traverse((child) => {
             if (child.isMesh) {
-              child.frustumCulled = true;
-              child.castShadow = false;
-              child.receiveShadow = false;
+              child.frustumCulled = true; // 절두체 컬링 활성화
+              child.castShadow = false; // 그림자 비활성화
+              child.receiveShadow = false; // 그림자 수신 비활성화
             }
           });
         },
@@ -301,11 +326,13 @@ function ARPage() {
       );
     }
 
-    controllerRef.current = rendererRef.current.xr.getController(0);
-    controllerRef.current.addEventListener('selectstart', onSelectStart);
-    controllerRef.current.addEventListener('selectend', onSelectEnd);
-    sceneRef.current.add(controllerRef.current);
+    // AR 컨트롤러 설정 - 컨트롤러 이벤트 처리
+    controllerRef.current = rendererRef.current.xr.getController(0); // 컨트롤러 가져오기
+    controllerRef.current.addEventListener('selectstart', onSelectStart); // 선택 시작 이벤트 처리
+    controllerRef.current.addEventListener('selectend', onSelectEnd); // 선택 종료 이벤트 처리
+    sceneRef.current.add(controllerRef.current); // 컨트롤러 추가
 
+    // AR 조준선 생성 (바닥 표시용) - 카메라 조준 기능
     reticleRef.current = new THREE.Mesh(
       new THREE.RingGeometry(0.15, 0.2, 32).rotateX(-Math.PI / 2),
       new THREE.MeshBasicMaterial()
@@ -315,6 +342,7 @@ function ARPage() {
     reticleRef.current.visible = false;
     sceneRef.current.add(reticleRef.current);
 
+    // 선택 링 생성 (선택된 가구 표시용) - 선택된 가구 표시
     selectionRingRef.current = new THREE.Mesh(
       new THREE.TorusGeometry(0.5, 0.03, 16, 100).rotateX(-Math.PI / 2),
       new THREE.MeshBasicMaterial({ color: 0x00ff00 })
@@ -322,60 +350,7 @@ function ARPage() {
     selectionRingRef.current.visible = false;
   }
 
-  // // 크기 정보 카드 생성 함수 (3D 텍스처 방식)
-  // function createSizeInfoCard(width, height, depth) {
-  //   // 기존 카드가 있다면 제거
-  //   if (sizeInfoCardRef.current) {
-  //     sceneRef.current.remove(sizeInfoCardRef.current);
-  //     sizeInfoCardRef.current = null;
-  //   }
 
-  //   // 캔버스 생성하여 텍스트 그리기
-  //   const canvas = document.createElement('canvas');
-  //   canvas.width = 512;
-  //   canvas.height = 256;
-  //   const context = canvas.getContext('2d');
-
-  //   // 배경 그리기
-  //   context.fillStyle = 'rgba(0, 0, 0, 0.8)';
-  //   context.fillRect(0, 0, canvas.width, canvas.height);
-
-  //   // 테두리 그리기
-  //   context.strokeStyle = '#00ff00';
-  //   context.lineWidth = 4;
-  //   context.strokeRect(0, 0, canvas.width, canvas.height);
-
-  //   // 텍스트 설정
-  //   context.fillStyle = 'white';
-  //   context.font = 'bold 32px Arial';
-  //   context.textAlign = 'center';
-
-  //   // 제목 그리기
-  //   context.fillStyle = '#00ff00';
-  //   context.fillText('가구 크기', canvas.width / 2, 50);
-
-  //   // 크기 정보 그리기
-  //   context.fillStyle = 'white';
-  //   context.font = '28px Arial';
-  //   context.fillText(
-  //     `가로: ${(width / 100).toFixed(2)}m`,
-  //     canvas.width / 2,
-  //     100
-  //   );
-  //   context.fillText(
-  //     `세로: ${(depth / 100).toFixed(2)}m`,
-  //     canvas.width / 2,
-  //     140
-  //   );
-  //   context.fillText(
-  //     `높이: ${(height / 100).toFixed(2)}m`,
-  //     canvas.width / 2,
-  //     180
-  //   );
-
-  //   // 텍스처 생성
-  //   const texture = new THREE.CanvasTexture(canvas);
-  //   texture.needsUpdate = true;
 
   //   // 카드 메시 생성
   //   const cardGeometry = new THREE.PlaneGeometry(0.5, 0.25);
@@ -393,32 +368,36 @@ function ARPage() {
   //   return sizeInfoCardRef.current;
   // }
 
+  // 컨트롤러 선택 시작 이벤트 - 롱프레스 처리
   function onSelectStart() {
-    if (isRotatingRef.current) return;
+    if (isRotatingRef.current) return; // 회전 중이면 무시
     longPressTimeoutRef.current = setTimeout(() => {
-      handleLongPress();
-      longPressTimeoutRef.current = null;
+      handleLongPress(); // 롱프레스 처리
+      longPressTimeoutRef.current = null; // 타임아웃 제거
     }, LONG_PRESS_DURATION);
   }
 
+  // 컨트롤러 선택 종료 이벤트
   function onSelectEnd() {
-    if (isRotatingRef.current) return;
+    if (isRotatingRef.current) return; // 회전 중이면 무시
     if (longPressTimeoutRef.current) {
       clearTimeout(longPressTimeoutRef.current);
-      handleTap();
+      handleTap(); // 짧은 탭으로 처리
     }
   }
 
+  // 터치 시작 이벤트 (2손가락 회전용)
   function handleTouchStart(event) {
     if (event.touches.length === 2 && selectedObjectRef.current) {
-      event.preventDefault();
-      isRotatingRef.current = true;
+      event.preventDefault(); // 기본 동작 방지
+      isRotatingRef.current = true; // 회전 상태 설정
       initialTouchCenterXRef.current =
-        (event.touches[0].pageX + event.touches[1].pageX) / 2;
-      initialObjectYRotationRef.current = selectedObjectRef.current.rotation.y;
+        (event.touches[0].pageX + event.touches[1].pageX) / 2; // 초기 터치 중심 좌표 저장
+      initialObjectYRotationRef.current = selectedObjectRef.current.rotation.y; // 초기 회전 각도 저장
     }
   }
 
+  // 터치 이동 이벤트 (2손가락 회전 처리)
   function handleTouchMove(event) {
     if (
       isRotatingRef.current &&
@@ -434,12 +413,14 @@ function ARPage() {
     }
   }
 
+  // 터치 종료 이벤트
   function handleTouchEnd(event) {
     if (event.touches.length < 2) {
       isRotatingRef.current = false;
     }
   }
 
+  // 캔버스 클릭 이벤트 (빈 공간 클릭 시 선택 해제)
   function handleCanvasClick(event) {
     if (!selectedObjectRef.current) {
       return;
@@ -461,36 +442,41 @@ function ARPage() {
     );
 
     if (intersects.length === 0) {
-      deselectObject();
+      deselectObject(); // 빈 공간 클릭 시 선택 해제
     }
   }
 
+  // 탭 이벤트 처리 (더블탭으로 가구 배치)
   function handleTap() {
-    const currentTime = Date.now();
-    const timeSinceLastTap = currentTime - lastTapTimeRef.current;
+    const currentTime = Date.now(); // 현재시간 저장
+    const timeSinceLastTap = currentTime - lastTapTimeRef.current; // 마지막 탭 이후 경과 시간 계산
     if (timeSinceLastTap < DOUBLE_TAP_THRESHOLD) {
+      // 더블탭 타임 체크
       if (reticleRef.current.visible) {
-        placeFurniture();
+        placeFurniture(); // 더블탭 시 가구 배치
       }
     }
     lastTapTimeRef.current = currentTime;
   }
 
+  // 롱프레스 이벤트 처리 (가구 선택/삭제)
   function handleLongPress() {
-    const raycaster = new THREE.Raycaster();
-    const pointingRay = new THREE.Vector3(0, 0, -1);
-    pointingRay.applyQuaternion(controllerRef.current.quaternion);
-    raycaster.set(controllerRef.current.position, pointingRay);
+    const raycaster = new THREE.Raycaster(); // 레이캐스터 생성
+    const pointingRay = new THREE.Vector3(0, 0, -1); // 포인팅 레이 생성
+    pointingRay.applyQuaternion(controllerRef.current.quaternion); // 컨트롤러 회전 적용
+    raycaster.set(controllerRef.current.position, pointingRay); // 레이캐스터 설정
 
     const intersects = raycaster.intersectObjects(
-      placedObjectsRef.current,
-      true
+      // 레이캐스터 충돌 감지
+      placedObjectsRef.current, // 배치된 객체 리스트
+      true // 충돌 감지 여부
     );
 
     if (intersects.length > 0) {
       const intersectedObject = findTopLevelObject(intersects[0].object);
       if (intersectedObject) {
         if (intersectedObject === selectedObjectRef.current) {
+          // 이미 선택된 객체를 다시 롱프레스하면 삭제
           sceneRef.current.remove(intersectedObject);
           const index = placedObjectsRef.current.indexOf(intersectedObject);
           if (index !== -1) {
@@ -498,14 +484,16 @@ function ARPage() {
           }
           deselectObject();
         } else {
+          // 다른 객체 선택
           selectObject(intersectedObject);
         }
       }
     } else {
-      deselectObject();
+      deselectObject(); // 빈 공간 롱프레스 시 선택 해제
     }
   }
 
+  // 가구 배치 함수
   function placeFurniture() {
     const newModel = itemsRef.current[itemSelectedIndexRef.current].clone();
     newModel.visible = true;
@@ -528,8 +516,9 @@ function ARPage() {
     selectObject(newModel);
   }
 
+  // 객체 선택 함수
   function selectObject(object) {
-    deselectObject();
+    deselectObject(); // 기존 선택 해제
     selectedObjectRef.current = object;
 
     const box = new THREE.Box3().setFromObject(selectedObjectRef.current);
@@ -571,60 +560,12 @@ function ARPage() {
       maxDim * RING_SCALE_FACTOR
     );
 
+
     selectionRingRef.current.visible = true;
+
   }
 
-  // function createThickLine(start, end, radius = 0.8, color = 0xff0000) {
-  //   const direction = new THREE.Vector3().subVectors(end, start);
-  //   const length = direction.length();
 
-  //   const material = new THREE.MeshBasicMaterial({ color });
-  //   const geometry = new THREE.CylinderGeometry(radius, radius, length, 16);
-
-  //   const cylinder = new THREE.Mesh(geometry, material);
-
-  //   const midPoint = new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5);
-  //   cylinder.position.copy(midPoint);
-
-  //   const axis = new THREE.Vector3(0, 1, 0);
-  //   cylinder.quaternion.setFromUnitVectors(axis, direction.clone().normalize());
-
-  //   return cylinder;
-  // }
-
-  // function makeSizeLine(size) {
-  //   const scale = selectedObject.scale;
-
-  //   const trueSize = new THREE.Vector3(
-  //     size.x / scale.x,
-  //     size.y / scale.y,
-  //     size.z / scale.z
-  //   );
-
-  //   const scaleFactor = 0.27;
-  //   const halfX = (trueSize.x / 2) * scaleFactor;
-  //   const halfY = (trueSize.y / 2) * scaleFactor;
-  //   const halfZ = (trueSize.z / 2) * scaleFactor;
-
-  //   const xLine = createThickLine(
-  //     new THREE.Vector3(-halfX, -halfY, halfZ),
-  //     new THREE.Vector3(halfX, -halfY, halfZ)
-  //   );
-
-  //   const zLine = createThickLine(
-  //     new THREE.Vector3(halfX, -halfY, halfZ),
-  //     new THREE.Vector3(halfX, -halfY, -halfZ)
-  //   );
-
-  //   const yLine = createThickLine(
-  //     new THREE.Vector3(-halfX, -halfY, halfZ),
-  //     new THREE.Vector3(-halfX, halfY * 7, halfZ)
-  //   );
-
-  //   lineGroup = new THREE.Group();
-  //   lineGroup.add(xLine, zLine, yLine);
-  //   selectedObject.add(lineGroup);
-  // }
 
   function createLine(start, end, color = 0x00ff00, radius = 0.005) {
     const dir = new THREE.Vector3().subVectors(end, start);
@@ -771,9 +712,11 @@ function ARPage() {
     measurementGroupRef.current = group;
   }
 
+
   function deselectObject() {
     if (selectedObjectRef.current) {
       selectedObjectRef.current.remove(selectionRingRef.current);
+      // 주석 처리된 크기선 제거
       // if (lineGroup) {
       //   selectedObject.remove(lineGroup);
       //   lineGroup = null;
@@ -803,6 +746,7 @@ function ARPage() {
     selectionRingRef.current.visible = false;
   }
 
+  // 최상위 객체 찾기 함수 (중첩된 객체 구조에서)
   function findTopLevelObject(object) {
     let parent = object;
     while (parent.parent && parent.parent !== sceneRef.current) {
@@ -811,24 +755,29 @@ function ARPage() {
     return placedObjectsRef.current.includes(parent) ? parent : null;
   }
 
+  // 가구 선택 UI 클릭 이벤트
   function onClicked(e, selectItem, index) {
     itemSelectedIndexRef.current = index;
     deselectObject();
   }
 
+  // 가구 선택 UI 설정 (React에서는 DOM 이벤트 리스너 대신 onClick prop 사용)
   function setupFurnitureSelection() {
     // React에서는 DOM 이벤트 리스너 대신 onClick prop 사용
   }
 
+  // 애니메이션 루프 시작
   function animate() {
     rendererRef.current.setAnimationLoop(render);
   }
 
+  // 렌더링 함수 (매 프레임 실행)
   function render(timestamp, frame) {
     if (frame) {
       const referenceSpace = rendererRef.current.xr.getReferenceSpace();
       const session = rendererRef.current.xr.getSession();
 
+      // AR 히트 테스트 설정 (바닥 감지)
       if (hitTestSourceRequestedRef.current === false) {
         session.requestReferenceSpace('viewer').then(function (refSpace) {
           session
@@ -845,6 +794,7 @@ function ARPage() {
         hitTestSourceRequestedRef.current = true;
       }
 
+      // 히트 테스트 결과로 조준선 위치 업데이트
       if (hitTestSourceRef.current) {
         const hitTestResults = frame.getHitTestResults(
           hitTestSourceRef.current
@@ -867,8 +817,14 @@ function ARPage() {
     // }
 
     rendererRef.current.render(sceneRef.current, cameraRef.current);
+    // 주석 처리된 CSS3D 렌더링
     // cssRenderer.render(cssScene, camera); // CSS3D 렌더링 제거
   }
+
+  // 튜토리얼 닫기 핸들러
+  const handleTutorialClose = () => {
+    setShowTutorial(false);
+  };
 
   // 뒤로가기 버튼 UI (오른쪽 위 고정)
   // 실제 AR 캔버스 위에 겹치게 absolute/fixed로 배치
@@ -896,9 +852,33 @@ function ARPage() {
     </button>
   );
 
+  // 튜토리얼 버튼 UI (좌측 상단 고정)
+  const TutorialButton = () => (
+    <button
+      onClick={() => setShowTutorial(true)}
+      className="fixed top-4 left-4 z-50 bg-black/60 text-white p-2 rounded-full hover:bg-black/80 transition-colors"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth="2"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+    </button>
+  );
+
   return (
     <div className="App">
       <BackButton />
+      <TutorialButton />
       <canvas
         id="canvas"
         className="w-full h-screen"
@@ -938,6 +918,7 @@ function ARPage() {
           </button>
         ))}
       </div>
+      <Tutorial isVisible={showTutorial} onClose={handleTutorialClose} />
     </div>
   );
 }

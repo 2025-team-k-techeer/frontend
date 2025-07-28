@@ -65,7 +65,7 @@ button:focus-visible {
     color: #a0c23d;
   }
   button {
-    background-color: transparent;
+    background-color: white;
   }
 }
 

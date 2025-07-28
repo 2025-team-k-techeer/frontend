@@ -44,12 +44,12 @@ export default function RoomDetail() {
   );
 
   // textarea의 onChange 이벤트를 처리할 핸들러
-  const handlePromptChange = (e) => {
+  function handlePromptChange(e) {
     setPromptDebounced(e.target.value);
-  };
+  }
 
   // 완료 버튼 클릭 시
-  const handleComplete = async () => {
+  async function handleComplete() {
     setError('');
     setLoading(true);
     try {
@@ -100,7 +100,7 @@ export default function RoomDetail() {
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   return (
     <>
