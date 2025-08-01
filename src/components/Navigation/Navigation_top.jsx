@@ -2,9 +2,9 @@ import React from 'react';
 
 function Navigation_top({ activeSection, onSectionClick }) {
   const navItems = [
-    { id: 'upload', label: '사진 업로드' },
-    { id: 'select', label: '스타일 선택' },
-    { id: 'ar', label: 'AR로 보기' },
+    { id: 'upload', label: 'AI 인테리어' },
+    { id: 'AR', label: 'AR로 보기' },
+    { id: 'library', label: '라이브러리' },
   ];
 
   return (
